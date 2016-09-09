@@ -13,7 +13,6 @@ export default class MapView extends SuperMapView
 
         const serviceClient = new ServiceClient();
         serviceClient.getRoute([[32.04389, 118.77881], [31.97746, 118.75621]]).then(res => {
-            console.log(res);
             this.routeLayer.drawRoute(res);
         })
     }

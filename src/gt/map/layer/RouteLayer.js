@@ -35,10 +35,10 @@ export default class RouteLayer extends Layer
     drawRoute(routes)
     {
         this.routeGroup.clearLayers();
-        const polyline = L.polyline(routes);
-        this.routeGroup.addLayer(polyline);
+        const multiPolyline = L.multiPolyline(routes);
+        this.routeGroup.addLayer(multiPolyline);
 
-        this.getParent().setBounds(polyline.getBounds());
+        this.getParent().setBounds(multiPolyline.getBounds());
     }
 
     _updateStartMarker()
