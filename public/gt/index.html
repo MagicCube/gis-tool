@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic GIS Tool</title>
+    <link rel="stylesheet" href="../vendor/leaflet/leaflet.css" charset="utf-8">
+    <link rel="stylesheet" href="../assets/gt/resource/index.css" charset="utf-8">
+    <link rel="stylesheet" href="./css/iconfont.css" charset="utf-8">
+    <script src="../assets/vendor/index.js" charset="utf-8"></script>
+    <script src="../vendor/leaflet/TileLayer.TileJSON.js" charset="utf-8"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../vendor/regenerator-runtime/regenerator-runtime.js" charset="utf-8"></script>
+    <script src="../vendor/async-to-generator/async-to-generator.js" charset="utf-8"></script>
+    <script src="../vendor/open-ui5/resources/sap-ui-core.js" charset="utf-8"
+        data-sap-ui-resourceroots='{ "sap.a": "../assets/sap/a", "gt": "../assets/gt" }'></script>
+    <script src="../vendor/jquery-transit/jquery.transit.js" charset="utf-8"></script>
+</head>
+<body>
+    <script src="../assets/gt/index.js" charset="utf-8"></script>
+    <script>
+        sap.ui.define([ "gt/app/ApplicationController" ], function() {
+            var applicatioonController = new gt.app.ApplicationController({
+                runningMode: "debug",
+                viewOptions: {
+                    id: "gt-app"
+                }
+            });
+            applicatioonController.getView().placeAt(document.body);
+            setTimeout(() => {
+                applicatioonController.run();
+            });
+        });
+    </script>
+</body>
+</html>

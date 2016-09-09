@@ -1,0 +1,28 @@
+.sap-a-object-inspector-view
+{
+    display: flex;
+    float: left;
+    flex-direction: column;
+    align-items: stretch;
+    width: 500px;
+    height: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    @title-height: 40px;
+
+    > .title
+    {
+        height: @title-height;
+        align-self: stretch;
+        text-align: center;
+        line-height: @title-height;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    > .content
+    {
+        flex: 1;
+        margin-left: 10px;
+        overflow: scroll;
+    }
+}

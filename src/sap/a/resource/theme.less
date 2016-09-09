@@ -1,0 +1,56 @@
+@import "app.less";
+@import "chart.less";
+@import "map-view.less";
+@import "object-inspector-view.less";
+
+.sap-a-view
+{
+    position: relative;
+}
+
+.sap-a-app
+{
+    font-family: @font-family;
+    font-size: @font-size-base;
+
+    color: @text-color;
+    background-color: @body-bg;
+
+    &, *
+    {
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    .base
+    {
+        font-size: @font-size-base;
+    }
+
+    h1, h2, h3
+    {
+        font-weight: normal;
+        margin: 0;
+        line-height: 100%;
+    }
+
+    h1, .h1
+    {
+        font-size: @font-size-h1;
+    }
+
+    h2, .h2
+    {
+        font-size: @font-size-h2;
+    }
+
+    h3, .h3
+    {
+        font-size: @font-size-h3;
+    }
+
+    small, .small
+    {
+        font-size: @font-size-small;
+    }
+}

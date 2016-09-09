@@ -1,0 +1,39 @@
+.sap-a-align-layout
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .sub-container
+    {
+        position: relative;
+    }
+
+    &.align-vertical-center
+    {
+        align-items: center;
+    }
+    &.align-vertical-top
+    {
+        align-items: flex-start;;
+    }
+    &.align-vertical-bottom
+    {
+        align-items: flex-end;
+    }
+
+    &.align-horizontal-center
+    {
+        justify-content: center;
+    }
+    &.align-horizontal-left
+    {
+        justify-content: flex-start;
+    }
+    &.align-horizontal-right
+    {
+        justify-content: flex-end;
+    }
+}
