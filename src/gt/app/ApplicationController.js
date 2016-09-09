@@ -1,5 +1,6 @@
-import Application from "sap/a/app/Application";
 import BaseApplicationController from "sap/a/app/ApplicationController";
+
+import Application from "./Application";
 
 export default class ApplicationController extends BaseApplicationController
 {
@@ -9,10 +10,10 @@ export default class ApplicationController extends BaseApplicationController
         app.addStyleClass("gt-app");
         return app;
     }
-    
+
     run()
     {
         super.run();
-        alert("App is running......");
+        console.log("App is running......");
     }
 }
