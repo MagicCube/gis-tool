@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "osmtogeojson": "^2.2.12",
     "request-promise": "^4.1.1",
     "socket.io": "^1.4.8"
   }
