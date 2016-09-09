@@ -2,7 +2,7 @@ import SuperMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
 import RouteLayer from "./layer/RouteLayer";
-import ServiceClient from "../service/ServiceClient";
+import ServiceClient from "../service/OsmServiceClient";
 
 export default class MapView extends SuperMapView
 {
