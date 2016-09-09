@@ -13,6 +13,6 @@ export default class ApplicationController extends BaseApplicationController
     run()
     {
         super.run();
-        alert("App is running......");
+        console.log("App is running......");
     }
 }
