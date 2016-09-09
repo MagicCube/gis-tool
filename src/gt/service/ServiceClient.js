@@ -8,6 +8,16 @@ export default class ServiceClient extends ManagedObject
         }
     };
     
+    static _instance = null;
+    static getInstance()
+    {
+        if (gt.service.ServiceClient._instance === null)
+        {
+            gt.service.ServiceClient._instance = new gt.service.ServiceClient();
+        }
+        return gt.service.ServiceClient._instance;
+    }
+    
     async searchCity(cityName)
     {
         const res = await this.fetch(`/city?q=${cityName}`);
@@ -25,7 +35,7 @@ export default class ServiceClient extends ManagedObject
     {
         if (thruPoints.length > 0 && Array.isArray(thruPoints[0]))
         {
-            thruPoints = thruPoints.map(point => {lat: point.[0], lng: point[1]});
+            thruPoints = thruPoints.map(point => {lat: point[0], lng: point[1]});
         }
         const tpString = thruPoints.map(point => `${point.lat},${point.lng}`).join(";");
         const res = await this.fetch(`/route/${tpString}`);
