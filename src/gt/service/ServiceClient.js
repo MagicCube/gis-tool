@@ -28,7 +28,7 @@ export default class ServiceClient extends ManagedObject
             thruPoints = thruPoints.map(point => {lat: point.[0], lng: point[1]});
         }
         const tpString = thruPoints.map(point => `${point.lat},${point.lng}`).join(";");
-        const res = await this.fetch(``);
+        const res = await this.fetch(`/route/${tpString}`);
         return res;
     }
 }
