@@ -6,6 +6,7 @@ import SceneTabContainerController from "../scn/SceneTabContainerController";
 import CitySceneController from "../scn/CitySceneController";
 import CorridorSceneController from "../scn/CorridorSceneController";
 import KeyRouteSceneController from "../scn/KeyRouteSceneController";
+import WaySceneController from "../scn/WaySceneController";
 
 export default class ApplicationController extends BaseApplicationController
 {
@@ -27,11 +28,13 @@ export default class ApplicationController extends BaseApplicationController
         this.citySceneController = new CitySceneController("citySceneController");
         this.corridorSceneController = new CorridorSceneController("corridorSceneController");
         this.keyRouteSceneController = new KeyRouteSceneController("keyRouteSceneController");
-
+        this.waySceneController = new WaySceneController("waySceneController");
+        
         this.sceneTabContainerController.setSceneControllers([
             this.citySceneController,
             this.corridorSceneController,
-            this.keyRouteSceneController
+            this.keyRouteSceneController,
+            this.waySceneController
         ]);
     }
 
