@@ -1,24 +1,38 @@
+import SplitLayout from "sap/a/layout/SplitLayout";
 import SuperApplication from "sap/a/app/Application";
 
-import MapView from "../map/MapView";
+import AppBar from "../view/AppBar";
+import SceneTabContainer from "../scn/SceneTabContainer";
 
 export default class Application extends SuperApplication
 {
     init()
     {
         super.init();
-        this._initMapView();
+        this._initAppBar();
+        this._initSceneTabContainer();
     }
 
-    _initMapView()
+    initLayout()
     {
-        this.mapView = new MapView({
-            minZoom: 3,
-            defaultZoom: 4
+        this.setLayout(new SplitLayout({
+            ratio: [ 50, undefined ]
+        }));
+    }
+
+    _initAppBar()
+    {
+        this.appBar = new AppBar({
+            title: "SAP Traffic Map Tools"
         });
-        this.addSubview(this.mapView);
-        $(() => {
-            this.mapView.invalidateSize();
+        this.addSubview(this.appBar);
+    }
+
+    _initSceneTabContainer()
+    {
+        this.sceneTabContainer = new SceneTabContainer({
+
         });
+        this.addSubview(this.sceneTabContainer);
     }
 }
