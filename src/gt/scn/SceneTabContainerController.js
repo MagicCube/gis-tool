@@ -17,4 +17,9 @@ export default class SceneTabContainerController extends SceneContainerControlle
             this.view.appendScene(controller.view);
         });
     }
+
+    selectSceneController(id)
+    {
+        this.view.selectScene(this.sceneControllers[id].view.getId());
+    }
 }

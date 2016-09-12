@@ -6,7 +6,7 @@ export default class SceneTabContainer extends SceneContainer
     init()
     {
         super.init();
-        this._scenes = [];
+        this.scenes = [];
         this.addStyleClass("gt-scene-tab-container");
     }
 
@@ -36,8 +36,8 @@ export default class SceneTabContainer extends SceneContainer
 
     appendScene(scene)
     {
-        this._scenes.push(scene);
-        this._scenes[scene.getId()] = scene;
+        this.scenes.push(scene);
+        this.scenes[scene.getId()] = scene;
 
         const $li = $(`<li>`);
         $li.attr("id", scene.getId());
@@ -61,6 +61,6 @@ export default class SceneTabContainer extends SceneContainer
         }
         const $li = this.$ul.find("#" + id);
         $li.addClass("selected");
-        this.setScene(this._scenes[id], this.$container);
+        this.setScene(this.scenes[id], this.$container);
     }
 }

@@ -45,6 +45,6 @@ export default class ApplicationController extends BaseApplicationController
     run()
     {
         super.run();
-        console.log("App is running......");
+        this.sceneTabContainerController.selectSceneController("citySceneController");
     }
 }
