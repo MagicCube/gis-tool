@@ -9,7 +9,7 @@ export default class SceneContainer extends View
         }
     };
 
-    setScene(scene)
+    setScene(scene, $container)
     {
         this.clearScene();
 
@@ -18,7 +18,7 @@ export default class SceneContainer extends View
             if (scene instanceof Scene)
             {
                 this.setProperty("scene", scene);
-                this.addSubview(scene);
+                this.addSubview(scene, $container);
                 scene.activate();
                 scene.invalidateSize();
             }

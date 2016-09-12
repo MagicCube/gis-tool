@@ -8,4 +8,13 @@ export default class SceneTabContainerController extends SceneContainerControlle
     {
         return new SceneTabContainer(options);
     }
+
+    setSceneControllers(controllers)
+    {
+        this.sceneControllers = controllers;
+        this.sceneControllers.forEach(controller => {
+            this.sceneControllers[controller.getId()] = controller;
+            this.view.appendScene(controller.view);
+        });
+    }
 }
