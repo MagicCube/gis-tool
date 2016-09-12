@@ -4,7 +4,7 @@ export default class ServiceClient extends ManagedObject
 {
     metadata = {
         properties: {
-            baseUrl: { type: "string", defaultValue: "localhost:8080/api/osm" },
+            baseUrl: { type: "string", defaultValue: "/api/osm" },
         }
     };
 
@@ -20,25 +20,36 @@ export default class ServiceClient extends ManagedObject
 
     async searchCity(cityName)
     {
-        const res = await this.fetch(`/city?q=${cityName}`);
+        const res = await this.fetch(`${this.getBaseUrl()}/city?q=${cityName}`);
         return res;
     }
 
     async getRelation(osmId)
     {
-        const res = await this.fetch(`/relation/${osmId}`);
+        const res = await this.fetch(`${this.getBaseUrl()}/relation/${osmId}`);
         return res;
     }
 
-    // Supported point type: Leaflet.LatLng, Array and {lat, lng}
-    async getRoute(thruPoints)
+    // Supported location type: [lng, lat] and { lat, lng }
+    async getRoute(locations)
     {
-        if (thruPoints.length > 0 && Array.isArray(thruPoints[0]))
+        // locaiton is array
+        if (locations.length > 0 && Array.isArray(locations[0]))
         {
-            thruPoints = thruPoints.map(point => ({lat: point[0], lng: point[1]}));
+            locations = locations.map(location => ({
+                lat: location[0],
+                lng: location[1]
+            }));
         }
-        const tpString = thruPoints.map(point => `${point.lng},${point.lat}`).join(";");
-        const res = await $.ajax(`/api/osm/route/${tpString}`);
+        locations = locations.map(location => ({
+            lat: location.lat,
+            lon: location.lng
+        }));
+        const json = {
+            locations: locations,
+            costing: "auto"
+        }
+        const res = await $.ajax(`${this.getBaseUrl()}/route/${JSON.stringify(json)}`);
         return res;
     }
 }

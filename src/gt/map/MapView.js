@@ -2,7 +2,7 @@ import SuperMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
 import RouteLayer from "./layer/RouteLayer";
-import ServiceClient from "../service/OsmServiceClient";
+import OsmServiceClient from "../service/OsmServiceClient";
 
 export default class MapView extends SuperMapView
 {
@@ -11,10 +11,11 @@ export default class MapView extends SuperMapView
         super.afterInit();
         this.addStyleClass("gt-map-view");
 
-        const serviceClient = new ServiceClient();
-        serviceClient.getRoute([[32.04389, 118.77881], [31.97746, 118.75621]]).then(res => {
-            this.routeLayer.drawRoute(res);
-        })
+        OsmServiceClient.getInstance()
+            .getRoute([[31.9785192, 118.756434338897], [32.051007361253916,118.77885818481445]])
+            .then(res => {
+                this.routeLayer.drawRoute(res);
+            });
     }
 
     initLayers()
