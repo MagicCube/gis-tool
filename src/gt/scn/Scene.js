@@ -7,7 +7,7 @@ export default class Scene extends SuperScene
     afterInit()
     {
         super.afterInit();
-
+        
         this.mapView = Application.getInstance().mapView;
         this.attachActivated(() => {
             this.addSubview(this.mapView, this.$(">.sub-container:nth-child(2)"));

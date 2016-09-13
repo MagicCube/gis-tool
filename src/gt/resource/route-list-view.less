@@ -1,0 +1,44 @@
+.gt-route-list-view
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    
+    > li
+    {
+        height: @route-list-item-height;
+        line-height: @route-list-item-height;
+        background-color: white;
+        margin: 6px;
+        padding-left: 24px;
+        padding-right: 24px;
+        
+        .direction-icon
+        {
+            font-size: inherit;
+            color: #555;
+        }
+        
+        .text
+        {
+            cursor: default;
+        }
+        
+        &:hover .delete-icon
+        {
+            display: inline-block;
+        }
+        
+        .delete-icon
+        {
+            display: none;
+            font-size: inherit;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            align-self: center;
+            cursor: pointer;
+        }
+    }
+}
