@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 
-export default class ServiceClient extends ManagedObject
+export default class OsmServiceClient extends ManagedObject
 {
     metadata = {
         properties: {
@@ -20,20 +20,19 @@ export default class ServiceClient extends ManagedObject
 
     async searchCity(cityName)
     {
-        const res = await this.fetch(`${this.getBaseUrl()}/city?q=${cityName}`);
+        const res = await $.ajax(`${this.getBaseUrl()}/city?q=${cityName}`);
         return res;
     }
 
     async getRelation(osmId)
     {
-        const res = await this.fetch(`${this.getBaseUrl()}/relation/${osmId}`);
+        const res = await $.ajax(`${this.getBaseUrl()}/relation/${osmId}`);
         return res;
     }
 
-    // Supported location type: [lng, lat] and { lat, lng }
+    // Supported location format: [lng, lat] and { lat, lng }
     async getRoute(locations)
     {
-        // locaiton is array
         if (locations.length > 0 && Array.isArray(locations[0]))
         {
             locations = locations.map(location => ({
