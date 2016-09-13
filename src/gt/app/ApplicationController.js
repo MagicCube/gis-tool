@@ -1,6 +1,7 @@
 import BaseApplicationController from "sap/a/app/ApplicationController";
 
 import Application from "./Application";
+import ProjectModel from "../model/ProjectModel";
 import SceneTabContainerController from "../scn/SceneTabContainerController";
 
 import CitySceneController from "../scn/CitySceneController";
@@ -13,6 +14,7 @@ export default class ApplicationController extends BaseApplicationController
     afterInit()
     {
         super.afterInit();
+        this._initModels();
         this._initSceneTabContainerController();
         this._initSceneControllers();
     }
@@ -37,6 +39,13 @@ export default class ApplicationController extends BaseApplicationController
             this.waySceneController
         ]);
     }
+    
+    _initModels()
+    {
+        const projectModel = new ProjectModel();
+        sap.ui.getCore().setModel(projectModel, "project");
+        this.setModel(projectModel, "project");
+    }
 
     createView()
     {
@@ -45,9 +54,10 @@ export default class ApplicationController extends BaseApplicationController
         return app;
     }
 
-    run()
+    async run()
     {
         super.run();
-        this.sceneTabContainerController.selectSceneController("citySceneController");
+        await this.getModel("project").loadProject();
+        this.sceneTabContainerController.selectSceneController("corridorSceneController");
     }
 }

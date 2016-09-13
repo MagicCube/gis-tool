@@ -24,7 +24,7 @@ export default class ServiceClient extends ManagedObject
         return res;
     }
     
-    async saveProject(project)
+    async updateProject(project)
     {
         const res = await $.ajax({
             url: `${this.getBaseUrl()}/${project.id}`,
