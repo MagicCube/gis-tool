@@ -9,7 +9,7 @@ export default class WaySceneController extends SceneController
             id: "wayScene",
             title: "WAYS"
         });
-        scene.$container.text("WAYS");
+        scene.$(".sub-container:nth-child(1)").text("WAYS");
         return scene;
     }
 }

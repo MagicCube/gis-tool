@@ -9,7 +9,6 @@ export default class KeyRouteSceneController extends SceneController
             id: "keyRouteScene",
             title: "KEYROUTES"
         });
-        scene.$container.text("KEYROUTES");
         return scene;
     }
 }

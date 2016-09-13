@@ -9,7 +9,6 @@ export default class CitySceneController extends SceneController
             id: "cityScene",
             title: "CITY"
         });
-        scene.$container.text("CITY");
         return scene;
     }
 }

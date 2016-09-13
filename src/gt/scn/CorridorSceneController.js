@@ -9,7 +9,6 @@ export default class CorridorSceneController extends SceneController
             id: "corridorScene",
             title: "CORRIDOR"
         });
-        scene.$container.text("CORRIDOR");
         return scene;
     }
 }
