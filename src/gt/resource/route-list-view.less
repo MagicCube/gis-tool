@@ -1,5 +1,7 @@
 .gt-route-list-view
 {
+    @list-item-height: 40px;
+
     padding: 0;
     margin: 0;
     list-style: none;
@@ -7,8 +9,8 @@
 
     > li
     {
-        height: @route-list-item-height;
-        line-height: @route-list-item-height;
+        height: @list-item-height;
+        line-height: @list-item-height;
         background-color: white;
         margin: 6px 14px 6px 14px;
         display: flex;
@@ -41,9 +43,12 @@
         > .icon
         {
             color: #555;
-            width: 14px;
             font-size: 16px;
             text-align: center;
+            align-self: center;
+            height: 20px;
+            width: 20px;
+            line-height: 20px;
         }
 
         .text
@@ -67,6 +72,8 @@
             {
                 color: @fab-bg;
             }
+
+            color: @separate-color;
         }
     }
 }
