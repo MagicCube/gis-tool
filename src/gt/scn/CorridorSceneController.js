@@ -1,5 +1,6 @@
 import StateBus from "sap/a/state/StateBus";
 
+import CorridorEditor from "../view/CorridorEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
@@ -32,6 +33,7 @@ export default class CorridorSceneController extends SceneController
 
     _initCorridorEditor()
     {
-        // TODO
+        const corridorEditor = new CorridorEditor();
+        this.getView().addSubview(corridorEditor, this.getView().$(">.sub-container:nth-child(2)"));
     }
 }

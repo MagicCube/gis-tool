@@ -19,7 +19,6 @@ export default class FloatActionButton extends View
         const $icon = $(`<i class="icon ${this.getIcon()}"></i>`);
         this.$container.append($icon);
         this.$container.on("click", () => {
-            alert("fab click");
             this.fireClick();
         });
     }
