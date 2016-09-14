@@ -23,11 +23,29 @@ export default class CorridorSceneController extends SceneController
         this.listView = new RouteListView({
             items: "{project>/corridors}",
             itemClick: e => {
-                const corridor = e.getParameter("item").getRoute();
-                StateBus.getInstance().setState("selectedCorridor", corridor);
+                const route = e.getParameter("item").getRoute();
+                StateBus.getInstance().setState("selectedCorridor", route);
             },
             itemDelete: e => {
-                // 判断是否为选项，如果是则先清空选项
+                const item = e.getParameter("item");
+                const route = item.getRoute();
+                if (!confirm(`Are you sure you want to delete corridor ${route.name}?`))
+                {
+                    return;
+                }
+                if (route)
+                {
+                    const selectedRoute = StateBus.getInstance().getState("/selectedCorridor");
+                    if (selectedRoute && route.id === selectedRoute.id)
+                    {
+                        StateBus.getInstance().setState("/selectedCorridor", null);
+                    }
+                    
+                    const projectModel = sap.ui.getCore().getModel("project");
+                    projectModel.removeItem("corridors", route);
+                    
+                    this.listView.removeItem(item);
+                }
             }
         });
         scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));

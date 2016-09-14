@@ -30,4 +30,24 @@ export default class ProjectModel extends Model
             throw new Error(`#saveProject failed. Server responded with ${result}`);
         }
     }
+    
+    
+    
+    
+    createItem(path, item)
+    {
+        const items = this.getProperty("/corridors");
+        items.push(item);
+    }
+    
+    updateItem(path, item)
+    {
+        
+    }
+    
+    removeItem(path, item)
+    {
+        const items = this.getProperty("/corridors");
+        items.splice(items.findIndex(project => project.id === item.id), 1);
+    }
 }

@@ -12,7 +12,7 @@ export default class AppBar extends View
     {
         super.init();
         this.addStyleClass("gt-app-bar");
-        this.$logo = $(`<i class="logo icon ion-android-map"></i>`);
+        this.$logo = $(`<i class="logo icon ion-map"></i>`);
         this.$container.append(this.$logo);
         this.$h1 = $(`<h1/>`);
         this.$container.append(this.$h1);
