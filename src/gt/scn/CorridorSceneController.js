@@ -6,13 +6,19 @@ import SceneController from "./SceneController";
 
 export default class CorridorSceneController extends SceneController
 {
+    afterInit()
+    {
+        super.afterInit();
+        this._initCorridorEditor();
+    }
+
     createView()
     {
         const scene = new Scene({
             id: "corridorScene",
             title: "CORRIDOR"
         });
-        
+
         this.listView = new RouteListView({
             items: "{project>/corridors}",
             itemClick: item => {
@@ -20,7 +26,12 @@ export default class CorridorSceneController extends SceneController
             }
         });
         scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));
-        
+
         return scene;
+    }
+
+    _initCorridorEditor()
+    {
+        // TODO
     }
 }
