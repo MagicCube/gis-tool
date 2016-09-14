@@ -2,27 +2,28 @@
 {
     @height: 50px;
 
+    position: relative;
     color: white;
     background: @primary-color;
     height: @height;
 
     .logo
     {
-        display: block;
-        float: left;
-        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
         font-size: 24px;
         text-align: center;
-        width: 40px;
+        width: 38px;
         height: @height;
         line-height: @height;
     }
 
     h1
     {
-        display: block;
-        float: left;
-        display: inline-block;
+        top: 0;
+        left: 38px;
+        position: absolute;
         font-size: 16px;
         height: @height;
         line-height: @height;
