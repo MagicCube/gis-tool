@@ -1,7 +1,8 @@
-import Scene from "./Scene";
-import SceneController from "./SceneController";
+import StateBus from "sap/a/state/StateBus";
 
 import RouteListView from "../view/RouteListView";
+import Scene from "./Scene";
+import SceneController from "./SceneController";
 
 export default class CorridorSceneController extends SceneController
 {
@@ -19,7 +20,10 @@ export default class CorridorSceneController extends SceneController
         });
 
         this.listView = new RouteListView({
-            items: "{project>/corridors}"
+            items: "{project>/corridors}",
+            itemClick: item => {
+                StateBus.getInstance().setProperty("selectedCorridor", item);
+            }
         });
         scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));
 

@@ -1,4 +1,5 @@
 import BaseApplicationController from "sap/a/app/ApplicationController";
+import StateBus from "sap/a/state/StateBus";
 
 import Application from "./Application";
 import ProjectModel from "../model/ProjectModel";
@@ -14,6 +15,7 @@ export default class ApplicationController extends BaseApplicationController
     afterInit()
     {
         super.afterInit();
+        this._initStateBus();
         this._initModels();
         this._initSceneTabContainerController();
         this._initSceneControllers();
@@ -38,6 +40,13 @@ export default class ApplicationController extends BaseApplicationController
             this.keyRouteSceneController,
             this.waySceneController
         ]);
+    }
+    
+    _initStateBus()
+    {
+        new StateBus();
+        const stateModel = sap.ui.getCore().getModel("state");
+        this.setModel(stateModel, "state");
     }
     
     _initModels()
