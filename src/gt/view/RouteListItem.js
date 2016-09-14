@@ -10,25 +10,22 @@ export default class RouteListItem extends ListItem
 
     initLayout()
     {
-        this.$container.append(`<span class="direction-icon iconfont"></span>`);
+        this.$directionIcon = $(`<i class="direction-icon icon ion-arrow-up-c"></i>`);
+        this.$container.append(this.$directionIcon);
         super.initLayout();
-        const $deleteIcon = $(`<span class="delete-icon iconfont icon-close"></span>`);
-        $deleteIcon.on("click", () => {
+        this.$deleteIcon = $(`<i class="delete-icon icon ion-android-cancel"></i>`);
+        this.$deleteIcon.on("click", () => {
             this.getParent().removeItem(this);
         });
-        this.$container.append($deleteIcon);
+        this.$container.append(this.$deleteIcon);
     }
     
     setDirection(value)
     {
         this.setProperty("direction", value);
-        if (value === 0)
+        if (typeof value === "number")
         {
-            this.$(".direction-icon").addClass("icon-directiondown");
-        }
-        else
-        {
-            this.$(".direction-icon").addClass("icon-directionup");
+            this.$directionIcon.css("transform", `rotate(${value}deg)`);
         }
     }
 }

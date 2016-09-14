@@ -22,31 +22,31 @@
         {
             "id": 1,
             "name": "城东干道",
-            "direction": 1,
+            "direction": 0,
             "keyLocations": []
         },
         {
             "id": 2,
             "name": "城西干道",
-            "direction": 1,
+            "direction": 90,
             "keyLocations": []
         },
         {
             "id": 3,
             "name": "长江大桥",
-            "direction": 1,
+            "direction": 180,
             "keyLocations": []
         },
         {
             "id": 4,
             "name": "长江二桥",
-            "direction": 1,
+            "direction": 270,
             "keyLocations": []
         },
         {
             "id": 5,
             "name": "长江三桥",
-            "direction": 0,
+            "direction": 45,
             "keyLocations": []
         }
     ]

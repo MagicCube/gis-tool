@@ -3,42 +3,49 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    overflow-y: scroll;
     
     > li
     {
         height: @route-list-item-height;
         line-height: @route-list-item-height;
         background-color: white;
-        margin: 6px;
-        padding-left: 24px;
-        padding-right: 24px;
-        
-        .direction-icon
+        margin: 6px 14px 6px 14px;
+        display: flex;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        &:first-child
         {
-            font-size: inherit;
-            color: #555;
+            margin-top: 20px;
         }
-        
+                
+        > .icon
+        {
+            color: #555;
+            width: 14px;
+            text-align: center;
+        }
+
         .text
         {
             cursor: default;
+            flex-grow: 1;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left: 8px;
+            margin-right: 8px;
         }
         
         &:hover .delete-icon
         {
-            display: inline-block;
+            visibility: visible;
         }
         
         .delete-icon
         {
-            display: none;
-            font-size: inherit;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            align-self: center;
             cursor: pointer;
+            visibility: hidden;
         }
     }
 }
