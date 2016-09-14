@@ -40,10 +40,10 @@ export default class CorridorSceneController extends SceneController
                     {
                         StateBus.getInstance().setState("/selectedCorridor", null);
                     }
-                    
+
                     const projectModel = sap.ui.getCore().getModel("project");
                     projectModel.removeItem("corridors", route);
-                    
+
                     this.listView.removeItem(item);
                 }
             }
@@ -58,6 +58,6 @@ export default class CorridorSceneController extends SceneController
         const corridorEditor = new CorridorEditor({
             selectedCorridor: "{state>/selectedCorridor}"
         });
-        this.getView().addSubview(corridorEditor, this.getView().$(">.sub-container:nth-child(2)"));
+        this.getView().addSubview(corridorEditor, this.getView().$element);
     }
 }
