@@ -4,7 +4,7 @@
     margin: 0;
     list-style: none;
     overflow-y: scroll;
-    
+
     > li
     {
         height: @route-list-item-height;
@@ -14,12 +14,30 @@
         display: flex;
         padding-left: 8px;
         padding-right: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover
+        {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transform: translate(-3px, -2px);
+            .delete-icon
+            {
+                opacity: 1;
+            }
+        }
+
+        &:active
+        {
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            transform: translate(-1px, -1px);
+        }
 
         &:first-child
         {
             margin-top: 20px;
         }
-                
+
         > .icon
         {
             color: #555;
@@ -30,24 +48,25 @@
 
         .text
         {
-            cursor: default;
             flex-grow: 1;
             text-overflow: ellipsis;
             white-space: nowrap;
             margin-left: 8px;
             margin-right: 8px;
         }
-        
-        &:hover .delete-icon
-        {
-            visibility: visible;
-        }
-        
+
         .delete-icon
         {
             cursor: pointer;
-            visibility: hidden;
+            opacity: 0;
             color: #999;
+            font-size: 18px;
+            transition: opacity 0.2s;
+
+            &:hover
+            {
+                color: @fab-bg;
+            }
         }
     }
 }
