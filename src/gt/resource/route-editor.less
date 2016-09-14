@@ -3,32 +3,38 @@
     @item-height: 40px;
 
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 20px;
+    right: 20px;
     width: 400px;
+    color: rgba(250, 250, 250, 1);
     z-index: 1;
 
     > header
     {
-        padding: 20px;
+        padding: 10px 20px 10px 20px;
         background: @primary-color-darker;
 
         > .item
         {
             width: 100%;
             height: @item-height;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: flex;
 
             label
             {
-                color: white;
                 line-height: @item-height;
-                width: 80px;
-                display: inline-block;
+                width: 70px;
             }
 
             input
             {
-
+                flex: 1;
+                background: @primary-color-darker;
+                border: none;
+                border-bottom: 1px solid rgba(250, 250, 250, 0.5);
+                color: rgba(250, 250, 250, 1);
             }
         }
     }
