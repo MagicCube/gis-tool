@@ -21,8 +21,9 @@ export default class CorridorSceneController extends SceneController
 
         this.listView = new RouteListView({
             items: "{project>/corridors}",
-            itemClick: item => {
-                StateBus.getInstance().setProperty("selectedCorridor", item);
+            itemClick: e => {
+                const corridor = e.getParameter("item").getRoute();
+                StateBus.getInstance().setState("selectedCorridor", corridor);
             }
         });
         scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));
