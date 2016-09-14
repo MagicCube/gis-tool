@@ -11,7 +11,7 @@
 
     > header
     {
-        padding: 10px 20px 10px 20px;
+        padding: 10px;
         background: @primary-color-darker;
 
         > .item
@@ -21,14 +21,19 @@
             margin-top: 5px;
             margin-bottom: 5px;
             display: flex;
+            align-items: center;
 
-            label
+            > label
             {
-                line-height: @item-height;
-                width: 70px;
+                font-size: @item-height * 0.5;
+                margin-right: 10px;
+                width: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
-            input
+            > input
             {
                 flex: 1;
                 background: @primary-color-darker;

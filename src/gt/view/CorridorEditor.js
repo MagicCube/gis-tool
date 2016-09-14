@@ -13,11 +13,15 @@ export default class CorridorEditor extends RouteEditor
         super.initHeader();
         this.$header.append(`
             <div class="item name">
-                <label>Name</label>
+                <label>
+                    <i class="icon ion-pin" />
+                </label>
                 <input type="text" placeholder="Select a starting point, or click on the map" />
             </div>
             <div class="item direction">
-                <label>Direction</label>
+                <label>
+                    <i class="icon ion-navigate" />
+                </label>
                 <input type="text" />
             </div>
         `);
