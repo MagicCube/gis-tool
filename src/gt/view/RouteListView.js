@@ -13,8 +13,7 @@ export default class RouteListView extends ListView
     createItemTemplate()
     {
         const listItem = new RouteListItem({
-            text: "{project>name}",
-            direction: "{project>direction}"
+            route: "{project>}"
         });
         return listItem;
     }
