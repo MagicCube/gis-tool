@@ -24,6 +24,9 @@ export default class CorridorSceneController extends SceneController
             itemClick: e => {
                 const corridor = e.getParameter("item").getRoute();
                 StateBus.getInstance().setState("selectedCorridor", corridor);
+            },
+            itemDelete: e => {
+                // 判断是否为选项，如果是则先清空选项
             }
         });
         scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));
