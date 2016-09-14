@@ -14,9 +14,9 @@ export default class CorridorEditor extends RouteEditor
         this.$header.append(`
             <div class="item name">
                 <label>
-                    <i class="icon ion-pin" />
+                    <i class="icon ion-pinpoint" />
                 </label>
-                <input type="text" placeholder="Select a starting point, or click on the map" />
+                <input type="text" placeholder="Input name" />
             </div>
             <div class="item direction">
                 <label>
