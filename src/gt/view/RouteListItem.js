@@ -26,7 +26,6 @@ export default class RouteListItem extends ListItem
         if (typeof value === "number")
         {
             this.$directionIcon.css("transform", `rotate(${value}deg)`);
-            console.log("transform", `rotate(${value}deg)`);
         }
     }
 }
