@@ -10,9 +10,9 @@ export default class RouteListItem extends ListItem
 
     initLayout()
     {
-        this.$container.append(`<span class="direction-icon iconfont"></span>`);
+        this.$container.append(`<i class="direction-icon icon ion-arrow-up-c"></i>`);
         super.initLayout();
-        const $deleteIcon = $(`<span class="delete-icon iconfont icon-close"></span>`);
+        const $deleteIcon = $(`<i class="delete-icon icon ion-android-cancel"></i>`);
         $deleteIcon.on("click", () => {
             this.getParent().removeItem(this);
         });
@@ -22,13 +22,5 @@ export default class RouteListItem extends ListItem
     setDirection(value)
     {
         this.setProperty("direction", value);
-        if (value === 0)
-        {
-            this.$(".direction-icon").addClass("icon-directiondown");
-        }
-        else
-        {
-            this.$(".direction-icon").addClass("icon-directionup");
-        }
     }
 }
