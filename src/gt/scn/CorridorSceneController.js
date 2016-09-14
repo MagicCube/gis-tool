@@ -37,7 +37,9 @@ export default class CorridorSceneController extends SceneController
 
     _initCorridorEditor()
     {
-        const corridorEditor = new CorridorEditor();
+        const corridorEditor = new CorridorEditor({
+            selectedCorridor: "{state>/selectedCorridor}"
+        });
         this.getView().addSubview(corridorEditor, this.getView().$(">.sub-container:nth-child(2)"));
     }
 }
