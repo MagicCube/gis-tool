@@ -15,7 +15,9 @@ export default class RouteListItem extends ListItem
         super.initLayout();
         this.$deleteIcon = $(`<i class="delete-icon icon ion-android-cancel"></i>`);
         this.$deleteIcon.on("mousedown", e => {
-            this.removeFromParent();
+            this.getParent().fireItemDelete({
+                item: this
+            });
             e.stopPropagation();
         });
         this.$container.append(this.$deleteIcon);
