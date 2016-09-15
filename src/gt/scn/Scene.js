@@ -12,24 +12,29 @@ export default class Scene extends SuperScene
         }
     };
 
+    init()
+    {
+        super.init();
+
+        this.$element.append(`<aside/><main/>`);
+
+        this.fab = new FloatActionButton();
+    }
+
     afterInit()
     {
         super.afterInit();
 
         this.mapView = Application.getInstance().mapView;
-        this.fab = new FloatActionButton();
         this.attachActivated(() => {
-            this.addSubview(this.mapView, this.$(">.sub-container:nth-child(2)"));
-            this.addSubview(this.fab, this.$(">.sub-container:nth-child(2)"));
+            this.addSubview(this.mapView, this.$(">main"));
+            this.addSubview(this.fab, this.$(">main"));
             this.mapView.invalidateSize();
         });
     }
 
     initLayout()
     {
-        this.setLayout(new SplitLayout({
-            direction: SplitLayout.HORIZONTAL,
-            ratio: [ 300, undefined ]
-        }));
+        super.initLayout();
     }
 }

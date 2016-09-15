@@ -48,7 +48,7 @@ export default class CorridorSceneController extends SceneController
                 }
             }
         });
-        scene.addSubview(this.listView, scene.$(">.sub-container:nth-child(1)"));
+        scene.addSubview(this.listView, scene.$(">aside"));
 
         return scene;
     }
