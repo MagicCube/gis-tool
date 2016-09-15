@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Traffic GIS Tool</title>
+    <title>SAP Traffic Map Tool</title>
     <link rel="stylesheet" href="../vendor/leaflet/leaflet.css" charset="utf-8">
     <link rel="stylesheet" href="../vendor/ionicons/css/ionicons.css" charset="utf-8">
     <link rel="stylesheet" href="../assets/gt/resource/index.css" charset="utf-8">
@@ -19,7 +19,7 @@
     <script src="../assets/gt/index.js" charset="utf-8"></script>
     <script>
         $.ajax("http://localhost:8080/api/osm/relation/2131524");
-    
+
         sap.ui.define([ "gt/app/ApplicationController" ], function() {
             var applicatioonController = new gt.app.ApplicationController({
                 runningMode: "debug",
