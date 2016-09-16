@@ -12,7 +12,8 @@ export default class RouteListItem extends ListItem
     {
         this.$directionIcon = $(`<i class="direction-icon icon ion-arrow-up-c"></i>`);
         this.$container.append(this.$directionIcon);
-        super.initLayout();
+        this.$routeName = $(`<span class="text"></span>`);
+        this.$container.append(this.$routeName);
         this.$deleteIcon = $(`<i class="delete-icon icon ion-android-cancel"></i>`);
         this.$deleteIcon.on("mousedown", e => {
             this.getParent().fireItemDelete({
@@ -40,7 +41,7 @@ export default class RouteListItem extends ListItem
             }
             if (route.name)
             {
-                this.setText(route.name);
+                this.$(".text").text(route.name !== undefined && route.name !== null ? route.name : "");
             }
         }
     }    
