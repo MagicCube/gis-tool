@@ -6,7 +6,10 @@ export default class RouteEidtor extends View
 {
     metadata = {
         properties: {
-            route: { type: "object", bindable: true }
+            route: { type: "object", bindable: true },
+            name: { type: "string", bindable: true },
+            direction: { type: "float", bindable: true },
+            keyLocations: { type: "object", bindable: true }
         },
     };
 
@@ -44,6 +47,12 @@ export default class RouteEidtor extends View
                 <input type="text" />
             </div>
         `);
+        this.$header.find(".name > input").on("change", (e) => {
+            this.setName($(e.currentTarget).val());
+        });
+        this.$header.find(".direction > input").on("change", (e) => {
+            this.setDirection(parseFloat($(e.currentTarget).val()));
+        });
     }
 
     initMain()
@@ -55,13 +64,25 @@ export default class RouteEidtor extends View
         this.addSubview(keyLocationListView, this.$main);
     }
 
+
+
+
+
     setRoute(route)
     {
         this.setProperty("route", route);
-        if (this.$header && route)
-        {
-            this.$header.find(".name > input").val(route.name);
-            this.$header.find(".direction > input").val(route.direction);
-        }
+        this.$element.toggle(route !== undefined && route !== null);
+    }
+
+    setName(value)
+    {
+        this.setProperty("name", value);
+        this.$header.find(".name > input").val(value);
+    }
+
+    setDirection(value)
+    {
+        this.setProperty("direction", value);
+        this.$header.find(".direction > input").val(value);
     }
 }
