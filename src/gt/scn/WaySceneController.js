@@ -22,7 +22,7 @@ export default class WaySceneController extends SceneController
         scene.addSubview(this.listView, scene.$(">aside"));
 
         const routeEditor = new RouteEditor({
-            selectedWay: "{state>/selectedWay}"
+            route: "{state>/selectedWay}"
         });
         scene.addSubview(routeEditor, scene.$element);
 

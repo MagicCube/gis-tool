@@ -22,7 +22,7 @@ export default class KeyRouteSceneController extends SceneController
         scene.addSubview(this.listView, scene.$(">aside"));
 
         const routeEditor = new RouteEditor({
-            selectedKeyRoute: "{state>/selectedKeyRoute}"
+            route: "{state>/selectedKeyRoute}"
         });
         scene.addSubview(routeEditor, scene.$element);
         

@@ -22,7 +22,7 @@ export default class CorridorSceneController extends SceneController
         scene.addSubview(this.listView, scene.$(">aside"));
 
         const routeEditor = new RouteEditor({
-            selectedCorridor: "{state>/selectedCorridor}"
+            route: "{state>/selectedCorridor}"
         });
         scene.addSubview(routeEditor, scene.$element);
 
