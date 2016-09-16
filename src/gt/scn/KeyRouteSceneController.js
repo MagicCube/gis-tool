@@ -52,7 +52,7 @@ export default class KeyRouteSceneController extends SceneController
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
-            projectModel.removeItem("keyRoutes", route);
+            projectModel.removeItem("/keyRoutes", route);
 
             this.listView.removeItem(item);
         }

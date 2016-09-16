@@ -4,7 +4,8 @@ export default class RouteListItem extends ListItem
 {
     metadata = {
         properties: {
-            route: { type: "object", bindable: true }
+            route: { type: "object", bindable: true },
+            direction: { type: "int", bindable: true }
         },
     };
     
@@ -27,22 +28,11 @@ export default class RouteListItem extends ListItem
     setRoute(value)
     {
         this.setProperty("route", value);
-        this.render();
     }
     
-    render()
+    setDirection(value)
     {
-        const route = this.getRoute();
-        if (route)
-        {
-            if (route.direction)
-            {
-                this.$directionIcon.css("transform", `rotate(${route.direction}deg)`);
-            }
-            if (route.name)
-            {
-                this.$(".text").text(route.name !== undefined && route.name !== null ? route.name : "");
-            }
-        }
-    }    
+        this.setProperty("direction", value);
+        this.$directionIcon.css("transform", `rotate(${value ? value : 0}deg)`);
+    }
 }

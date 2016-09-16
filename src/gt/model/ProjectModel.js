@@ -8,7 +8,7 @@ export default class ProjectModel extends Model
         super(...args);
         this.serviceClient = new ProjectServiceClient();
     }
-        
+
     async loadProject(id = "default")
     {
         const project = await this.serviceClient.getProject(id);

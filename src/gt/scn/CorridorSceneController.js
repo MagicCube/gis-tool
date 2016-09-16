@@ -21,10 +21,8 @@ export default class CorridorSceneController extends SceneController
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
-        const routeEditor = new RouteEditor({
-            route: "{state>/selectedCorridor}"
-        });
-        scene.addSubview(routeEditor, scene.$element);
+        this.routeEditor = new RouteEditor();
+        scene.addSubview(this.routeEditor, scene.$element);
 
         return scene;
     }
@@ -33,6 +31,8 @@ export default class CorridorSceneController extends SceneController
     {
         const route = e.getParameter("item").getRoute();
         StateBus.getInstance().setState("selectedCorridor", route);
+        
+        this.routeEditor.bindRoute("project>/corridors/0");
     }
     
     _listView_itemdDelete(e)

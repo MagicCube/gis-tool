@@ -52,7 +52,7 @@ export default class WaySceneController extends SceneController
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
-            projectModel.removeItem("ways", route);
+            projectModel.removeItem("/ways", route);
 
             this.listView.removeItem(item);
         }
