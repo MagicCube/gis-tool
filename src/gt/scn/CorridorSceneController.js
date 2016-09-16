@@ -22,31 +22,8 @@ export default class CorridorSceneController extends SceneController
 
         this.listView = new RouteListView({
             items: "{project>/corridors}",
-            itemClick: e => {
-                const route = e.getParameter("item").getRoute();
-                StateBus.getInstance().setState("selectedCorridor", route);
-            },
-            itemDelete: e => {
-                const item = e.getParameter("item");
-                const route = item.getRoute();
-                if (!confirm(`Are you sure you want to delete corridor ${route.name}?`))
-                {
-                    return;
-                }
-                if (route)
-                {
-                    const selectedRoute = StateBus.getInstance().getState("/selectedCorridor");
-                    if (selectedRoute && route.id === selectedRoute.id)
-                    {
-                        StateBus.getInstance().setState("/selectedCorridor", null);
-                    }
-
-                    const projectModel = sap.ui.getCore().getModel("project");
-                    projectModel.removeItem("corridors", route);
-
-                    this.listView.removeItem(item);
-                }
-            }
+            itemClick: this._listView_itemClick.bind(this),
+            itemDelete: this._listView_itemdDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
@@ -59,5 +36,34 @@ export default class CorridorSceneController extends SceneController
             selectedCorridor: "{state>/selectedCorridor}"
         });
         this.getView().addSubview(corridorEditor, this.getView().$element);
+    }
+    
+    _listView_itemClick(e)
+    {
+        const route = e.getParameter("item").getRoute();
+        StateBus.getInstance().setState("selectedCorridor", route);
+    }
+    
+    _listView_itemdDelete(e)
+    {
+        const item = e.getParameter("item");
+        const route = item.getRoute();
+        if (!confirm(`Are you sure you want to delete ${route.name}?`))
+        {
+            return;
+        }
+        if (route)
+        {
+            const selectedRoute = StateBus.getInstance().getState("/selectedCorridor");
+            if (selectedRoute && route.id === selectedRoute.id)
+            {
+                StateBus.getInstance().setState("/selectedCorridor", null);
+            }
+
+            const projectModel = sap.ui.getCore().getModel("project");
+            projectModel.removeItem("corridors", route);
+
+            this.listView.removeItem(item);
+        }
     }
 }
