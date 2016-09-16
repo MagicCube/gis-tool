@@ -9,13 +9,13 @@ export default class RouteListView extends ListView
             itemDelete: { parameters: { item: "object"} }
         }
     };
-    
+
     init()
     {
         super.init();
         this.addStyleClass("gt-route-list-view");
     }
-    
+
     createItemTemplate()
     {
         const listItem = new RouteListItem({

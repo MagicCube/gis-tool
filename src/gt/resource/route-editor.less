@@ -3,6 +3,8 @@
     @item-height: 40px;
     @header-padding: 20px;
 
+    transition: all 1s;
+
     position: absolute;
     top: 20px;
     right: 20px;
@@ -11,11 +13,10 @@
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px 0px, rgba(0, 0, 0, 0.227451) 0px 3px 10px 0px;
     z-index: 1;
 
-    > header
+    > header, main
     {
         padding: @header-padding;
         padding-right: @header-padding * 2;
-        background: @primary-color-darker;
 
         > .item
         {
@@ -48,9 +49,13 @@
         }
     }
 
+    > header
+    {
+        background: @primary-color-darker;
+    }
+
     > main
     {
-        padding: 20px;
         background: white;
     }
 }
