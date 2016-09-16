@@ -14,6 +14,8 @@ export default class CorridorSceneController extends SceneController
             title: "CORRIDOR"
         });
 
+        this.mapView = scene.mapView;
+
         this.listView = new RouteListView({
             items: "{project>/corridors}",
             itemClick: this._listView_itemClick.bind(this),
@@ -27,24 +29,16 @@ export default class CorridorSceneController extends SceneController
         return scene;
     }
 
-    _listView_itemClick(e)
+    selectRoute(index)
     {
-        const item = e.getParameter("item");
-        const route = item.getRoute();
-        StateBus.getInstance().setState("selectedCorridor", route);
+        this.clearSelection();
 
-        const index = this.listView.getItems(item).indexOf(item);
         const path = "project>/corridors/" + index;
-        this.routeEditor.unbindRoute(false);
         this.routeEditor.bindRoute(path);
-        this.routeEditor.unbindName(false);
         this.routeEditor.bindName(`${path}/name`);
-        this.routeEditor.unbindDirection(false);
         this.routeEditor.bindDirection(`${path}/direction`);
 
-        const mapView = this.view.mapView;
-        const routeLayer = mapView.routeLayer;
-        routeLayer.unbindKeyLocations();
+        const routeLayer = this.mapView.routeLayer;
         routeLayer.bindKeyLocations(`${path}/keyLocations`);
         /*
          要删除
@@ -55,6 +49,29 @@ export default class CorridorSceneController extends SceneController
                 mode: sap.ui.model.BindingMode.TwoWay
             });
         */
+    }
+
+    clearSelection()
+    {
+        StateBus.getInstance().setState("/selectedCorridor", null);
+        this.routeEditor.unbindRoute(false);
+        this.routeEditor.unbindName(false);
+        this.routeEditor.unbindDirection(false);
+        this.routeEditor.unbindKeyLocations(false);
+        this.routeEditor.setRoute(null);
+
+        const routeLayer = this.mapView.routeLayer;
+        routeLayer.unbindKeyLocations();
+    }
+
+    _listView_itemClick(e)
+    {
+        const item = e.getParameter("item");
+        const route = item.getRoute();
+        StateBus.getInstance().setState("selectedCorridor", route);
+
+        const index = this.listView.getItems(item).indexOf(item);
+        this.selectRoute(index);
     }
 
     _listView_itemdDelete(e)
@@ -70,12 +87,7 @@ export default class CorridorSceneController extends SceneController
             const selectedRoute = StateBus.getInstance().getState("/selectedCorridor");
             if (selectedRoute && route.id === selectedRoute.id)
             {
-                StateBus.getInstance().setState("/selectedCorridor", null);
-                this.routeEditor.unbindRoute(false);
-                this.routeEditor.unbindName(false);
-                this.routeEditor.unbindDirection(false);
-                this.routeEditor.unbindKeyLocations(false);
-                this.routeEditor.setRoute(null);
+                this.clearSelection();
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
