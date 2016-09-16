@@ -57,16 +57,11 @@ export default class RouteEidtor extends View
 
     initMain()
     {
-        const keyLocationListView = new KeyLocationListView({
-            items: "{state>/selectedCorridor/keyLocations}"
+        this.keyLocationListView = new KeyLocationListView({
+            items: this.getKeyLocations()
         });
-
-        this.addSubview(keyLocationListView, this.$main);
+        this.addSubview(this.keyLocationListView, this.$main);
     }
-
-
-
-
 
     setRoute(route)
     {
@@ -74,15 +69,30 @@ export default class RouteEidtor extends View
         this.$element.toggle(route !== undefined && route !== null);
     }
 
-    setName(value)
+    setName(name)
     {
-        this.setProperty("name", value);
-        this.$header.find(".name > input").val(value);
+        this.setProperty("name", name);
+        if (this.$header)
+        {
+            this.$header.find(".name > input").val(name);
+        }
     }
 
-    setDirection(value)
+    setDirection(direction)
     {
-        this.setProperty("direction", value);
-        this.$header.find(".direction > input").val(value);
+        this.setProperty("direction", direction);
+        if (this.$header)
+        {
+            this.$header.find(".direction > input").val(direction);
+        }
+    }
+
+    setKeyLocations(keyLocations)
+    {
+        this.setProperty("keyLocations", keyLocations);
+        if (this.keyLocationListView)
+        {
+            this.keyLocationListView.setItems(keyLocations);
+        }
     }
 }

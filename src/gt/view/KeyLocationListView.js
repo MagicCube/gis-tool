@@ -41,10 +41,10 @@ export default class KeylocationListView extends View
         {
             iconClass = "ion-android-radio-button-on";
         }
-
+        const draggable = (index === 0 || index === this.getItems().length - 1) ? "true" : "false";
         const $keyLocation = $(`
             <div class="item">
-                <label draggable="true"><i class="icon ${iconClass}"></i></label>
+                <label draggable=${draggable}><i class="icon ${iconClass}"></i></label>
                 <input type="text" disabled="true" value="${item}" />
             </div>
         `);
