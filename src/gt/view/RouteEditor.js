@@ -57,7 +57,6 @@ export default class RouteEidtor extends View
 
     setRoute(route)
     {
-        console.log(route);
         this.setProperty("route", route);
         if (this.$header && route)
         {

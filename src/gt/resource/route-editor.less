@@ -13,12 +13,12 @@
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px 0px, rgba(0, 0, 0, 0.227451) 0px 3px 10px 0px;
     z-index: 1;
 
-    > header, main
+    header, main
     {
         padding: @header-padding;
         padding-right: @header-padding * 2;
 
-        > .item
+        .item
         {
             width: 100%;
             height: @item-height;
@@ -27,7 +27,7 @@
             display: flex;
             align-items: center;
 
-            > label
+            label
             {
                 font-size: @item-height * 0.5;
                 margin-right: @header-padding;
@@ -37,7 +37,7 @@
                 align-items: center;
             }
 
-            > input
+            input
             {
                 flex: 1;
                 background: @primary-color-darker;
@@ -49,13 +49,38 @@
         }
     }
 
-    > header
+    header
     {
         background: @primary-color-darker;
     }
 
-    > main
+    main
     {
         background: white;
+
+        .item
+        {
+            label
+            {
+                color: @primary-color-darker;
+                font-size: 20px;
+                cursor: move;
+            }
+
+            input
+            {
+                background: white;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            &:last-of-type
+            {
+                label
+                {
+                    font-size: 25px;
+                }
+            }
+        }
     }
 }
