@@ -10,7 +10,7 @@ export default class CorridorSceneController extends SceneController
     afterInit()
     {
         super.afterInit();
-        this._initCorridorEditor();
+        this._initRouteEditor();
     }
 
     createView()
@@ -30,7 +30,7 @@ export default class CorridorSceneController extends SceneController
         return scene;
     }
 
-    _initCorridorEditor()
+    _initRouteEditor()
     {
         const corridorEditor = new CorridorEditor({
             selectedCorridor: "{state>/selectedCorridor}"
