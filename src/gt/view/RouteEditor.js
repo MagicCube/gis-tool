@@ -23,30 +23,29 @@ export default class RouteEidtor extends View
 
     _initLayout()
     {
-        this.$header = $(`<header />`);
-        this.$main = $(`<main />`);
-        this.initHeader();
-        this.initMain();
-        this.$container.append(this.$header);
-        this.$container.append(this.$main);
+        this._initHeader();
+        this._initMain();
     }
 
-    initHeader()
+    _initHeader()
     {
-        this.$header.append(`
-            <div class="item name">
-                <label>
-                    <i class="icon ion-pinpoint" />
-                </label>
-                <input type="text" placeholder="Input name" />
-            </div>
-            <div class="item direction">
-                <label>
-                    <i class="icon ion-navigate" />
-                </label>
-                <input type="text" />
-            </div>
+        this.$header = $(`
+            <header>
+                <div class="item name">
+                    <label>
+                        <i class="icon ion-pinpoint" />
+                    </label>
+                    <input type="text" placeholder="Input name" />
+                </div>
+                <div class="item direction">
+                    <label>
+                        <i class="icon ion-navigate" />
+                    </label>
+                    <input type="text" />
+                </div>
+            </header>
         `);
+        this.$container.append(this.$header);
         this.$header.find(".name > input").on("change", (e) => {
             this.setName($(e.currentTarget).val());
         });
@@ -55,8 +54,10 @@ export default class RouteEidtor extends View
         });
     }
 
-    initMain()
+    _initMain()
     {
+        this.$main = $(`<main />`);
+        this.$container.append(this.$main);
         this.keyLocationListView = new KeyLocationListView({
             items: this.getKeyLocations()
         });
