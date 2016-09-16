@@ -16,13 +16,13 @@ export default class KeylocationListView extends View
 
     setItems(items)
     {
-        items = items ? items : ["", ""];
-        this.setProperty("items", items);
-        if (items && Array.isArray(items))
+        if (!items || (Array.isArray(items) && items.length === 0))
         {
-            this._clearItems();
-            items.forEach((item, index) => this._addItem(item, index));
+            items = ["", ""];
         }
+        this.setProperty("items", items);
+        this._clearItems();
+        items.forEach((item, index) => this._addItem(item, index));
     }
 
     _clearItems()
@@ -42,11 +42,16 @@ export default class KeylocationListView extends View
             iconClass = "ion-android-radio-button-on";
         }
 
-        this.$container.append(`
+        const $keyLocation = $(`
             <div class="item">
-                <label><i class="icon ${iconClass}"></i></label>
-                <span class="text">${item.text}</span>
+                <label draggable="true"><i class="icon ${iconClass}"></i></label>
+                <input type="text" disabled="true" value="${item}" />
             </div>
         `);
+        // $keyLocation.children("label").on("dragstart", e => {
+        //     e.dataTransfer.setData("index", index);
+        // });
+
+        this.$container.append($keyLocation);
     }
 }
