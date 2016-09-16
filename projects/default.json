@@ -45,7 +45,16 @@
             "id": 1,
             "name": "城东干道",
             "direction": 0,
-            "keyLocations": []
+            "keyLocations": [
+                {
+                    "lat": 32.0808, 
+                    "lng": 118.7789
+                },
+                {
+                    "lat": 32.0590,
+                    "lng": 118.8051
+                }
+            ]
         },
         {
             "id": 2,
