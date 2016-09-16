@@ -1,18 +1,12 @@
 import StateBus from "sap/a/state/StateBus";
 
-import KeyRouteEditor from "../view/CorridorEditor";
+import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
 
 export default class KeyRouteSceneController extends SceneController
 {
-    afterInit()
-    {
-        super.afterInit();
-        this._initRouteEditor();
-    }
-    
     createView()
     {
         const scene = new Scene({
@@ -26,18 +20,15 @@ export default class KeyRouteSceneController extends SceneController
             itemDelete: this._listView_itemdDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
+
+        const routeEditor = new RouteEditor({
+            selectedKeyRoute: "{state>/selectedKeyRoute}"
+        });
+        scene.addSubview(routeEditor, scene.$element);
         
         return scene;
     }
-    
-    _initRouteEditor()
-    {
-        const routeEditor = new KeyRouteEditor({
-            selectedKeyRoute: "{state>/selectedKeyRoute}"
-        });
-        this.getView().addSubview(routeEditor, this.getView().$element);
-    }
-    
+        
     _listView_itemClick(e)
     {
         const route = e.getParameter("item").getRoute();

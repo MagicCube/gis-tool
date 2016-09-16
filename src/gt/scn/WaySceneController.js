@@ -1,18 +1,12 @@
 import StateBus from "sap/a/state/StateBus";
 
-import WayEditor from "../view/CorridorEditor";
+import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
 
 export default class WaySceneController extends SceneController
-{    
-    afterInit()
-    {
-        super.afterInit();
-        this._initRouteEditor();
-    }
-
+{
     createView()
     {
         const scene = new Scene({
@@ -27,17 +21,14 @@ export default class WaySceneController extends SceneController
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
+        const routeEditor = new RouteEditor({
+            selectedWay: "{state>/selectedWay}"
+        });
+        scene.addSubview(routeEditor, scene.$element);
+
         return scene;
     }
 
-    _initRouteEditor()
-    {
-        const wayEditor = new WayEditor({
-            selectedWay: "{state>/selectedWay}"
-        });
-        this.getView().addSubview(wayEditor, this.getView().$element);
-    }
-    
     _listView_itemClick(e)
     {
         const route = e.getParameter("item").getRoute();
