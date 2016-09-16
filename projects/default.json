@@ -60,7 +60,12 @@
             "id": 2,
             "name": "城西干道",
             "direction": 90,
-            "keyLocations": []
+            "keyLocations": [
+                {
+                    "lat": 32.0610,
+                    "lng": 118.7692
+                }
+            ]
         },
         {
             "id": 3,
