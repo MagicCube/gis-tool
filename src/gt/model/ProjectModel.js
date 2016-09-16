@@ -36,7 +36,7 @@ export default class ProjectModel extends Model
     
     createItem(path, item)
     {
-        const items = this.getProperty("/corridors");
+        const items = this.getProperty(path);
         items.push(item);
     }
     
@@ -47,7 +47,7 @@ export default class ProjectModel extends Model
     
     removeItem(path, item)
     {
-        const items = this.getProperty("/corridors");
+        const items = this.getProperty(path);
         items.splice(items.findIndex(project => project.id === item.id), 1);
     }
 }
