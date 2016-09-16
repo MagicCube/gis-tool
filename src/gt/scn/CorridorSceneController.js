@@ -41,6 +41,20 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.unbindDirection(false);
         this.routeEditor.bindDirection(`${path}/direction`);
+
+        const mapView = this.view.mapView;
+        const routeLayer = mapView.routeLayer;
+        routeLayer.unbindKeyLocations();
+        routeLayer.bindKeyLocations(`${path}/keyLocations`);
+        /*
+         要删除
+            routeLayer.bindKeyLocations(`${path}/keyLocations`);
+            routeLayer.bindKeyLocations({
+                model: "project",
+                path: "corridors/xxx/keyLocations",
+                mode: sap.ui.model.BindingMode.TwoWay
+            });
+        */
     }
 
     _listView_itemdDelete(e)

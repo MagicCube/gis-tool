@@ -1,6 +1,8 @@
 import SuperMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
+import RouteLayer from "./layer/RouteLayer";
+
 export default class MapView extends SuperMapView
 {
     afterInit()
@@ -13,6 +15,7 @@ export default class MapView extends SuperMapView
     {
         super.initLayers();
         this._initTileLayer();
+        this._initRouteLayer();
     }
 
     _initTileLayer()
@@ -21,5 +24,11 @@ export default class MapView extends SuperMapView
             url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         });
         this.addLayer(this.tileLayer);
+    }
+
+    _initRouteLayer()
+    {
+        this.routeLayer = new RouteLayer();
+        this.addLayer(this.routeLayer);
     }
 }

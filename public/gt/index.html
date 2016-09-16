@@ -18,7 +18,7 @@
 <body>
     <script src="../assets/gt/index.js" charset="utf-8"></script>
     <script>
-        $.ajax("http://localhost:8080/api/osm/relation/2131524");
+        L.Icon.Default.imagePath = "../vendor/leaflet/images/";
 
         sap.ui.define([ "gt/app/ApplicationController" ], function() {
             var applicatioonController = new gt.app.ApplicationController({
