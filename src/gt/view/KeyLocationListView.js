@@ -45,16 +45,15 @@ export default class KeylocationListView extends View
         const $keyLocation = $(`
             <div class="item">
                 <label draggable=${draggable}><i class="icon ${iconClass}"></i></label>
-                <input type="text" disabled="true" value="${_formatItem(item)}" />
+                <input type="text" disabled="true" value="${this._formatItem(item)}" />
             </div>
         `);
 
         this.$container.append($keyLocation);
     }
-}
 
-
-function _formatItem(item)
-{
-    return item ? (item.lat + ", " + item.lng) : "N/A"
+    _formatItem(item)
+    {
+        return item ? (item.lat.toFixed(4) + ", " + item.lng.toFixed(4)) : "N/A"
+    }
 }

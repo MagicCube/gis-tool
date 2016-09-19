@@ -14,13 +14,14 @@ export default class CorridorSceneController extends SceneController
             id: "corridorScene",
             title: "CORRIDOR"
         });
+        this.mapView = scene.mapView;
+        
         const fab = scene.fab;
         fab.attachClick(() => {
             this.clearSelection();
 
             const dialogWidth = this.routeEditor.$element.width();
             const dialogHeight = this.routeEditor.$element.height();
-
             const sceneWidth = scene.$element.width();
             const sceneHeight = scene.$element.height();
 
@@ -33,8 +34,6 @@ export default class CorridorSceneController extends SceneController
             this.routeEditor.setMode("create");
         });
 
-        this.mapView = scene.mapView;
-
         this.listView = new RouteListView({
             items: "{project>/corridors}",
             itemClick: this._listView_itemClick.bind(this),
@@ -42,45 +41,12 @@ export default class CorridorSceneController extends SceneController
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
-        this.routeEditor = new RouteEditor();
+        this.routeEditor = new RouteEditor({
+            create: this._routeEditor_create.bind(this),
+            cancel: this._routeEditor_cancel.bind(this)
+        });
         this.routeEditor.hide();
         scene.addSubview(this.routeEditor, scene.$element);
-        this.routeEditor.attachCreate(() => {
-            let name = this.routeEditor.getName();
-            if (!name)
-            {
-                return;
-            }
-            name = name.trim();
-            if (name === "")
-            {
-                return;
-            }
-
-            const route = {
-                name,
-                "direction": 0,
-                "keyLocations": [ null, null ]
-            };
-            const projectModel = sap.ui.getCore().getModel("project");
-            projectModel.appendItem("/corridors", route);
-            this.listView.unbindItems(false);
-            this.listView.bindItems("project>/corridors");
-            this.routeEditor.setMode("edit");
-            this.routeEditor.$element.css({
-                top: 20,
-                right: 20
-            });
-            this.selectRoute(projectModel.getProperty("/corridors").length - 1);
-        });
-        this.routeEditor.attachCancel(() => {
-            this.routeEditor.setMode("edit");
-            this.routeEditor.$element.css({
-                top: 20,
-                right: 20
-            });
-            this.routeEditor.hide();
-        });
 
         return scene;
     }
@@ -141,5 +107,55 @@ export default class CorridorSceneController extends SceneController
 
             this.listView.removeItem(item);
         }
+    }
+
+    _routeEditor_create()
+    {
+        let name = this.routeEditor.getName();
+        if (!name)
+        {
+            return;
+        }
+        name = name.trim();
+        if (name === "")
+        {
+            return;
+        }
+
+        const route = {
+            name,
+            "direction": 0,
+            "keyLocations": [ null, null ]
+        };
+        const projectModel = sap.ui.getCore().getModel("project");
+        projectModel.appendItem("/corridors", route);
+        this.listView.unbindItems(false);
+        this.listView.bindItems("project>/corridors");
+        this.routeEditor.setMode("edit");
+        this.routeEditor.$element.css({
+            top: 20,
+            right: 20
+        });
+        this.selectRoute(projectModel.getProperty("/corridors").length - 1);
+    }
+
+    _routeEditor_cancel()
+    {
+        this.routeEditor.setMode("edit");
+        this.routeEditor.$element.transition({
+            scale: 0,
+            opacity: 0
+        }, 400);
+        setTimeout(() => {
+            this.routeEditor.hide();
+            const top = 20;
+            const right = 20;
+            this.routeEditor.$element.css({
+                scale: 1,
+                opacity: 1,
+                top,
+                right
+            });
+        }, 400);
     }
 }
