@@ -39,7 +39,6 @@ export default class OsmServiceClient extends ManagedObject
             this.getRouteXhr = null;
         }
         
-        
         if (locations.length > 0 && Array.isArray(locations[0]))
         {
             locations = locations.map(location => ({
@@ -65,7 +64,19 @@ export default class OsmServiceClient extends ManagedObject
             url: `${this.getBaseUrl()}/route/${JSON.stringify(json)}`,
             data: data
         });
-        const res = await this.getRouteXhr;
-        return res;
+        
+        return new Promise((resolve, reject) => {
+            this.getRouteXhr.done(resolve);
+            this.getRouteXhr.fail((xhr, status, error) => {
+                if (xhr.statusText === "abort")
+                {
+                    reject("getRoute() request cancelled by user.");
+                }
+                else
+                {
+                    reject(error);
+                }
+            });
+        })
     }
 }
