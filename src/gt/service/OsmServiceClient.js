@@ -31,7 +31,7 @@ export default class OsmServiceClient extends ManagedObject
     }
 
     // Supported location format: [lng, lat] and { lat, lng }
-    async getRoute(locations)
+    async getRoute(locations, maxAge = 0)
     {
         if (locations.length > 0 && Array.isArray(locations[0]))
         {
@@ -48,7 +48,16 @@ export default class OsmServiceClient extends ManagedObject
             locations: locations,
             costing: "auto"
         }
-        const res = await $.ajax(`${this.getBaseUrl()}/route/${JSON.stringify(json)}`);
+
+        let data = undefined;
+        if (maxAge)
+        {
+            data = { maxage: maxAge };
+        }
+        const res = await $.ajax({
+            url: `${this.getBaseUrl()}/route/${JSON.stringify(json)}`,
+            data: data
+        });
         return res;
     }
 }

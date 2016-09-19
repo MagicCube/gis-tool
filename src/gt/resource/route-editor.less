@@ -60,11 +60,26 @@
 
         .item
         {
+            &:last-of-type
+            {
+                label
+                {
+                    font-size: 25px;
+                }
+            }
+
+            &:first-of-type, &:last-of-type
+            {
+                label
+                {
+                    cursor: move;
+                }
+            }
+
             label
             {
                 color: @primary-color-darker;
                 font-size: 20px;
-                cursor: move;
             }
 
             input
@@ -72,14 +87,6 @@
                 background: white;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.3);
                 color: rgba(0, 0, 0, 0.5);
-            }
-
-            &:last-of-type
-            {
-                label
-                {
-                    font-size: 25px;
-                }
             }
         }
     }

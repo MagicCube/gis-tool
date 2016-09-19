@@ -9,6 +9,10 @@ export default class CitySceneController extends SceneController
             id: "cityScene",
             title: "CITY"
         });
+        scene.$element.children("aside").remove();
+        scene.$element.children("main").css({
+            left: 0
+        });
         return scene;
     }
 }

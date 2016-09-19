@@ -23,30 +23,29 @@ export default class RouteEidtor extends View
 
     _initLayout()
     {
-        this.$header = $(`<header />`);
-        this.$main = $(`<main />`);
-        this.initHeader();
-        this.initMain();
-        this.$container.append(this.$header);
-        this.$container.append(this.$main);
+        this._initHeader();
+        this._initMain();
     }
 
-    initHeader()
+    _initHeader()
     {
-        this.$header.append(`
-            <div class="item name">
-                <label>
-                    <i class="icon ion-pinpoint" />
-                </label>
-                <input type="text" placeholder="Input name" />
-            </div>
-            <div class="item direction">
-                <label>
-                    <i class="icon ion-navigate" />
-                </label>
-                <input type="text" />
-            </div>
+        this.$header = $(`
+            <header>
+                <div class="item name">
+                    <label>
+                        <i class="icon ion-pinpoint" />
+                    </label>
+                    <input type="text" placeholder="Input name" />
+                </div>
+                <div class="item direction">
+                    <label>
+                        <i class="icon ion-navigate" />
+                    </label>
+                    <input type="text" />
+                </div>
+            </header>
         `);
+        this.$container.append(this.$header);
         this.$header.find(".name > input").on("change", (e) => {
             this.setName($(e.currentTarget).val());
         });
@@ -55,18 +54,15 @@ export default class RouteEidtor extends View
         });
     }
 
-    initMain()
+    _initMain()
     {
-        const keyLocationListView = new KeyLocationListView({
-            items: "{state>/selectedCorridor/keyLocations}"
+        this.$main = $(`<main />`);
+        this.$container.append(this.$main);
+        this.keyLocationListView = new KeyLocationListView({
+            items: this.getKeyLocations()
         });
-
-        this.addSubview(keyLocationListView, this.$main);
+        this.addSubview(this.keyLocationListView, this.$main);
     }
-
-
-
-
 
     setRoute(route)
     {
@@ -74,15 +70,30 @@ export default class RouteEidtor extends View
         this.$element.toggle(route !== undefined && route !== null);
     }
 
-    setName(value)
+    setName(name)
     {
-        this.setProperty("name", value);
-        this.$header.find(".name > input").val(value);
+        this.setProperty("name", name);
+        if (this.$header)
+        {
+            this.$header.find(".name > input").val(name);
+        }
     }
 
-    setDirection(value)
+    setDirection(direction)
     {
-        this.setProperty("direction", value);
-        this.$header.find(".direction > input").val(value);
+        this.setProperty("direction", direction);
+        if (this.$header)
+        {
+            this.$header.find(".direction > input").val(direction);
+        }
+    }
+
+    setKeyLocations(keyLocations)
+    {
+        this.setProperty("keyLocations", keyLocations);
+        if (this.keyLocationListView)
+        {
+            this.keyLocationListView.setItems(keyLocations);
+        }
     }
 }
