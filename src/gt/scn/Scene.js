@@ -24,10 +24,15 @@ export default class Scene extends SuperScene
         this.mapView = Application.getInstance().mapView;
         this.fab = new FloatActionButton();
         this.attachActivated(() => {
-            this.addSubview(this.mapView, this.$(">main"));
-            this.addSubview(this.fab, this.$(">main"));
-            
             const id = this.getId();
+            this.addSubview(this.mapView, this.$(">main"));
+            
+            if (id !== "cityScene")
+            {
+                this.addSubview(this.fab, this.$(">main"));
+            }
+            
+            this.mapView.toggleLayer(this.mapView.boundLayer, id === "cityScene");
             this.mapView.toggleLayer(this.mapView.corridorLayer, id === "corridorScene");
             this.mapView.toggleLayer(this.mapView.keyRouteLayer, id === "keyRouteScene");
             this.mapView.toggleLayer(this.mapView.wayLayer, id === "wayScene");

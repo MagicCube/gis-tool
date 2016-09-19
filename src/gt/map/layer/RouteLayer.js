@@ -49,40 +49,24 @@ export default class RouteLayer extends Layer
         });
     }
 
-    async _drawRoute(keyLocations, clearAll)
+    _drawRoute(keyLocations, clearAll)
     {
         const maxAge = clearAll ? 3600 * 12 : 0;
         if (keyLocations && keyLocations[0] && keyLocations[1])
         {
-            const timestamp = new Date();
-            this.timestamp = timestamp;
-            let latlngs = null;
-            try
-            {
-                latlngs = await OsmServiceClient.getInstance().getRoute(keyLocations, maxAge);
-            }
-            catch (err)
-            {
-                if (err.statusText === "abort")
-                {
-                    console.log("getRoute() request cancelled by user.");
-                }
-                else
-                {
-                    console.error(err);
-                }
-                return;
-            }
-            if (!this.timestamp || this.timestamp <= timestamp)
-            {
-                this.container.removeLayer(this.route);
-                this.route = L.multiPolyline(latlngs);
-                this.container.addLayer(this.route);
-                if (clearAll)
-                {
-                    this.fitBounds();
-                }
-            }
+            OsmServiceClient.getInstance().getRoute(keyLocations, maxAge)
+                .then(latlngs => {
+                    this.container.removeLayer(this.route);
+                    this.route = L.multiPolyline(latlngs);
+                    this.container.addLayer(this.route);
+                    if (clearAll)
+                    {
+                        this.fitBounds();
+                    }
+                })
+                .catch(reason => {
+                    console.log(reason);
+                });
         }
     }
 

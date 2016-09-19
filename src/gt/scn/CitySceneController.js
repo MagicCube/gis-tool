@@ -2,7 +2,7 @@ import Scene from "./Scene";
 import SceneController from "./SceneController";
 
 export default class CitySceneController extends SceneController
-{
+{    
     createView()
     {
         const scene = new Scene({
@@ -13,6 +13,10 @@ export default class CitySceneController extends SceneController
         scene.$element.children("main").css({
             left: 0
         });
+        
+        this.mapView = scene.mapView;
+        this.mapView.boundLayer.bindCityBounds("project>/city/bounds");
+        
         return scene;
     }
 }
