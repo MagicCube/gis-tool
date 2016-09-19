@@ -21,7 +21,7 @@ export default class RouteEidtor extends View
     init()
     {
         super.init();
-        this.addStyleClass("gt-route-editor");
+        this.addStyleClass("gt-gis-editor");
         this._initLayout();
     }
 
