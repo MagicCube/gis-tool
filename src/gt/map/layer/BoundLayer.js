@@ -6,30 +6,30 @@ export default class BoundLayer extends Layer {
             cityBounds: { type: "object", bindable: true }  //array of array
         },
     };
-    
-    afterInit() {
-        super.afterInit();
-    }
-    
+        
     _initRect() {
         const bounds = this.getCityBounds();
-        this.editableRectangle = L.rectangle(bounds, {
-            color: "black",
+        this.rectangle = L.rectangle(bounds, {
+            color: "rgb(0, 51, 255)",
             opacity: 0.8,
             weight: 2
         });
-        this.container.addLayer(this.editableRectangle);
         
-        this.editableRectangle.editing.enable();
-		this.editableRectangle.on("edit", e => {
+        this.rectangle.editing.enable();
+		this.rectangle.on("edit", e => {
             const [bottomLeft, topLeft, topRight, bottomRight] = e.target.getLatLngs();
-            console.log(bottomLeft, topLeft, topRight, bottomRight);
+            this.setCityBounds([bottomLeft, topRight]);
 		});
+        
+        this.container.addLayer(this.rectangle);
     }
     
     setCityBounds(value)
     {
         this.setProperty("cityBounds", value);
-        this._initRect();        
+        if (!this.rectangle)
+        {
+            this._initRect();            
+        }
     }
 }
