@@ -16,15 +16,15 @@ export default class CorridorSceneController extends SceneController
         });
         this.mapView = scene.mapView;
 
-        const fab = scene.fab;
-        fab.attachClick(this._fab_click.bind(this));
-
         this.listView = new RouteListView({
             items: "{project>/corridors}",
             itemClick: this._listView_itemClick.bind(this),
             itemDelete: this._listView_itemdDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
+
+        const fab = scene.fab;
+        fab.attachClick(this._fab_click.bind(this));
 
         this.routeEditor = new RouteEditor({
             create: this._routeEditor_create.bind(this),
@@ -104,13 +104,31 @@ export default class CorridorSceneController extends SceneController
         const sceneWidth = this.getView().$element.width();
         const sceneHeight = this.getView().$element.height();
 
-        this.routeEditor.show();
-        this.routeEditor.$element.transition({
-            top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
-            right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
-        }, 400);
-
-        this.routeEditor.setMode("create");
+        const centerTop = (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50;
+        const centerRight = (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2;
+        if (this.routeEditor.isShown())
+        {
+            this.routeEditor.setMode("create");
+            this.routeEditor.$element.transition({
+                top: centerTop,
+                right: centerRight
+            }, 400);
+        }
+        else
+        {
+            this.routeEditor.setMode("create", 0);
+            this.routeEditor.$element.css({
+                top: centerTop,
+                right: centerRight,
+                scale: 0,
+                opacity: 0
+            });
+            this.routeEditor.show();
+            this.routeEditor.$element.transition({
+                scale: 1,
+                opacity: 1
+            }, 400);
+        }
     }
 
     _routeEditor_create()
