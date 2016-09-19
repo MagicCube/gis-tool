@@ -22,6 +22,7 @@ export default class BoundLayer extends Layer {
 		});
         
         this.container.addLayer(this.rectangle);
+        this.fitBounds();
     }
     
     setCityBounds(value)
