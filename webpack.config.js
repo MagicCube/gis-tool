@@ -6,7 +6,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     context: path.resolve("./src"),
     entry: {
-        "vendor": [ "leaflet", "leaflet-draw", "renderjson" ],
+        "vendor": [ "leaflet", "leaflet-draw" ],
         "gt": [ "./gt/app/ApplicationController.js", "./gt/resource/index.less" ]
     },
     output: {

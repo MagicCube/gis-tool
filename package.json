@@ -28,7 +28,6 @@
     "leaflet-draw": "^0.3.2",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "renderjson": "^1.2.0",
     "rimraf": "^2.5.3",
     "style-loader": "^0.13.1",
     "ui5-loader": "^1.0.5",
