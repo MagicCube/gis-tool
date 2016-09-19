@@ -18,7 +18,7 @@ export default class KeylocationListView extends View
     {
         if (!items || (Array.isArray(items) && items.length === 0))
         {
-            items = ["", ""];
+            items = [ null ,  null ];
         }
         this.setProperty("items", items);
         this._clearItems();
@@ -45,13 +45,16 @@ export default class KeylocationListView extends View
         const $keyLocation = $(`
             <div class="item">
                 <label draggable=${draggable}><i class="icon ${iconClass}"></i></label>
-                <input type="text" disabled="true" value="${item}" />
+                <input type="text" disabled="true" value="${_formatItem(item)}" />
             </div>
         `);
-        // $keyLocation.children("label").on("dragstart", e => {
-        //     e.dataTransfer.setData("index", index);
-        // });
 
         this.$container.append($keyLocation);
     }
+}
+
+
+function _formatItem(item)
+{
+    return item ? (item.lat + ", " + item.lng) : "N/A"
 }

@@ -17,7 +17,7 @@ export default class ProjectModel extends Model
             this.setData(project);
         }
     }
-    
+
     async saveProject()
     {
         const result = await this.serviceClient.updateProject(this.getData());
@@ -30,21 +30,21 @@ export default class ProjectModel extends Model
             throw new Error(`#saveProject failed. Server responded with ${result}`);
         }
     }
-    
-    
-    
-    
-    createItem(path, item)
+
+
+
+
+    appendItem(path, item)
     {
         const items = this.getProperty(path);
         items.push(item);
     }
-    
+
     updateItem(path, item)
     {
-        
+
     }
-    
+
     removeItem(path, item)
     {
         const items = this.getProperty(path);

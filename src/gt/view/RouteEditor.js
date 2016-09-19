@@ -6,10 +6,14 @@ export default class RouteEidtor extends View
 {
     metadata = {
         properties: {
-            route: { type: "object", bindable: true },
             name: { type: "string", bindable: true },
             direction: { type: "float", bindable: true },
-            keyLocations: { type: "object", bindable: true }
+            keyLocations: { type: "object", bindable: true },
+            mode: { type: "string", defaultValue: "edit" }
+        },
+        events: {
+            create: {},
+            cancel: {}
         }
     };
 
@@ -57,29 +61,31 @@ export default class RouteEidtor extends View
 
     _initMain()
     {
-        this.$main = $(`<main />`);
-        this.$element.append(this.$main);
+        const $main = $(`<main />`);
+        this.$element.append($main);
         this.keyLocationListView = new KeyLocationListView({
             items: this.getKeyLocations()
         });
-        this.addSubview(this.keyLocationListView, this.$main);
+        this.addSubview(this.keyLocationListView, $main);
     }
 
     _initFooter()
     {
-        this.$footer = $(`
+        const $footer = $(`
             <footer>
                 <a class="create-button">Create</a>
                 <a class="cancel-button">Cancel</a>
             </footer>
         `);
-        this.$element.append(this.$footer);
-    }
-
-    setRoute(route)
-    {
-        this.setProperty("route", route);
-        this.$element.toggle(route !== undefined && route !== null);
+        this.$element.append($footer);
+        $footer.children(".create-button").on("click", e => {
+            // e.preventDefault();
+            this.fireCreate();
+        });
+        $footer.children(".cancel-button").on("click", e => {
+            // e.preventDefault();
+            this.fireCancel();
+        });
     }
 
     setName(name)
@@ -106,6 +112,24 @@ export default class RouteEidtor extends View
         if (this.keyLocationListView)
         {
             this.keyLocationListView.setItems(keyLocations);
+        }
+    }
+
+    setMode(mode)
+    {
+        this.setProperty("mode", mode);
+        if (mode === "create")
+        {
+            this.$("header > .item:not(:first-child)").slideUp(400);
+            this.$("main").slideUp(400);
+            this.$("footer").slideDown(400);
+        }
+        else
+        {
+            this.$("header > .item:not(:first-child)").slideDown(400);
+            this.$("main").slideDown(400);
+            this.$("footer").slideUp(400);
+            this.$(".name > input").val("");
         }
     }
 }

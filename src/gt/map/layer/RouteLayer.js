@@ -23,7 +23,7 @@ export default class RouteLayer extends Layer
             this._drawRoute(value, clearAll);
         }
     }
-    
+
     _drawMarker(keyLocations, clearAll)
     {
         if (!clearAll)
@@ -48,11 +48,11 @@ export default class RouteLayer extends Layer
             }
         });
     }
-    
+
     async _drawRoute(keyLocations, clearAll)
     {
         const maxAge = clearAll ? 3600 * 12 : 0;
-        if (keyLocations && keyLocations.length > 0)
+        if (keyLocations && keyLocations[0] && keyLocations[1])
         {
             const timestamp = new Date();
             this.timestamp = timestamp;
@@ -80,16 +80,16 @@ export default class RouteLayer extends Layer
                 this.container.addLayer(this.route);
                 if (clearAll)
                 {
-                    this.fitBounds();                
-                }                
+                    this.fitBounds();
+                }
             }
         }
     }
-    
+
     _onMarkerDrag(marker, markderIndex)
     {
         const locations = this.getKeyLocations();
         locations[markderIndex] = marker.getLatLng();
-        this.setKeyLocations(locations, false);
+        this.setKeyLocations(JSON.parse(JSON.stringify(locations)), false);
     }
 }

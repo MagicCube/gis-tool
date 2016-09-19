@@ -2,6 +2,7 @@ import StateBus from "sap/a/state/StateBus";
 
 import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
+import RouteListItem from "../view/RouteListItem";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
 
@@ -15,28 +16,21 @@ export default class CorridorSceneController extends SceneController
         });
         const fab = scene.fab;
         fab.attachClick(() => {
-            if (this.routeEditor.getRoute())
-            {
-                const sceneWidth = window.getComputedStyle(scene.$element[0]).width;
-                const sceneHeight = window.getComputedStyle(scene.$element[0]).height;
+            this.clearSelection();
 
-                this._clearRouteEditor();
-                this.routeEditor.$("header > .item:not(:first-child)").slideUp(400);
-                this.routeEditor.$("main").slideUp(400);
-                this.routeEditor.$("footer").slideDown(400, () => {
-                    const dialogWidth = window.getComputedStyle(this.routeEditor.$element[0]).width;
-                    const dialogHeight = window.getComputedStyle(this.routeEditor.$element[0]).height;
-                    this.routeEditor.$element.transition({
-                        top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
-                        right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
-                    }, 400);
-                });
-            }
-            else
-            {
-                alert("add")
-            }
+            const dialogWidth = this.routeEditor.$element.width();
+            const dialogHeight = this.routeEditor.$element.height();
 
+            const sceneWidth = scene.$element.width();
+            const sceneHeight = scene.$element.height();
+
+            this.routeEditor.show();
+            this.routeEditor.$element.transition({
+                top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
+                right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
+            }, 400);
+
+            this.routeEditor.setMode("create");
         });
 
         this.mapView = scene.mapView;
@@ -49,8 +43,44 @@ export default class CorridorSceneController extends SceneController
         scene.addSubview(this.listView, scene.$(">aside"));
 
         this.routeEditor = new RouteEditor();
-        this.routeEditor.setRoute(null);
+        this.routeEditor.hide();
         scene.addSubview(this.routeEditor, scene.$element);
+        this.routeEditor.attachCreate(() => {
+            let name = this.routeEditor.getName();
+            if (!name)
+            {
+                return;
+            }
+            name = name.trim();
+            if (name === "")
+            {
+                return;
+            }
+
+            const route = {
+                name,
+                "direction": 0,
+                "keyLocations": [ null, null ]
+            };
+            const projectModel = sap.ui.getCore().getModel("project");
+            projectModel.appendItem("/corridors", route);
+            this.listView.unbindItems(false);
+            this.listView.bindItems("project>/corridors");
+            this.routeEditor.setMode("edit");
+            this.routeEditor.$element.css({
+                top: 20,
+                right: 20
+            });
+            this.selectRoute(projectModel.getProperty("/corridors").length - 1);
+        });
+        this.routeEditor.attachCancel(() => {
+            this.routeEditor.setMode("edit");
+            this.routeEditor.$element.css({
+                top: 20,
+                right: 20
+            });
+            this.routeEditor.hide();
+        });
 
         return scene;
     }
@@ -60,45 +90,23 @@ export default class CorridorSceneController extends SceneController
         this.clearSelection();
 
         const path = "project>/corridors/" + index;
-        this.routeEditor.bindRoute(path);
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
+        this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
 
         const bindKeyLocations = this.mapView.corridorLayer;
         bindKeyLocations.bindKeyLocations(`${path}/keyLocations`);
-        /*
-         要删除
-            routeLayer.bindKeyLocations(`${path}/keyLocations`);
-            routeLayer.bindKeyLocations({
-                model: "project",
-                path: "corridors/xxx/keyLocations",
-                mode: sap.ui.model.BindingMode.TwoWay
-            });
-        */
     }
 
     clearSelection()
     {
         StateBus.getInstance().setState("/selectedCorridor", null);
-        this.routeEditor.unbindRoute(false);
         this.routeEditor.unbindName(false);
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
 
         const corridorLayer = this.mapView.corridorLayer;
         corridorLayer.unbindKeyLocations();
-
-        this.routeEditor.setRoute(null);
-    }
-
-    _clearRouteEditor()
-    {
-        this.routeEditor.unbindName(false);
-        this.routeEditor.unbindDirection(false);
-        this.routeEditor.unbindKeyLocations(false);
-        const corridorLayer = this.mapView.corridorLayer;
-        corridorLayer.unbindKeyLocations();
-        this.routeEditor.$("input").val("");
     }
 
     _listView_itemClick(e)
@@ -108,6 +116,7 @@ export default class CorridorSceneController extends SceneController
         StateBus.getInstance().setState("selectedCorridor", route);
 
         const index = this.listView.getItems(item).indexOf(item);
+        this.routeEditor.show();
         this.selectRoute(index);
     }
 

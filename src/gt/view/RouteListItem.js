@@ -8,7 +8,7 @@ export default class RouteListItem extends ListItem
             direction: { type: "int", bindable: true }
         },
     };
-    
+
     initLayout()
     {
         this.$directionIcon = $(`<i class="direction-icon icon ion-arrow-up-c"></i>`);
@@ -24,12 +24,12 @@ export default class RouteListItem extends ListItem
         });
         this.$container.append(this.$deleteIcon);
     }
-    
+
     setRoute(value)
     {
         this.setProperty("route", value);
     }
-    
+
     setDirection(value)
     {
         this.setProperty("direction", value);
