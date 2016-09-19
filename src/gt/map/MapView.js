@@ -28,7 +28,16 @@ export default class MapView extends SuperMapView
 
     _initRouteLayer()
     {
-        this.routeLayer = new RouteLayer();
-        this.addLayer(this.routeLayer);
+        this.corridorLayer = new RouteLayer();
+        this.addLayer(this.corridorLayer);
+        this.hideLayer(this.corridorLayer);
+        
+        this.keyRouteLayer = new RouteLayer();
+        this.addLayer(this.keyRouteLayer);
+        this.hideLayer(this.keyRouteLayer);
+        
+        this.wayLayer = new RouteLayer();
+        this.addLayer(this.wayLayer);
+        this.hideLayer(this.wayLayer);
     }
 }
