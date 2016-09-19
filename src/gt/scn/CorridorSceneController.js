@@ -17,14 +17,18 @@ export default class CorridorSceneController extends SceneController
         fab.attachClick(() => {
             if (this.routeEditor.getRoute())
             {
-                this.clearSelection();
-                // TODO
+                const sceneWidth = window.getComputedStyle(scene.$element[0]).width;
+                const sceneHeight = window.getComputedStyle(scene.$element[0]).height;
+
+                this._clearRouteEditor();
                 this.routeEditor.$("header > .item:not(:first-child)").slideUp(400);
                 this.routeEditor.$("main").slideUp(400);
                 this.routeEditor.$("footer").slideDown(400, () => {
+                    const dialogWidth = window.getComputedStyle(this.routeEditor.$element[0]).width;
+                    const dialogHeight = window.getComputedStyle(this.routeEditor.$element[0]).height;
                     this.routeEditor.$element.transition({
-                        top: 200,
-                        right: 400
+                        top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
+                        right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
                     }, 400);
                 });
             }
@@ -39,13 +43,13 @@ export default class CorridorSceneController extends SceneController
 
         this.listView = new RouteListView({
             items: "{project>/corridors}",
-            itemClick: this._onListItemClick.bind(this),
-            itemDelete: this._onListItemDelete.bind(this)
+            itemClick: this._listView_itemClick.bind(this),
+            itemDelete: this._listView_itemdDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
         this.routeEditor = new RouteEditor();
-        this.routeEditor.hide();
+        this.routeEditor.setRoute(null);
         scene.addSubview(this.routeEditor, scene.$element);
 
         return scene;
@@ -60,8 +64,17 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
 
-        const routeLayer = this.mapView.corridorLayer;
-        routeLayer.bindKeyLocations(`${path}/keyLocations`);
+        const bindKeyLocations = this.mapView.corridorLayer;
+        bindKeyLocations.bindKeyLocations(`${path}/keyLocations`);
+        /*
+         要删除
+            routeLayer.bindKeyLocations(`${path}/keyLocations`);
+            routeLayer.bindKeyLocations({
+                model: "project",
+                path: "corridors/xxx/keyLocations",
+                mode: sap.ui.model.BindingMode.TwoWay
+            });
+        */
     }
 
     clearSelection()
@@ -72,11 +85,23 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
 
-        const routeLayer = this.mapView.corridorLayer;
-        routeLayer.unbindKeyLocations();
+        const corridorLayer = this.mapView.corridorLayer;
+        corridorLayer.unbindKeyLocations();
+
+        this.routeEditor.setRoute(null);
     }
 
-    _onListItemClick(e)
+    _clearRouteEditor()
+    {
+        this.routeEditor.unbindName(false);
+        this.routeEditor.unbindDirection(false);
+        this.routeEditor.unbindKeyLocations(false);
+        const corridorLayer = this.mapView.corridorLayer;
+        corridorLayer.unbindKeyLocations();
+        this.routeEditor.$("input").val("");
+    }
+
+    _listView_itemClick(e)
     {
         const item = e.getParameter("item");
         const route = item.getRoute();
@@ -86,7 +111,7 @@ export default class CorridorSceneController extends SceneController
         this.selectRoute(index);
     }
 
-    _onListItemDelete(e)
+    _listView_itemdDelete(e)
     {
         const item = e.getParameter("item");
         const route = item.getRoute();
@@ -100,7 +125,6 @@ export default class CorridorSceneController extends SceneController
             if (selectedRoute && route.id === selectedRoute.id)
             {
                 this.clearSelection();
-                //
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
