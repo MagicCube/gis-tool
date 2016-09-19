@@ -1,0 +1,91 @@
+.gt-scene-tab-container
+{
+    > .sub-container:nth-child(1)
+    {
+        ul
+        {
+            display: block;
+            color: white;
+            background: @primary-color;
+            padding: 0;
+            margin: 0;
+            height: 38px;
+            cursor: default;
+            padding-left: 12px;
+            padding-right: 12px;
+
+            li
+            {
+                color: rgba(255, 255, 255, 0.4);
+                display: inline-block;
+                padding: 0;
+                margin: 0;
+                margin-left: 2px;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-right: 2px;
+                cursor: pointer;
+                border-bottom: 3px solid transparent;
+                line-height: 35px;
+
+                &:hover
+                {
+                    color: rgba(255, 255, 255, 0.7);
+                }
+
+                &.selected
+                {
+                    color: white;
+                    border-bottom: 3px solid @secondary-color;
+                }
+            }
+        }
+    }
+
+    > .sub-container:nth-child(2)
+    {
+        width: 100%;
+        height: 100%;
+
+        > .scene-placeholder
+        {
+            width: 100%;
+            height: 100%;
+            background: @gray-bg;
+
+            > .sap-a-scene
+            {
+                width: 100%;
+                height: 100%;
+                position: relative;
+
+                > aside
+                {
+                    position: absolute;
+                    z-index: 2;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    width: 250px;
+                    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 10px 0px, rgba(0, 0, 0, 0.23) 0px 3px 10px 0px;
+
+                    .gt-route-list-view
+                    {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                > main
+                {
+                    position: absolute;
+                    z-index: 1;
+                    top: 0;
+                    bottom: 0;
+                    left: 250px;
+                    right: 0;
+                }
+            }
+        }
+    }
+}

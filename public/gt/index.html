@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Traffic GIS Tool</title>
+    <title>SAP Traffic Map Tool</title>
     <link rel="stylesheet" href="../vendor/leaflet/leaflet.css" charset="utf-8">
+    <link rel="stylesheet" href="../vendor/ionicons/css/ionicons.css" charset="utf-8">
     <link rel="stylesheet" href="../assets/gt/resource/index.css" charset="utf-8">
-    <link rel="stylesheet" href="./css/iconfont.css" charset="utf-8">
     <script src="../assets/vendor/index.js" charset="utf-8"></script>
     <script src="../vendor/leaflet/TileLayer.TileJSON.js" charset="utf-8"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -18,6 +18,8 @@
 <body>
     <script src="../assets/gt/index.js" charset="utf-8"></script>
     <script>
+        L.Icon.Default.imagePath = "../vendor/leaflet/images/";
+
         sap.ui.define([ "gt/app/ApplicationController" ], function() {
             var applicatioonController = new gt.app.ApplicationController({
                 runningMode: "debug",

@@ -159,6 +159,15 @@ export default class MapView extends View
         }
     }
 
+    toggleLayer(layer, shown)
+    {
+        if (arguments.length === 1)
+        {
+            shown = !layer.isVisible();
+        }
+        shown ? this.showLayer(layer) : this.hideLayer(layer);
+    }
+
 
 
 

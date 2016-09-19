@@ -28,7 +28,6 @@
     "leaflet-draw": "^0.3.2",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "renderjson": "^1.2.0",
     "rimraf": "^2.5.3",
     "style-loader": "^0.13.1",
     "ui5-loader": "^1.0.5",
@@ -37,7 +36,12 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cached-request": "^1.0.0",
     "express": "^4.14.0",
-    "socket.io": "^1.4.8"
+    "osmtogeojson": "^2.2.12",
+    "request": "^2.74.0",
+    "socket.io": "^1.4.8",
+    "xmldom": "^0.1.22"
   }
 }

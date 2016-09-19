@@ -1,0 +1,27 @@
+.gt-float-action-button
+{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    width: @fab-size;
+    height: @fab-size;
+    border-radius: @fab-size * 0.5;
+    font-size: @fab-size * 0.4;
+    color: @fab-color;
+    background: @fab-bg;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px 0px, rgba(0, 0, 0, 0.227451) 0px 3px 10px 0px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+    &:hover
+    {
+        background: lighten(@fab-bg, 10%);
+    }
+
+    > .icon
+    {
+        align-self: center;
+        padding-top: 1px;
+    }
+}
