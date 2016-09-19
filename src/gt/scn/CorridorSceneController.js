@@ -38,17 +38,8 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
 
-        const routeLayer = this.mapView.routeLayer;
+        const routeLayer = this.mapView.corridorLayer;
         routeLayer.bindKeyLocations(`${path}/keyLocations`);
-        /*
-         要删除
-            routeLayer.bindKeyLocations(`${path}/keyLocations`);
-            routeLayer.bindKeyLocations({
-                model: "project",
-                path: "corridors/xxx/keyLocations",
-                mode: sap.ui.model.BindingMode.TwoWay
-            });
-        */
     }
 
     clearSelection()
@@ -60,7 +51,7 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.unbindKeyLocations(false);
         this.routeEditor.setRoute(null);
 
-        const routeLayer = this.mapView.routeLayer;
+        const routeLayer = this.mapView.corridorLayer;
         routeLayer.unbindKeyLocations();
     }
 
