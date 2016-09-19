@@ -15,24 +15,9 @@ export default class CorridorSceneController extends SceneController
             title: "CORRIDOR"
         });
         this.mapView = scene.mapView;
-        
+
         const fab = scene.fab;
-        fab.attachClick(() => {
-            this.clearSelection();
-
-            const dialogWidth = this.routeEditor.$element.width();
-            const dialogHeight = this.routeEditor.$element.height();
-            const sceneWidth = scene.$element.width();
-            const sceneHeight = scene.$element.height();
-
-            this.routeEditor.show();
-            this.routeEditor.$element.transition({
-                top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
-                right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
-            }, 400);
-
-            this.routeEditor.setMode("create");
-        });
+        fab.attachClick(this._fab_click.bind(this));
 
         this.listView = new RouteListView({
             items: "{project>/corridors}",
@@ -109,6 +94,25 @@ export default class CorridorSceneController extends SceneController
         }
     }
 
+    _fab_click()
+    {
+        this.getView().showOverlay();
+        this.clearSelection();
+
+        const dialogWidth = this.routeEditor.$element.width();
+        const dialogHeight = this.routeEditor.$element.height();
+        const sceneWidth = this.getView().$element.width();
+        const sceneHeight = this.getView().$element.height();
+
+        this.routeEditor.show();
+        this.routeEditor.$element.transition({
+            top: (window.parseInt(sceneHeight) - window.parseInt(dialogHeight)) / 2 - 50,
+            right: (window.parseInt(sceneWidth) - window.parseInt(dialogWidth)) / 2
+        }, 400);
+
+        this.routeEditor.setMode("create");
+    }
+
     _routeEditor_create()
     {
         let name = this.routeEditor.getName();
@@ -122,6 +126,7 @@ export default class CorridorSceneController extends SceneController
             return;
         }
 
+        this.getView().hideOverlay();
         const route = {
             name,
             "direction": 0,
@@ -141,6 +146,7 @@ export default class CorridorSceneController extends SceneController
 
     _routeEditor_cancel()
     {
+        this.getView().hideOverlay();
         this.routeEditor.setMode("edit");
         this.routeEditor.$element.transition({
             scale: 0,

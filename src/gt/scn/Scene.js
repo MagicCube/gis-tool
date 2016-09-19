@@ -15,7 +15,11 @@ export default class Scene extends SuperScene
     init()
     {
         super.init();
-        this.$element.append(`<aside/><main/>`);
+        this.$element.append(`
+            <aside />
+            <main />
+            <div class="overlay" />
+        `);
     }
 
     afterInit()
@@ -26,17 +30,17 @@ export default class Scene extends SuperScene
         this.attachActivated(() => {
             const id = this.getId();
             this.addSubview(this.mapView, this.$(">main"));
-            
+
             if (id !== "cityScene")
             {
                 this.addSubview(this.fab, this.$(">main"));
             }
-            
+
             this.mapView.toggleLayer(this.mapView.boundLayer, id === "cityScene");
             this.mapView.toggleLayer(this.mapView.corridorLayer, id === "corridorScene");
             this.mapView.toggleLayer(this.mapView.keyRouteLayer, id === "keyRouteScene");
             this.mapView.toggleLayer(this.mapView.wayLayer, id === "wayScene");
-            
+
             this.mapView.invalidateSize();
         });
     }
@@ -44,5 +48,23 @@ export default class Scene extends SuperScene
     initLayout()
     {
         super.initLayout();
+    }
+
+    showOverlay()
+    {
+        this.$(".overlay").css({
+            display: "block"
+        }).transition({
+            opacity: 0.5
+        });
+    }
+
+    hideOverlay()
+    {
+        this.$(".overlay").transition({
+            opacity: 0
+        }).css({
+            display: "none"
+        });
     }
 }
