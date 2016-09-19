@@ -1,6 +1,7 @@
 import SuperMapView from "sap/a/map/MapView";
 import TileLayer from "sap/a/map/layer/TileLayer";
 
+import BoundLayer from "./layer/BoundLayer";
 import RouteLayer from "./layer/RouteLayer";
 
 export default class MapView extends SuperMapView
@@ -28,6 +29,10 @@ export default class MapView extends SuperMapView
 
     _initRouteLayer()
     {
+        this.boundLayer = new BoundLayer();
+        this.addLayer(this.boundLayer);
+        this.hideLayer(this.boundLayer);
+        
         this.corridorLayer = new RouteLayer();
         this.addLayer(this.corridorLayer);
         this.hideLayer(this.corridorLayer);
@@ -39,5 +44,12 @@ export default class MapView extends SuperMapView
         this.wayLayer = new RouteLayer();
         this.addLayer(this.wayLayer);
         this.hideLayer(this.wayLayer);
+    }
+    
+    _initBoundLayer()
+    {
+        this.boundLayer = new BoundLayer();
+        this.addLayer(this.boundLayer);
+        this.hideLayer(this.boundLayer);
     }
 }
