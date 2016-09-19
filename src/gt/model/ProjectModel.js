@@ -9,9 +9,9 @@ export default class ProjectModel extends Model
         this.serviceClient = new ProjectServiceClient();
     }
 
-    async loadProject(id = "default")
+    async loadProject(code = "default")
     {
-        const project = await this.serviceClient.getProject(id);
+        const project = await this.serviceClient.getProject(code);
         if (project)
         {
             this.setData(project);
@@ -48,6 +48,6 @@ export default class ProjectModel extends Model
     removeItem(path, item)
     {
         const items = this.getProperty(path);
-        items.splice(items.findIndex(project => project.id === item.id), 1);
+        items.splice(items.findIndex(i => i.id === item.id), 1);
     }
 }

@@ -1,6 +1,8 @@
 import Scene from "./Scene";
 import SceneController from "./SceneController";
 
+import CityEditor from "../view/CityEditor";
+
 export default class CitySceneController extends SceneController
 {    
     createView()
@@ -16,6 +18,11 @@ export default class CitySceneController extends SceneController
         
         this.mapView = scene.mapView;
         this.mapView.boundLayer.bindCityBounds("project>/city/bounds");
+        
+        this.cityEditor = new CityEditor();
+        this.cityEditor.bindName("project>/city/name");
+        this.cityEditor.bindCode("project>/city/code");
+        scene.addSubview(this.cityEditor, scene.$element);
         
         return scene;
     }
