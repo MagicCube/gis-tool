@@ -13,7 +13,7 @@ export default class OsmServiceClient extends ManagedObject
     {
         if (gt.service.ServiceClient._instance === null)
         {
-            gt.service.ServiceClient._instance = new gt.service.ServiceClient();
+            gt.service.ServiceClient._instance = new gt.service.OsmServiceClient();
         }
         return gt.service.ServiceClient._instance;
     }

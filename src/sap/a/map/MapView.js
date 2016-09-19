@@ -56,7 +56,6 @@ export default class MapView extends View
 
     _initMap()
     {
-        console.log(this.getDefaultZoom());
         const options = {
             zoomControl: true,
 			attributionControl: false,

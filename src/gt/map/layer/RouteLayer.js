@@ -1,5 +1,7 @@
 import Layer from "sap/a/map/layer/Layer";
 
+import OsmServiceClient from "../../service/OsmServiceClient";
+
 export default class RouteLayer extends Layer
 {
     metadata = {
@@ -25,6 +27,18 @@ export default class RouteLayer extends Layer
                     this.container.addLayer(marker);
                 }
             });
+        }
+        this._drawRoute(3600 * 12);
+    }
+    
+    async _drawRoute(maxAge = 0)
+    {
+        const locations = this.getKeyLocations();
+        if (locations && locations.length > 0)
+        {
+            const latlngs = await OsmServiceClient.getInstance().getRoute(locations, maxAge);
+            const multiPolyline = L.multiPolyline(latlngs).addTo(this.getParent().map);
+            this.getParent().setBounds(multiPolyline.getBounds());
         }
     }
 }
