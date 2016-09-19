@@ -13,6 +13,27 @@ export default class CorridorSceneController extends SceneController
             id: "corridorScene",
             title: "CORRIDOR"
         });
+        const fab = scene.fab;
+        fab.attachClick(() => {
+            if (this.routeEditor.getRoute())
+            {
+                this.clearSelection();
+                // TODO
+                this.routeEditor.$("header > .item:not(:first-child)").slideUp(400);
+                this.routeEditor.$("main").slideUp(400);
+                this.routeEditor.$("footer").slideDown(400, () => {
+                    this.routeEditor.$element.transition({
+                        top: 200,
+                        right: 400
+                    }, 400);
+                });
+            }
+            else
+            {
+                alert("add")
+            }
+
+        });
 
         this.mapView = scene.mapView;
 
@@ -24,6 +45,7 @@ export default class CorridorSceneController extends SceneController
         scene.addSubview(this.listView, scene.$(">aside"));
 
         this.routeEditor = new RouteEditor();
+        this.routeEditor.hide();
         scene.addSubview(this.routeEditor, scene.$element);
 
         return scene;
@@ -58,7 +80,6 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.unbindName(false);
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
-        this.routeEditor.setRoute(null);
 
         const routeLayer = this.mapView.routeLayer;
         routeLayer.unbindKeyLocations();
@@ -88,6 +109,7 @@ export default class CorridorSceneController extends SceneController
             if (selectedRoute && route.id === selectedRoute.id)
             {
                 this.clearSelection();
+                //
             }
 
             const projectModel = sap.ui.getCore().getModel("project");

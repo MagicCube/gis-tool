@@ -15,17 +15,14 @@ export default class Scene extends SuperScene
     init()
     {
         super.init();
-
         this.$element.append(`<aside/><main/>`);
-
-        this.fab = new FloatActionButton();
     }
 
     afterInit()
     {
         super.afterInit();
-
         this.mapView = Application.getInstance().mapView;
+        this.fab = new FloatActionButton();
         this.attachActivated(() => {
             this.addSubview(this.mapView, this.$(">main"));
             this.addSubview(this.fab, this.$(">main"));

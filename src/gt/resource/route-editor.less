@@ -90,4 +90,42 @@
             }
         }
     }
+
+    footer
+    {
+        @button-width: 88px;
+
+        padding: 8px;
+        padding-right: @header-padding * 2;
+        background: white;
+        color: @primary-color-darker;
+        display: none;
+        overflow: auto;
+
+        > a
+        {
+            width: @button-width;
+            height: 36px;
+            line-height: 36px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            float: right;
+
+            &.cancel-button
+            {
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            &:hover
+            {
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            &:active
+            {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
 }

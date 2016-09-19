@@ -6,11 +6,10 @@ export default class RouteEidtor extends View
 {
     metadata = {
         properties: {
-            route: { type: "object", bindable: true },
             name: { type: "string", bindable: true },
             direction: { type: "float", bindable: true },
             keyLocations: { type: "object", bindable: true }
-        },
+        }
     };
 
 
@@ -25,6 +24,7 @@ export default class RouteEidtor extends View
     {
         this._initHeader();
         this._initMain();
+        this._initFooter();
     }
 
     _initHeader()
@@ -45,7 +45,7 @@ export default class RouteEidtor extends View
                 </div>
             </header>
         `);
-        this.$container.append(this.$header);
+        this.$element.append(this.$header);
         this.$header.find(".name > input").on("change", (e) => {
             this.setName($(e.currentTarget).val());
         });
@@ -57,17 +57,22 @@ export default class RouteEidtor extends View
     _initMain()
     {
         this.$main = $(`<main />`);
-        this.$container.append(this.$main);
+        this.$element.append(this.$main);
         this.keyLocationListView = new KeyLocationListView({
             items: this.getKeyLocations()
         });
         this.addSubview(this.keyLocationListView, this.$main);
     }
 
-    setRoute(route)
+    _initFooter()
     {
-        this.setProperty("route", route);
-        this.$element.toggle(route !== undefined && route !== null);
+        this.$footer = $(`
+            <footer>
+                <a class="create-button">Create</a>
+                <a class="cancel-button">Cancel</a>
+            </footer>
+        `);
+        this.$element.append(this.$footer);
     }
 
     setName(name)
@@ -76,6 +81,10 @@ export default class RouteEidtor extends View
         if (this.$header)
         {
             this.$header.find(".name > input").val(name);
+        }
+        if (name)
+        {
+            this.show();
         }
     }
 
@@ -86,6 +95,10 @@ export default class RouteEidtor extends View
         {
             this.$header.find(".direction > input").val(direction);
         }
+        if (direction)
+        {
+            this.show();
+        }
     }
 
     setKeyLocations(keyLocations)
@@ -94,6 +107,10 @@ export default class RouteEidtor extends View
         if (this.keyLocationListView)
         {
             this.keyLocationListView.setItems(keyLocations);
+        }
+        if (keyLocations)
+        {
+            this.show();
         }
     }
 }
