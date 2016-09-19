@@ -1,7 +1,7 @@
 {
-    "code": "default",
     "version": 9,
     "city": {
+        "code": "008625",
         "osmId": "2131524",
         "bounds": [{
             "lat": 31.9803353,
