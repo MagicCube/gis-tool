@@ -56,7 +56,6 @@ export default class MapView extends View
 
     _initMap()
     {
-        console.log(this.getDefaultZoom());
         const options = {
             zoomControl: true,
 			attributionControl: false,
@@ -158,6 +157,15 @@ export default class MapView extends View
         {
             this.map.removeLayer(layer.container);
         }
+    }
+
+    toggleLayer(layer, shown)
+    {
+        if (arguments.length === 1)
+        {
+            shown = !layer.isVisible();
+        }
+        shown ? this.showLayer(layer) : this.hideLayer(layer);
     }
 
 

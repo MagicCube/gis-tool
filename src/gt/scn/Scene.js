@@ -26,6 +26,12 @@ export default class Scene extends SuperScene
         this.attachActivated(() => {
             this.addSubview(this.mapView, this.$(">main"));
             this.addSubview(this.fab, this.$(">main"));
+            
+            const id = this.getId();
+            this.mapView.toggleLayer(this.mapView.corridorLayer, id === "corridorScene");
+            this.mapView.toggleLayer(this.mapView.keyRouteLayer, id === "keyRouteScene");
+            this.mapView.toggleLayer(this.mapView.wayLayer, id === "wayScene");
+            
             this.mapView.invalidateSize();
         });
     }

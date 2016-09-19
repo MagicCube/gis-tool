@@ -39,8 +39,8 @@ export default class CorridorSceneController extends SceneController
 
         this.listView = new RouteListView({
             items: "{project>/corridors}",
-            itemClick: this._listView_itemClick.bind(this),
-            itemDelete: this._listView_itemdDelete.bind(this)
+            itemClick: this._onListItemClick.bind(this),
+            itemDelete: this._onListItemDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
@@ -60,17 +60,8 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
 
-        const routeLayer = this.mapView.routeLayer;
+        const routeLayer = this.mapView.corridorLayer;
         routeLayer.bindKeyLocations(`${path}/keyLocations`);
-        /*
-         要删除
-            routeLayer.bindKeyLocations(`${path}/keyLocations`);
-            routeLayer.bindKeyLocations({
-                model: "project",
-                path: "corridors/xxx/keyLocations",
-                mode: sap.ui.model.BindingMode.TwoWay
-            });
-        */
     }
 
     clearSelection()
@@ -81,11 +72,11 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
 
-        const routeLayer = this.mapView.routeLayer;
+        const routeLayer = this.mapView.corridorLayer;
         routeLayer.unbindKeyLocations();
     }
 
-    _listView_itemClick(e)
+    _onListItemClick(e)
     {
         const item = e.getParameter("item");
         const route = item.getRoute();
@@ -95,7 +86,7 @@ export default class CorridorSceneController extends SceneController
         this.selectRoute(index);
     }
 
-    _listView_itemdDelete(e)
+    _onListItemDelete(e)
     {
         const item = e.getParameter("item");
         const route = item.getRoute();

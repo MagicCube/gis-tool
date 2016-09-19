@@ -13,7 +13,7 @@ export default class OsmServiceClient extends ManagedObject
     {
         if (gt.service.ServiceClient._instance === null)
         {
-            gt.service.ServiceClient._instance = new gt.service.ServiceClient();
+            gt.service.ServiceClient._instance = new gt.service.OsmServiceClient();
         }
         return gt.service.ServiceClient._instance;
     }
@@ -33,6 +33,13 @@ export default class OsmServiceClient extends ManagedObject
     // Supported location format: [lng, lat] and { lat, lng }
     async getRoute(locations, maxAge = 0)
     {
+        if (this.getRouteXhr)
+        {
+            this.getRouteXhr.abort();
+            this.getRouteXhr = null;
+        }
+        
+        
         if (locations.length > 0 && Array.isArray(locations[0]))
         {
             locations = locations.map(location => ({
@@ -54,10 +61,11 @@ export default class OsmServiceClient extends ManagedObject
         {
             data = { maxage: maxAge };
         }
-        const res = await $.ajax({
+        this.getRouteXhr = $.ajax({
             url: `${this.getBaseUrl()}/route/${JSON.stringify(json)}`,
             data: data
         });
+        const res = await this.getRouteXhr;
         return res;
     }
 }
