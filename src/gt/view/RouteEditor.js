@@ -2,7 +2,7 @@ import View from "sap/a/view/View";
 
 import KeyLocationListView from "./KeyLocationListView";
 
-export default class RouteEidtor extends View
+export default class RouteEditor extends View
 {
     metadata = {
         properties: {
@@ -115,21 +115,38 @@ export default class RouteEidtor extends View
         }
     }
 
-    setMode(mode)
+    setMode(mode, duration)
     {
         this.setProperty("mode", mode);
         if (mode === "create")
         {
-            this.$("header > .item:not(:first-child)").slideUp(400);
-            this.$("main").slideUp(400);
-            this.$("footer").slideDown(400);
+            this.$("header > .item:not(:first-child)").slideUp(duration);
+            this.$("main").slideUp(duration);
+            this.$("footer").slideDown(duration);
         }
         else
         {
-            this.$("header > .item:not(:first-child)").slideDown(400);
-            this.$("main").slideDown(400);
-            this.$("footer").slideUp(400);
+            this.$("header > .item:not(:first-child)").slideDown(duration);
+            this.$("main").slideDown(duration);
+            this.$("footer").slideUp(duration);
             this.$(".name > input").val("");
         }
+    }
+
+    show()
+    {
+        super.show();
+        this._isShown = true;
+    }
+
+    hide()
+    {
+        super.hide();
+        this._isShown = false;
+    }
+
+    isShown()
+    {
+        return this._isShown;
     }
 }
