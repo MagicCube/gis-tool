@@ -10,30 +10,33 @@ export default class RouteLayer extends Layer
         }
     };
 
-    setKeyLocations(value, isUserDrag = false)
+    setKeyLocations(value, clearAll = true)
     {
         this.setProperty("keyLocations", value);
-        // this.container.clearLayers();
+        if (clearAll)
+        {
+            this.container.clearLayers();
+        }
         if (value)
         {
-            if(!isUserDrag)
-            {
-                this._drawMarker(value);
-            }
-            this._drawRoute(value, isUserDrag);
+            this._drawMarker(value, clearAll);
+            this._drawRoute(value, clearAll);
         }
     }
     
-    _drawMarker(locations)
+    _drawMarker(keyLocations, clearAll)
     {
-        locations.forEach((point, i) => {
-            if (point && point.lat && point.lng)
+        if (!clearAll)
+        {
+            return;
+        }
+        keyLocations.forEach((location, i) => {
+            if (location && location.lat && location.lng)
             {
-                const marker = L.marker(point, {
+                const marker = L.marker(location, {
                     draggable: true,
-                    title: i === 0 ? "Origin" : (i === locations.length - 1 ? "Destination" : i)
+                    title: i === 0 ? "Origin" : (i === keyLocations.length - 1 ? "Destination" : i)
                 });
-                // 处理point为空的情况
                 marker.on("drag", e => {
                     if (this._dragTimer)
                     {
@@ -46,17 +49,39 @@ export default class RouteLayer extends Layer
         });
     }
     
-    async _drawRoute(locations, isUserDrag)
+    async _drawRoute(keyLocations, clearAll)
     {
-        const maxAge = isUserDrag ? 0 : 3600 * 12;
-        if (locations && locations.length > 0)
+        const maxAge = clearAll ? 3600 * 12 : 0;
+        if (keyLocations && keyLocations.length > 0)
         {
-            const latlngs = await OsmServiceClient.getInstance().getRoute(locations, maxAge);
-            const multiPolyline = L.multiPolyline(latlngs);
-            this.container.addLayer(multiPolyline);
-            if (!isUserDrag)
+            const timestamp = new Date();
+            this.timestamp = timestamp;
+            let latlngs = null;
+            try
             {
-                this.fitBounds();                
+                latlngs = await OsmServiceClient.getInstance().getRoute(keyLocations, maxAge);
+            }
+            catch (err)
+            {
+                if (err.statusText === "abort")
+                {
+                    console.log("getRoute() request cancelled by user.");
+                }
+                else
+                {
+                    console.error(err);
+                }
+                return;
+            }
+            if (!this.timestamp || this.timestamp <= timestamp)
+            {
+                this.container.removeLayer(this.route);
+                this.route = L.multiPolyline(latlngs);
+                this.container.addLayer(this.route);
+                if (clearAll)
+                {
+                    this.fitBounds();                
+                }                
             }
         }
     }
@@ -65,6 +90,6 @@ export default class RouteLayer extends Layer
     {
         const locations = this.getKeyLocations();
         locations[markderIndex] = marker.getLatLng();
-        this.setKeyLocations(locations, true);
+        this.setKeyLocations(locations, false);
     }
 }
