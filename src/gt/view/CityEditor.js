@@ -1,5 +1,7 @@
 import View from "sap/a/view/View";
 
+import OsmServiceClient from "../service/OsmServiceClient";
+
 export default class CityEidtor extends View
 {
     metadata = {
@@ -31,7 +33,10 @@ export default class CityEidtor extends View
                     <label>
                         <i class="icon ion-pinpoint" />
                     </label>
-                    <input type="text" placeholder="Input name" />
+                    <input type="text" placeholder="Input name" list="suggestion" />
+                    <datalist id="suggestion">
+                        
+                    </datalist>
                 </div>
                 <div class="item code">
                     <label>
@@ -42,10 +47,19 @@ export default class CityEidtor extends View
             </header>
         `);
         this.$element.append(this.$header);
-        this.$header.find(".name > input").on("change", (e) => {
+        
+        this.$header.find(".name > input").on("change", e => {
             this.setName($(e.currentTarget).val());
         });
-        this.$header.find(".code > input").on("change", (e) => {
+        
+        this.$header.find(".name > input").on("input", e => {
+            window.clearTimeout(this.inputTimer);
+            this.inputTimer = window.setTimeout(() => {
+                this._onInputChange(e);
+            }, 300);
+        });
+        
+        this.$header.find(".code > input").on("change", e => {
             this.setCode($(e.currentTarget).val());
         });
     }
@@ -85,6 +99,7 @@ export default class CityEidtor extends View
 
     setName(name)
     {
+        console.log("set name");
         this.setProperty("name", name);
         if (this.$header)
         {
@@ -110,6 +125,25 @@ export default class CityEidtor extends View
             const { lat: north, lng: east } = bounds[1];
             const data = [north, south, west, east];
             this.$main.find(".item > input").val(i => data[i].toFixed(4));
+        }
+    }
+    
+    _onInputChange(e)
+    {
+        const input = $(e.currentTarget).val();
+        if (input)
+        {
+            console.log("input change");
+            OsmServiceClient.getInstance().searchCity(input).then(cities => {
+                const $datalist = this.$header.find("#suggestion");
+                $datalist.children().remove();
+                cities.forEach(city => {
+                    const $option = $("<option/>");
+                    $option.attr("value", city.displayName);
+                    $option.data("city", city);
+                    $datalist.append($option);
+                });
+            });
         }
     }
 }
