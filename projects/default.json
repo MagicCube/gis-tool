@@ -22,14 +22,14 @@
             "name": "应天高架",
             "category": 1,
             "direction": 0,
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         },
         {
             "id": 2,
             "name": "风台南路",
             "category": 2,
             "direction": 180,
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         }
     ],
     "keyRoutes": [
@@ -37,7 +37,7 @@
             "id": 1,
             "name": "应天高架",
             "direction": "0",
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         }
     ],
     "corridors": [
@@ -75,19 +75,19 @@
             "id": 3,
             "name": "长江大桥",
             "direction": 180,
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         },
         {
             "id": 4,
             "name": "长江二桥",
             "direction": 270,
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         },
         {
             "id": 5,
             "name": "长江三桥",
             "direction": 45,
-            "keyLocations": []
+            "keyLocations": [ {}, {} ]
         }
     ]
 }

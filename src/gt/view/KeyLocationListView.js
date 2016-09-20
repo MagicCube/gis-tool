@@ -49,11 +49,35 @@ export default class KeylocationListView extends View
             </div>
         `);
 
+        if (draggable)
+        {
+            $keyLocation.children("label").on("dragstart", e => {
+                e = e.originalEvent;
+                if (index === 0)
+                {
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("origin", "true");
+                }
+                else
+                {
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("destination", "true");
+                }
+            });
+        }
+
         this.$container.append($keyLocation);
     }
 
     _formatItem(item)
     {
-        return item ? (item.lat.toFixed(4) + ", " + item.lng.toFixed(4)) : "N/A"
+        if (item && item.lat)
+        {
+            return item ? (item.lat.toFixed(4) + ", " + item.lng.toFixed(4)) : "N/A"
+        }
+        else
+        {
+            return "N/A";
+        }
     }
 }

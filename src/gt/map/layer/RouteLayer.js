@@ -10,70 +10,106 @@ export default class RouteLayer extends Layer
         }
     };
 
-    setKeyLocations(value, clearAll = true)
+    init()
+    {
+        super.init();
+        this.markers = [];
+    }
+
+    setKeyLocations(value)
     {
         this.setProperty("keyLocations", value);
-        if (clearAll)
-        {
-            this.container.clearLayers();
-        }
+        this.container.clearLayers();
+        this.markers = [];
         if (value)
         {
-            this._drawMarker(value, clearAll);
-            this._drawRoute(value, clearAll);
+            value.forEach(latLng => {
+                if (latLng.lat && latLng.lng)
+                {
+                    const marker = this.addMarker(latLng);
+                    this.markers.push(marker);
+                }
+            });
         }
     }
 
-    _drawMarker(keyLocations, clearAll)
+
+    addMarker(latLng)
     {
-        if (!clearAll)
-        {
-            return;
-        }
-        keyLocations.forEach((location, i) => {
-            if (location && location.lat && location.lng)
-            {
-                const marker = L.marker(location, {
-                    draggable: true,
-                    title: i === 0 ? "Origin" : (i === keyLocations.length - 1 ? "Destination" : i)
-                });
-                marker.on("drag", e => {
-                    if (this._dragTimer)
-                    {
-                        clearTimeout(this._dragTimer);
-                    }
-                    this._dragTimer = setTimeout(this._onMarkerDrag.bind(this, marker, i), 200);
-                });
-                this.container.addLayer(marker);
-            }
+        const marker = L.marker(latLng, {
+            draggable: true
         });
+        this.container.addLayer(marker);
+        marker.on("dragend", this._marker_ondragend.bind(this));
+        return marker;
     }
 
-    _drawRoute(keyLocations, clearAll)
+
+    onExternalDragOver(e)
     {
-        const maxAge = clearAll ? 3600 * 12 : 0;
-        if (keyLocations && keyLocations[0] && keyLocations[1])
+        let marker = null;
+        const markerName = e.dataTransfer.types[0];
+        if (markerName === "origin")
         {
-            OsmServiceClient.getInstance().getRoute(keyLocations, maxAge)
-                .then(latlngs => {
-                    this.container.removeLayer(this.route);
-                    this.route = L.multiPolyline(latlngs);
-                    this.container.addLayer(this.route);
-                    if (clearAll)
-                    {
-                        this.fitBounds();
-                    }
-                })
-                .catch(reason => {
-                    console.log(reason);
-                });
+            if (this.markers[0])
+            {
+                marker = this.markers[0];
+            }
+            else
+            {
+                marker = this.addMarker(e.latLng);
+                this.markers[0] = marker;
+            }
+        }
+        else if (markerName === "destination")
+        {
+            if (this.markers.length > 1)
+            {
+                marker = this.markers[this.markers.length - 1];
+            }
+            else
+            {
+                marker = this.addMarker(e.latLng);
+                this.markers[1] = marker;
+            }
+        }
+        if (marker)
+        {
+            marker.setLatLng(e.latLng);
         }
     }
 
-    _onMarkerDrag(marker, markderIndex)
+    onExternalDrop(e)
     {
-        const locations = this.getKeyLocations();
-        locations[markderIndex] = marker.getLatLng();
-        this.setKeyLocations(JSON.parse(JSON.stringify(locations)), false);
+        let marker = null;
+        const markerName = e.dataTransfer.types[0];
+        if (markerName === "origin")
+        {
+            marker = this.markers[0];
+        }
+        else if (markerName === "destination")
+        {
+            marker = this.markers[this.markers.length - 1];
+        }
+        if (marker)
+        {
+            this._marker_ondragend({
+                target: marker
+            });
+        }
+    }
+
+    _marker_ondragend(e)
+    {
+        const marker = e.target;
+        const index = this.markers.indexOf(marker);
+        const keyLocations = JSON.parse(JSON.stringify(this.getKeyLocations()));
+        if (!keyLocations[index])
+        {
+            keyLocations[index] = {};
+        }
+        keyLocations[index].lat = marker.getLatLng().lat;
+        keyLocations[index].lng = marker.getLatLng().lng;
+        this.setProperty("keyLocations", keyLocations);
     }
 }

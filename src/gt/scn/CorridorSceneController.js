@@ -148,7 +148,7 @@ export default class CorridorSceneController extends SceneController
         const route = {
             name,
             "direction": 0,
-            "keyLocations": [ null, null ]
+            "keyLocations": [ {}, {} ]
         };
         const projectModel = sap.ui.getCore().getModel("project");
         projectModel.appendItem("/corridors", route);
