@@ -46,7 +46,7 @@ export default class CityEidtor extends View
             this.setName($(e.currentTarget).val());
         });
         this.$header.find(".code > input").on("change", (e) => {
-            this.setCode(parseFloat($(e.currentTarget).val()));
+            this.setCode($(e.currentTarget).val());
         });
     }
 
