@@ -21,7 +21,7 @@ export default class RouteEditor extends View
     init()
     {
         super.init();
-        this.addStyleClass("gt-gis-editor");
+        this.addStyleClass("gt-gis-editor gt-route-editor");
         this._initLayout();
     }
 
@@ -46,16 +46,17 @@ export default class RouteEditor extends View
                     <label>
                         <i class="icon ion-navigate" />
                     </label>
-                    <input type="text" />
+                    <input type="range" min="0" max="360" step="5" />
                 </div>
             </header>
         `);
         this.$element.append(this.$header);
-        this.$header.find(".name > input").on("change", (e) => {
+        this.$header.find(".name > input").on("change", e => {
             this.setName($(e.currentTarget).val());
         });
-        this.$header.find(".direction > input").on("change", (e) => {
-            this.setDirection(parseFloat($(e.currentTarget).val()));
+        this.$header.find(".direction > input").on("change", e => {
+            // this.setDirection(parseFloat($(e.currentTarget).val()));
+            const direction = window.parseInt(this.$header.find(".direction > input").val());
         });
     }
 
@@ -79,11 +80,9 @@ export default class RouteEditor extends View
         `);
         this.$element.append($footer);
         $footer.children(".create-button").on("click", e => {
-            // e.preventDefault();
             this.fireCreate();
         });
         $footer.children(".cancel-button").on("click", e => {
-            // e.preventDefault();
             this.fireCancel();
         });
     }
@@ -148,5 +147,10 @@ export default class RouteEditor extends View
     isShown()
     {
         return this._isShown;
+    }
+
+    _directionFormat(value)
+    {
+        // TODO
     }
 }
