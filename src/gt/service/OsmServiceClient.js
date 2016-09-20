@@ -20,13 +20,19 @@ export default class OsmServiceClient extends ManagedObject
 
     async searchCity(cityName)
     {
-        const res = await $.ajax(`${this.getBaseUrl()}/city?q=${cityName}`);
+        const res = await $.ajax({
+            url: `${this.getBaseUrl()}/city?q=${cityName}`,
+            contentType: "application/json"
+        });
         return res;
     }
 
     async getRelation(osmId)
     {
-        const res = await $.ajax(`${this.getBaseUrl()}/relation/${osmId}`);
+        const res = await $.ajax({
+            url: `${this.getBaseUrl()}/relation/${osmId}`,
+            contentType: "application/json"
+        });
         return res;
     }
 

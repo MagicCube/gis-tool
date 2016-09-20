@@ -1,14 +1,17 @@
 import View from "sap/a/view/View";
 
+import CitySearchView from "../view/CitySearchView";
 import OsmServiceClient from "../service/OsmServiceClient";
 
 export default class CityEidtor extends View
 {
     metadata = {
         properties: {
-            name: { type: "string", bindable: true },
+            bounds: { type: "object", bindable: true },
+            centerLocation: { type: "object", bindable: true },
             code: { type: "string", bindable: true },
-            bounds: { typr: "object", bindable: true }
+            name: { type: "string", bindable: true },
+            osmId: { typr: "string", bindable: true }
         }
     };
 
@@ -33,10 +36,6 @@ export default class CityEidtor extends View
                     <label>
                         <i class="icon ion-pinpoint" />
                     </label>
-                    <input type="text" placeholder="Input name" list="suggestion" />
-                    <datalist id="suggestion">
-                        
-                    </datalist>
                 </div>
                 <div class="item code">
                     <label>
@@ -46,18 +45,10 @@ export default class CityEidtor extends View
                 </div>
             </header>
         `);
+        this.citySearchView = new CitySearchView();
+        this.addSubview(this.citySearchView, this.$header.find(".name"));
+        
         this.$element.append(this.$header);
-        
-        this.$header.find(".name > input").on("change", e => {
-            this.setName($(e.currentTarget).val());
-        });
-        
-        this.$header.find(".name > input").on("input", e => {
-            window.clearTimeout(this.inputTimer);
-            this.inputTimer = window.setTimeout(() => {
-                this._onInputChange(e);
-            }, 300);
-        });
         
         this.$header.find(".code > input").on("change", e => {
             this.setCode($(e.currentTarget).val());
@@ -97,18 +88,27 @@ export default class CityEidtor extends View
         this.$element.append(this.$main);
     }
 
+    setCity(value)
+    {
+        this.setName(value.displayName);
+        this.setCode(value.code || "");
+        this.setBounds(value.bounds);
+        this.setCenterLocation(value.centerLocation);
+        this.setOsmId(value.osmId);
+    }
+
     setName(name)
     {
-        console.log("set name");
         this.setProperty("name", name);
         if (this.$header)
         {
-            this.$header.find(".name > input").val(name);
+            this.citySearchView.setName(name);
         }
     }
-
+    
     setCode(code)
     {
+        console.log("set code", code);
         this.setProperty("code", code);
         if (this.$header)
         {
@@ -125,25 +125,6 @@ export default class CityEidtor extends View
             const { lat: north, lng: east } = bounds[1];
             const data = [north, south, west, east];
             this.$main.find(".item > input").val(i => data[i].toFixed(4));
-        }
-    }
-    
-    _onInputChange(e)
-    {
-        const input = $(e.currentTarget).val();
-        if (input)
-        {
-            console.log("input change");
-            OsmServiceClient.getInstance().searchCity(input).then(cities => {
-                const $datalist = this.$header.find("#suggestion");
-                $datalist.children().remove();
-                cities.forEach(city => {
-                    const $option = $("<option/>");
-                    $option.attr("value", city.displayName);
-                    $option.data("city", city);
-                    $datalist.append($option);
-                });
-            });
         }
     }
 }
