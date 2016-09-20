@@ -73,7 +73,7 @@ export default class ApplicationController extends BaseApplicationController
         const city = projectMoel.getProperty("/city");
         if (city && city.centerLocation)
         {
-            this.view.mapView.setCenterLocation(city.centerLocation);
+            this.view.mapView.setCenterLocation(city.centerLocation, 11);
         }
         
     }
