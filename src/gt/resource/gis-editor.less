@@ -44,12 +44,71 @@
             input
             {
                 flex: 1;
+                margin-left: @header-padding;
+            }
+
+            input[type="text"], input[type="search"]
+            {
                 background: @primary-color-darker;
                 border: none;
                 border-bottom: 1px solid rgba(250, 250, 250, 0.5);
                 color: rgba(250, 250, 250, 1);
                 padding-bottom: 4px;
-                margin-left: @header-padding;
+            }
+
+            input[type=range] {
+                border: none;
+                background: rgba(0, 0, 0, 0);
+                -webkit-appearance: none;
+                width: 100%;
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::-webkit-slider-runnable-track {
+                    width: 100%;
+                    height: 1px;
+                    background: rgba(250, 250, 250, 0.5);
+                    cursor: pointer;
+                    border-radius: 1.3px;
+                }
+
+                &::-webkit-slider-thumb {
+                    border: none;
+                    height: 11px;
+                    width: 11px;
+                    border-radius: 11px;
+                    background: rgba(250, 250, 250, 0.75);
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    margin-top: -5px;
+                }
+
+                &:hover
+                {
+                    &::-webkit-slider-thumb {
+                        background: rgba(250, 250, 250, 1);
+                    }
+
+                    &::-webkit-slider-runnable-track {
+                        background: rgba(250, 250, 250, 1);
+                    }
+                }
+
+                &:active
+                {
+                    &::-webkit-slider-thumb {
+                        height: 18px;
+                        width: 18px;
+                        margin-top: -7.2px;
+                        background: rgba(250, 250, 250, 1);
+                    }
+
+                    &::-webkit-slider-runnable-track {
+                        background: rgba(250, 250, 250, 1);
+                    }
+                }
             }
         }
     }
@@ -71,7 +130,7 @@
                 font-size: 20px;
             }
 
-            input
+            input[type="text"], input[type="search"]
             {
                 background: white;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.3);
