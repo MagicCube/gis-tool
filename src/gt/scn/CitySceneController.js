@@ -22,6 +22,7 @@ export default class CitySceneController extends SceneController
         this.cityEditor = new CityEditor();
         this.cityEditor.bindName("project>/city/displayName");
         this.cityEditor.bindCode("project>/city/code");
+        this.cityEditor.bindBounds("project>/city/bounds");
         scene.addSubview(this.cityEditor, scene.$element);
 
         return scene;

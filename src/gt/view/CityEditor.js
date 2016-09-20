@@ -5,10 +5,10 @@ export default class CityEidtor extends View
     metadata = {
         properties: {
             name: { type: "string", bindable: true },
-            code: { type: "string", bindable: true }
+            code: { type: "string", bindable: true },
+            bounds: { typr: "object", bindable: true }
         }
     };
-
 
     init()
     {
@@ -35,7 +35,7 @@ export default class CityEidtor extends View
                 </div>
                 <div class="item code">
                     <label>
-                        <i class="icon ion-navigate" />
+                        <i class="icon ion-pound" />
                     </label>
                     <input type="text" placeholder="Input code" />
                 </div>
@@ -52,10 +52,36 @@ export default class CityEidtor extends View
 
     _initMain()
     {
-        const $main = $(`<main />`);
-        this.$element.append($main);
+        this.$main = $(`
+            <main>
+                <div class="item">
+                    <label>
+                        <i class="icon ion-arrow-up-c" />
+                    </label>
+                    <input type="text" disabled="true" placeholder="Select north bound" />
+                </div>
+                <div class="item">
+                    <label>
+                        <i class="icon ion-arrow-down-c" />
+                    </label>
+                    <input type="text" disabled="true" placeholder="Select south bound" />
+                </div>
+                <div class="item">
+                    <label>
+                        <i class="icon ion-arrow-left-c" />
+                    </label>
+                    <input type="text" disabled="true" placeholder="Select west bound" />
+                </div>
+                <div class="item">
+                    <label>
+                        <i class="icon ion-arrow-right-c" />
+                    </label>
+                    <input type="text" disabled="true" placeholder="Select east bound" />
+                </div>
+            </main>
+        `);
+        this.$element.append(this.$main);
     }
-
 
     setName(name)
     {
@@ -72,6 +98,18 @@ export default class CityEidtor extends View
         if (this.$header)
         {
             this.$header.find(".code > input").val(code);
+        }
+    }
+    
+    setBounds(bounds)
+    {
+        this.setProperty("bounds", bounds);
+        if (bounds && bounds[0] && bounds[1])
+        {
+            const { lat: south, lng: west } = bounds[0];
+            const { lat: north, lng: east } = bounds[1];
+            const data = [north, south, west, east];
+            this.$main.find(".item > input").val(i => data[i].toFixed(4));
         }
     }
 }
