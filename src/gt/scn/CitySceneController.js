@@ -20,9 +20,11 @@ export default class CitySceneController extends SceneController
         this.mapView.boundLayer.bindCityBounds("project>/city/bounds");
 
         this.cityEditor = new CityEditor();
-        this.cityEditor.bindName("project>/city/displayName");
-        this.cityEditor.bindCode("project>/city/code");
         this.cityEditor.bindBounds("project>/city/bounds");
+        this.cityEditor.bindCenterLocation("project>/city/centerLocation");
+        this.cityEditor.bindCode("project>/city/code");
+        this.cityEditor.bindName("project>/city/displayName");
+        this.cityEditor.bindOsmId("project>/city/osmId");
         scene.addSubview(this.cityEditor, scene.$element);
 
         return scene;

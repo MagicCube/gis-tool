@@ -28,9 +28,7 @@ export default class BoundLayer extends Layer {
     setCityBounds(value)
     {
         this.setProperty("cityBounds", value);
-        if (!this.rectangle)
-        {
-            this._initRect();            
-        }
+        this.container.clearLayers();
+        this._initRect();   
     }
 }
