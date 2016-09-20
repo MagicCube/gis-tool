@@ -1,7 +1,32 @@
 .gt-route-editor
 {
-    input[type=range]
+    header
     {
-        
+        .direction > label
+        {
+            transform: rotate(-45deg);
+        }
+    }
+
+    main
+    {
+        .item
+        {
+            &:last-of-type
+            {
+                label
+                {
+                    font-size: 25px;
+                }
+            }
+
+            &:first-of-type, &:last-of-type
+            {
+                label
+                {
+                    cursor: move;
+                }
+            }
+        }
     }
 }

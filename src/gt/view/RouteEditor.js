@@ -54,10 +54,13 @@ export default class RouteEditor extends View
         this.$header.find(".name > input").on("change", e => {
             this.setName($(e.currentTarget).val());
         });
-        this.$header.find(".direction > input").on("change", e => {
-            // this.setDirection(parseFloat($(e.currentTarget).val()));
+        this.$header.find(".direction > input").on("input", e => {
             const direction = window.parseInt(this.$header.find(".direction > input").val());
+            const delta = Math.abs(direction - (this.getDirection() || 0));
+            this.setDirection(direction, delta > 20);
         });
+        this.$directionIcon = this.$header.find(".direction > label");
+        this.$progressBar = this.$header.find(".direction > input");
     }
 
     _initMain()
@@ -96,12 +99,25 @@ export default class RouteEditor extends View
         }
     }
 
-    setDirection(direction)
+    setDirection(direction = 0, transition = true)
     {
         this.setProperty("direction", direction);
         if (this.$header)
         {
-            this.$header.find(".direction > input").val(direction);
+            const degree = window.parseInt(direction) - 45;
+            if (transition)
+            {
+                this.$directionIcon.transition({
+                    transform: `rotate(${degree}deg)`
+                }, 200);
+            }
+            else
+            {
+                this.$directionIcon.css({
+                    transform: `rotate(${degree}deg)`
+                });
+            }
+            this.$progressBar.val(direction || 0);
         }
     }
 
@@ -147,10 +163,5 @@ export default class RouteEditor extends View
     isShown()
     {
         return this._isShown;
-    }
-
-    _directionFormat(value)
-    {
-        // TODO
     }
 }
