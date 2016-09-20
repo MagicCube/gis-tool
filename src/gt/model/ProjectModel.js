@@ -37,6 +37,7 @@ export default class ProjectModel extends Model
     appendItem(path, item)
     {
         const items = this.getProperty(path);
+        item.id = uuid.v1();
         items.push(item);
     }
 
