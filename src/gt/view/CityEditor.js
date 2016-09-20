@@ -108,7 +108,6 @@ export default class CityEidtor extends View
     
     setCode(code)
     {
-        console.log("set code", code);
         this.setProperty("code", code);
         if (this.$header)
         {

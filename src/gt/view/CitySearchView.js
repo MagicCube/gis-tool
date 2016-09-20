@@ -17,14 +17,13 @@ export default class CitySearchView extends View
         this.$element.append(this.$input);
         this.$list = $("<ul/>");
         this.$element.append(this.$list);
+        this._hideList();
+        
+        this.$input.on("blur", this._hideList.bind(this));
         
         this.$input.on("change", e => {
             this.getParent().setName($(e.currentTarget).val());
             this._hideList();
-        });
-        
-        this.$input.on("focus", e => {
-            this._showList();
         });
         
         this.$input.on("input", e => {
@@ -74,6 +73,10 @@ export default class CitySearchView extends View
                     this._showList();
                 }
             });
+        }
+        else
+        {
+            this._hideList();
         }
     }
     
