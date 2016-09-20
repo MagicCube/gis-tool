@@ -6,6 +6,12 @@ import RouteLayer from "./layer/RouteLayer";
 
 export default class MapView extends SuperMapView
 {
+    metadata = {
+        properties: {
+            minZoom: { defaultValue: 10 }
+        }
+    };
+    
     afterInit()
     {
         super.afterInit();
