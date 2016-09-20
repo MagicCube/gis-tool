@@ -33,7 +33,12 @@ export default class CitySearchView extends View
             }, 300);
         });
         
-        this.$list.on("mousedown", "li", this._onListClicked.bind(this));
+        this.$list.on("mousedown", "li", e => {
+            const city = $(e.currentTarget).data("city");
+            this.getParent().setCity(city);
+            this._hideList();
+            e.preventDefault();
+        });
     }
     
     setName(value)
@@ -78,13 +83,5 @@ export default class CitySearchView extends View
         {
             this._hideList();
         }
-    }
-    
-    _onListClicked(e)
-    {
-        const city = $(e.currentTarget).data("city");
-        this.getParent().setCity(city);
-        this._hideList();
-        e.preventDefault();
     }
 }
