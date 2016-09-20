@@ -18,17 +18,20 @@ export default class BoundLayer extends Layer {
         this.rectangle.editing.enable();
 		this.rectangle.on("edit", e => {
             const [bottomLeft, topLeft, topRight, bottomRight] = e.target.getLatLngs();
-            this.setCityBounds([bottomLeft, topRight]);
+            this.setCityBounds([bottomLeft, topRight], false);
 		});
         
         this.container.addLayer(this.rectangle);
         this.fitBounds();
     }
     
-    setCityBounds(value)
+    setCityBounds(value, clearLayers = true)
     {
         this.setProperty("cityBounds", value);
-        this.container.clearLayers();
-        this._initRect();   
+        if (clearLayers)
+        {
+            this.container.clearLayers();
+            this._initRect();
+        }
     }
 }

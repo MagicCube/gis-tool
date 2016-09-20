@@ -17,14 +17,13 @@ export default class CitySearchView extends View
         this.$element.append(this.$input);
         this.$list = $("<ul/>");
         this.$element.append(this.$list);
+        this._hideList();
+        
+        this.$input.on("blur", this._hideList.bind(this));
         
         this.$input.on("change", e => {
             this.getParent().setName($(e.currentTarget).val());
             this._hideList();
-        });
-        
-        this.$input.on("focus", e => {
-            this._showList();
         });
         
         this.$input.on("input", e => {
@@ -34,7 +33,12 @@ export default class CitySearchView extends View
             }, 300);
         });
         
-        this.$list.on("mousedown", "li", this._onListClicked.bind(this));
+        this.$list.on("mousedown", "li", e => {
+            const city = $(e.currentTarget).data("city");
+            this.getParent().setCity(city);
+            this._hideList();
+            e.preventDefault();
+        });
     }
     
     setName(value)
@@ -75,13 +79,9 @@ export default class CitySearchView extends View
                 }
             });
         }
-    }
-    
-    _onListClicked(e)
-    {
-        const city = $(e.currentTarget).data("city");
-        this.getParent().setCity(city);
-        this._hideList();
-        e.preventDefault();
+        else
+        {
+            this._hideList();
+        }
     }
 }
