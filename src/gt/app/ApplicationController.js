@@ -66,7 +66,15 @@ export default class ApplicationController extends BaseApplicationController
     async run()
     {
         super.run();
-        await this.getModel("project").loadProject();
-        this.sceneTabContainerController.selectSceneController("corridorSceneController");
+        const projectMoel = this.getModel("project");
+        await projectMoel.loadProject();
+        this.sceneTabContainerController.selectSceneController("citySceneController");
+
+        const city = projectMoel.getProperty("/city");
+        if (city && city.centerLocation)
+        {
+            this.view.mapView.setCenterLocation(city.centerLocation);
+        }
+        
     }
 }
