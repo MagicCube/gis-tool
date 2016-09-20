@@ -45,8 +45,9 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindDirection(`${path}/direction`);
         this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
 
-        const bindKeyLocations = this.mapView.corridorLayer;
-        bindKeyLocations.bindKeyLocations(`${path}/keyLocations`);
+        const routeLayer = this.mapView.corridorLayer;
+        routeLayer.bindDirection(`${path}/direction`);
+        routeLayer.bindKeyLocations(`${path}/keyLocations`);
     }
 
     clearSelection()
@@ -56,8 +57,9 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
 
-        const corridorLayer = this.mapView.corridorLayer;
-        corridorLayer.unbindKeyLocations();
+        const routeLayer = this.mapView.corridorLayer;
+        routeLayer.unbindDirection();
+        routeLayer.unbindKeyLocations();
     }
 
     _listView_itemClick(e)

@@ -1,11 +1,13 @@
 import Layer from "sap/a/map/layer/Layer";
 
 import OsmServiceClient from "../../service/OsmServiceClient";
+import GisUtil from "../../gis/GisUtil";
 
 export default class RouteLayer extends Layer
 {
     metadata = {
         properties: {
+            direction: { type: "int", bindable: true },
             keyLocations: { type: "object", bindable: true }
         }
     };
@@ -159,6 +161,13 @@ export default class RouteLayer extends Layer
         }
         keyLocations[index].lat = marker.getLatLng().lat;
         keyLocations[index].lng = marker.getLatLng().lng;
+
+        const direction = GisUtil.getHeading(keyLocations[0], keyLocations[keyLocations.length - 1]);
+        if (!isNaN(direction))
+        {
+            this.setProperty("direction", parseInt(direction));
+        }
+
         this.setProperty("keyLocations", keyLocations);
     }
 }
