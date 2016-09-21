@@ -8,7 +8,7 @@ export default class MapView extends SuperMapView
 {
     metadata = {
         properties: {
-            minZoom: { defaultValue: 10 }
+            minZoom: { defaultValue: 9 }
         }
     };
 
