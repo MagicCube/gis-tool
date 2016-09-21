@@ -5,7 +5,7 @@ import OsmServiceClient from "../../service/OsmServiceClient";
 export default class BoundLayer extends Layer {
     metadata = {
         properties: {
-            osmId: { type: "string", bindable: true },
+            geoJson: { type: "object", bindable: true },
             cityBounds: { type: "object", bindable: true }  //array of array
         },
     };
@@ -38,19 +38,12 @@ export default class BoundLayer extends Layer {
         }
     }
     
-    setOsmId(value)
+    setGeoJson(geoJson)
     {
-        OsmServiceClient.getInstance().getRelation(value).then(relation => {
-            const layer = L.geoJson(relation, {
-                style: function(feature) {
-                    switch (feature.properties.tags.admin_level) {
-                        case '6': return { color: "#ff0000" };
-                        default: return { color: "rgba(0, 0, 0, 0)" };
-                    }
-                }
-            });
-            this.container.addLayer(layer);
-            this.fitBounds();
+        const layer = L.geoJson(geoJson, {
+            color: "#ff0000"
         });
+        this.container.addLayer(layer);
+        this.fitBounds();
     }
 }

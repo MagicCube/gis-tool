@@ -2,8 +2,17 @@ import View from "sap/a/view/View";
 
 import OsmServiceClient from "../service/OsmServiceClient";
 
-export default class CitySearchView extends View
+export default class CityInput extends View
 {
+    metadata = {
+        properties: {
+            city: { type: "object" }
+        },
+        events: {
+            change: { }
+        }
+    };
+    
     init()
     {
         super.init();
@@ -22,8 +31,9 @@ export default class CitySearchView extends View
         this.$input.on("blur", this._hideList.bind(this));
         
         this.$input.on("change", e => {
-            this.getParent().setName($(e.currentTarget).val());
+            this.getCity().displayName = this.$input.val();
             this._hideList();
+            this.fireChange();
         });
         
         this.$input.on("input", e => {
@@ -35,20 +45,17 @@ export default class CitySearchView extends View
         
         this.$list.on("mousedown", "li", e => {
             const city = $(e.currentTarget).data("city");
-            this.getParent().setCity(city);
+            this.setCity(city);
+            this.fireChange();
             this._hideList();
             e.preventDefault();
         });
     }
     
-    setName(value)
+    setCity(value)
     {
-        this.$input.val(value);
-    }
-    
-    getName()
-    {
-        return this.$input.val();
+        this.setProperty("city", value);
+        this.$input.val(value.displayName);
     }
     
     _hideList()

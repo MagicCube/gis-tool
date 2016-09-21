@@ -27,15 +27,6 @@ export default class OsmServiceClient extends ManagedObject
         return res;
     }
 
-    async getRelation(osmId)
-    {
-        const res = await $.ajax({
-            url: `${this.getBaseUrl()}/relation/${osmId}`,
-            contentType: "application/json"
-        });
-        return res;
-    }
-
     // Supported location format: [lng, lat] and { lat, lng }
     async getRoute(locations, maxAge = 0)
     {

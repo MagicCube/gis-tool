@@ -1,6 +1,6 @@
 import View from "sap/a/view/View";
 
-import CitySearchView from "../view/CitySearchView";
+import CityInput from "../view/CityInput";
 import OsmServiceClient from "../service/OsmServiceClient";
 
 export default class CityEidtor extends View
@@ -9,7 +9,9 @@ export default class CityEidtor extends View
         properties: {
             bounds: { type: "object", bindable: true },
             centerLocation: { type: "object", bindable: true },
+            city: { type: "object", bindable: true },
             code: { type: "string", bindable: true },
+            geoJson: { type: "object", bindable: true },
             name: { type: "string", bindable: true },
             osmId: { typr: "string", bindable: true }
         }
@@ -45,8 +47,11 @@ export default class CityEidtor extends View
                 </div>
             </header>
         `);
-        this.citySearchView = new CitySearchView();
-        this.addSubview(this.citySearchView, this.$header.find(".name"));
+        this.cityInput = new CityInput();
+        this.addSubview(this.cityInput, this.$header.find(".name"));
+        this.cityInput.attachChange(e => {
+            this.setCity(this.cityInput.getCity());
+        });
         
         this.$element.append(this.$header);
         
@@ -90,29 +95,19 @@ export default class CityEidtor extends View
 
     setCity(value)
     {
-        this.setName(value.displayName);
-        this.setCode(value.code || "");
-        this.setBounds(value.bounds);
-        this.setCenterLocation(value.centerLocation);
-        this.setOsmId(value.osmId);
-    }
-
-    setName(name)
-    {
-        this.setProperty("name", name);
-        if (this.$header)
-        {
-            this.citySearchView.setName(name);
-        }
+        this.setProperty("city", value);
+        this.cityInput.setCity(value);
+        // this.setName(value.displayName);
+        // this.setCode(value.code || "");
+        // this.setBounds(value.bounds);
+        // this.setCenterLocation(value.centerLocation);
+        // this.setOsmId(value.osmId);
     }
     
     setCode(code)
     {
         this.setProperty("code", code);
-        if (this.$header)
-        {
-            this.$header.find(".code > input").val(code);
-        }
+        this.$header.find(".code > input").val(code);
     }
     
     setBounds(bounds)
