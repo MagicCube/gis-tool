@@ -95,7 +95,8 @@ export default class RouteLayer extends Layer
     onExternalDragOver(e)
     {
         let marker = null;
-        const markerName = e.dataTransfer.types[0];
+        const markerName = e.dataTransfer.types[2];
+
         if (markerName === "origin")
         {
             if (this.markers[0])
@@ -136,7 +137,7 @@ export default class RouteLayer extends Layer
     onExternalDrop(e)
     {
         let marker = null;
-        const markerName = e.dataTransfer.types[0];
+        const markerName = e.dataTransfer.types[2];
         if (markerName === "origin")
         {
             marker = this.markers[0];
