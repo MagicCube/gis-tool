@@ -47,6 +47,7 @@ export default class RouteEditor extends View
                         <i class="icon ion-navigate" />
                     </label>
                     <input type="range" min="0" max="360" step="5" />
+                    <div class="title"><span class="small" /></div>
                 </div>
             </header>
         `);
@@ -54,13 +55,30 @@ export default class RouteEditor extends View
         this.$header.find(".name > input").on("change", e => {
             this.setName($(e.currentTarget).val());
         });
-        this.$header.find(".direction > input").on("input", e => {
+        this.$header.find(".direction > input").on("input", () => {
+            const direction = window.parseInt(this.$header.find(".direction > input").val()) || 0;
+            this._onDirectionTitleChange(direction);
+        });
+        this.$header.find(".direction > input").on("change", e => {
             const direction = window.parseInt(this.$header.find(".direction > input").val());
             const delta = Math.abs(direction - (this.getDirection() || 0));
             this.setDirection(direction, delta > 20);
         });
+
         this.$directionIcon = this.$header.find(".direction > label");
         this.$progressBar = this.$header.find(".direction > input");
+        this.$progressBarTitle = this.$header.find(".direction > .title");
+
+        this.$progressBar.on("mouseenter mousemove", () => {
+            this.$progressBarTitle.css({
+                display: "flex"
+            });
+        });
+        this.$progressBar.on("mouseleave", () => {
+            this.$progressBarTitle.css({
+                display: "none"
+            });
+        });
     }
 
     _initMain()
@@ -117,7 +135,9 @@ export default class RouteEditor extends View
                     transform: `rotate(${degree}deg)`
                 });
             }
-            this.$progressBar.val(direction || 0);
+            const displayValue = direction || 0;
+            this.$progressBar.val(displayValue);
+            this._onDirectionTitleChange(displayValue);
         }
     }
 
@@ -163,5 +183,14 @@ export default class RouteEditor extends View
     isShown()
     {
         return this._isShown;
+    }
+
+    _onDirectionTitleChange(direction)
+    {
+        const left = (40 + direction / 360 * 300) * 0.96 + 7;
+        this.$progressBarTitle.children("span").text(direction);
+        this.$progressBarTitle.css({
+            left: `${left}px`
+        });
     }
 }
