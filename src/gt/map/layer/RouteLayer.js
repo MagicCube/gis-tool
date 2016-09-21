@@ -25,10 +25,13 @@ export default class RouteLayer extends Layer
         this.markers = [];
         if (value)
         {
-            value.forEach(latLng => {
+            value.forEach((latLng, i) => {
                 if (latLng.lat && latLng.lng)
                 {
-                    const marker = this.addMarker(latLng);
+                    const marker = this.addMarker({
+                        latLng,
+                        icon: (i === 0 ? "marker-origin" : "marker-destination")
+                    });
                     this.markers.push(marker);
                 }
             });
@@ -40,10 +43,15 @@ export default class RouteLayer extends Layer
     }
 
 
-    addMarker(latLng)
+    addMarker({ latLng, icon = "marker-origin" } = {})
     {
         const marker = L.marker(latLng, {
-            draggable: true
+            draggable: true,
+            icon: L.icon({
+                iconUrl: `/vendor/leaflet/images/${icon}.png`,
+                iconSize: [25, 41],
+                iconAnchor: [12.5, 41],
+            })
         });
         this.container.addLayer(marker);
         marker.on("drag", this._marker_ondragover.bind(this));
@@ -96,7 +104,10 @@ export default class RouteLayer extends Layer
             }
             else
             {
-                marker = this.addMarker(e.latLng);
+                marker = this.addMarker({
+                    latLng: e.latLng,
+                    icon: "marker-origin"
+                });
                 this.markers[0] = marker;
             }
         }
@@ -108,7 +119,10 @@ export default class RouteLayer extends Layer
             }
             else
             {
-                marker = this.addMarker(e.latLng);
+                marker = this.addMarker({
+                    latLng: e.latLng,
+                    icon: "marker-destination"
+                });
                 this.markers[1] = marker;
             }
         }
