@@ -36,8 +36,17 @@
         {
             "id": 1,
             "name": "应天高架",
-            "direction": "0",
-            "keyLocations": [ {}, {} ]
+            "direction": 0,
+            "keyLocations": [
+                {
+                    "lat": 32.0808,
+                    "lng": 118.7789
+                },
+                {
+                    "lat": 32.0590,
+                    "lng": 118.8051
+                }
+            ]
         }
     ],
     "corridors": [
@@ -81,12 +90,6 @@
             "id": 4,
             "name": "长江二桥",
             "direction": 270,
-            "keyLocations": [ {}, {} ]
-        },
-        {
-            "id": 5,
-            "name": "长江三桥",
-            "direction": 45,
             "keyLocations": [ {}, {} ]
         }
     ]

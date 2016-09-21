@@ -2,7 +2,6 @@ import StateBus from "sap/a/state/StateBus";
 
 import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
-import RouteListItem from "../view/RouteListItem";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
 
@@ -14,6 +13,7 @@ export default class CorridorSceneController extends SceneController
             id: "corridorScene",
             title: "CORRIDOR"
         });
+        
         this.mapView = scene.mapView;
 
         this.listView = new RouteListView({
