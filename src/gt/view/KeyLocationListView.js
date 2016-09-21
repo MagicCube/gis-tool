@@ -32,26 +32,35 @@ export default class KeylocationListView extends View
 
     _addItem(item, index)
     {
-        let iconClass;
-        if (index === this.getItems().length - 1)
+        let iconUrl;
+        let placeholder;
+        if (index === 0)
         {
-            iconClass = "ion-location";
+            iconUrl = "../vendor/leaflet/images/marker-origin.png";
+            placeholder = "From";
+        }
+        else if (index === this.getItems().length - 1)
+        {
+            iconUrl = "../vendor/leaflet/images/marker-destination.png";
+            placeholder = "To";
         }
         else
         {
-            iconClass = "ion-android-radio-button-on";
+            iconUrl = "../vendor/leaflet/images/marker-destination.png";
+            placeholder = "Passby";
         }
+
         const draggable = (index === 0 || index === this.getItems().length - 1) ? "true" : "false";
         const $keyLocation = $(`
             <div class="item">
-                <label draggable=${draggable}><i class="icon ${iconClass}"></i></label>
-                <input type="text" disabled="true" value="${this._formatItem(item)}" />
+                <label draggable=${draggable}><img src=${iconUrl} /></label>
+                <input type="text" disabled="true" value="${this._formatItem(item, placeholder)}" />
             </div>
         `);
 
         if (draggable)
         {
-            $keyLocation.children("label").on("dragstart", e => {
+            $keyLocation.find("label").on("dragstart", e => {
                 e = e.originalEvent;
                 if (index === 0)
                 {
@@ -69,15 +78,15 @@ export default class KeylocationListView extends View
         this.$container.append($keyLocation);
     }
 
-    _formatItem(item)
+    _formatItem(item, placeholder)
     {
         if (item && item.lat)
         {
-            return item ? (item.lat.toFixed(4) + ", " + item.lng.toFixed(4)) : "N/A"
+            return item ? (item.lat.toFixed(4) + ", " + item.lng.toFixed(4)) : placeholder
         }
         else
         {
-            return "N/A";
+            return placeholder;
         }
     }
 }
