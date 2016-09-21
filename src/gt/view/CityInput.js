@@ -16,7 +16,7 @@ export default class CityInput extends View
     init()
     {
         super.init();
-        this.addStyleClass("gt-city-search-view");
+        this.addStyleClass("gt-city-input");
         this._initLayout();
     }
 

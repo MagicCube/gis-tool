@@ -97,11 +97,6 @@ export default class CityEidtor extends View
     {
         this.setProperty("city", value);
         this.cityInput.setCity(value);
-        // this.setName(value.displayName);
-        // this.setCode(value.code || "");
-        // this.setBounds(value.bounds);
-        // this.setCenterLocation(value.centerLocation);
-        // this.setOsmId(value.osmId);
     }
     
     setCode(code)
