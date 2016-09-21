@@ -2,6 +2,12 @@ import RouteEditor from "./RouteEditor";
 
 export default class WayEditor extends RouteEditor
 {
+    metadata = {
+        properties: {
+            category: { type: "int", bindable: true },
+        }
+    };
+    
     init()
     {
         super.init();
@@ -24,5 +30,19 @@ export default class WayEditor extends RouteEditor
                 <i class="icon ion-arrow-down-b dropdown-icon" />
             </div>
         `);
+        
+        this.$category = this.$("header .category select");
+        this.$category.on("change", e => {
+            this.setCategory(parseInt(this.$category.val()));
+        });
+    }
+    
+    setCategory(value)
+    {
+        this.setProperty("category", value);
+        if (value)
+        {
+            this.$category.val(value);            
+        }
     }
 }

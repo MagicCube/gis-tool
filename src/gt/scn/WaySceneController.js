@@ -42,6 +42,7 @@ export default class WaySceneController extends SceneController
 
         const path = "project>/ways/" + index;
         this.routeEditor.bindName(`${path}/name`);
+        this.routeEditor.bindCategory(`${path}/category`);
         this.routeEditor.bindDirection(`${path}/direction`);
         this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
 

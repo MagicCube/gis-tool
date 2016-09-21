@@ -22,7 +22,16 @@
             "name": "应天高架",
             "category": 1,
             "direction": 0,
-            "keyLocations": [ {}, {} ]
+            "keyLocations": [
+                {
+                    "lat": 32.0808,
+                    "lng": 118.7789
+                },
+                {
+                    "lat": 32.0590,
+                    "lng": 118.8051
+                }
+            ]
         },
         {
             "id": 2,
