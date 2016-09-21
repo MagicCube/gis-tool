@@ -46,7 +46,8 @@ export default class RouteEditor extends View
                     <label>
                         <i class="icon ion-navigate" />
                     </label>
-                    <input type="range" min="0" max="360" step="5" />
+                    <input type="range" min="0" max="360" step="5" title="haha" />
+                    <div class="title"><span class="small" /></div>
                 </div>
             </header>
         `);
@@ -59,8 +60,21 @@ export default class RouteEditor extends View
             const delta = Math.abs(direction - (this.getDirection() || 0));
             this.setDirection(direction, delta > 20);
         });
+
         this.$directionIcon = this.$header.find(".direction > label");
         this.$progressBar = this.$header.find(".direction > input");
+        this.$progressBarTitle = this.$header.find(".direction > .title");
+
+        this.$progressBar.on("mouseenter mousemove", () => {
+            this.$progressBarTitle.css({
+                display: "flex"
+            });
+        });
+        this.$progressBar.on("mouseleave", () => {
+            this.$progressBarTitle.css({
+                display: "none"
+            });
+        });
     }
 
     _initMain()
@@ -117,7 +131,13 @@ export default class RouteEditor extends View
                     transform: `rotate(${degree}deg)`
                 });
             }
-            this.$progressBar.val(direction || 0);
+            const displayValue = direction || 0;
+            const left = (40 + displayValue / 360 * 300) * 0.96 + 7;
+            this.$progressBar.val(displayValue);
+            this.$progressBarTitle.children("span").text(displayValue);
+            this.$progressBarTitle.css({
+                left: `${left}px`
+            });
         }
     }
 

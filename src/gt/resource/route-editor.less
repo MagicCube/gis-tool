@@ -2,9 +2,27 @@
 {
     header
     {
-        .direction > label
+        .item
         {
-            transform: rotate(-45deg);
+            &.direction
+            {
+                position: relative;
+
+                label
+                {
+                    transform: rotate(-45deg);
+                }
+
+                .title
+                {
+                    position: absolute;
+                    top: -4px;
+                    width: 30px;
+                    margin-left: -15px;
+                    display: none;    // flex
+                    justify-content: center;
+                }
+            }
         }
     }
 
