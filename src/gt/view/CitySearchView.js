@@ -76,12 +76,10 @@ export default class CitySearchView extends View
                 if (cities.length > 0)
                 {
                     this._showList();
+                    return;
                 }
             });
         }
-        else
-        {
-            this._hideList();
-        }
+        this._hideList();
     }
 }

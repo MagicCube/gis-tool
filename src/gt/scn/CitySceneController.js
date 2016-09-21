@@ -18,6 +18,7 @@ export default class CitySceneController extends SceneController
 
         this.mapView = scene.mapView;
         this.mapView.boundLayer.bindCityBounds("project>/city/bounds");
+        this.mapView.boundLayer.bindOsmId("project>/city/osmId");
 
         this.cityEditor = new CityEditor();
         this.cityEditor.bindBounds("project>/city/bounds");
