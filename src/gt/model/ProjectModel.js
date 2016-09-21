@@ -7,11 +7,12 @@ export default class ProjectModel extends Model
     {
         super(...args);
         this.serviceClient = new ProjectServiceClient();
+        this.attachPropertyChange(this._onPropertyChange.bind(this));
     }
 
-    async loadProject(code = "default")
+    async loadProject(id = "default")
     {
-        const project = await this.serviceClient.getProject(code);
+        const project = await this.serviceClient.getProject(id);
         if (project)
         {
             this.setData(project);
@@ -20,14 +21,18 @@ export default class ProjectModel extends Model
 
     async saveProject()
     {
-        const result = await this.serviceClient.updateProject(this.getData());
-        if (result.version)
+        try
         {
-            this.setProperty("version", result.version);
+            const result = await this.serviceClient.updateProject(this.getData());
+            if (result.version)
+            {
+                this.setProperty("/version", result.version);
+                console.log("Project has been automatically saved.");
+            }
         }
-        else
+        catch (e)
         {
-            throw new Error(`#saveProject failed. Server responded with ${result}`);
+            alert("Save failed.")
         }
     }
 
@@ -39,16 +44,26 @@ export default class ProjectModel extends Model
         const items = this.getProperty(path);
         item.id = uuid.v1();
         items.push(item);
-    }
-
-    updateItem(path, item)
-    {
-
+        this._onPropertyChange();
     }
 
     removeItem(path, item)
     {
         const items = this.getProperty(path);
         items.splice(items.findIndex(i => i.id === item.id), 1);
+        this._onPropertyChange();
+    }
+
+    _onPropertyChange()
+    {
+        if (this._autoSaveTimer)
+        {
+            clearTimeout(this._autoSaveTimer);
+            this._autoSaveTimer = null;
+        }
+        this._autoSaveTimer = setTimeout(() => {
+            this._autoSaveTimer = null;
+            this.saveProject();
+        }, 200);
     }
 }

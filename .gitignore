@@ -34,3 +34,6 @@ node_modules
 
 # Temp
 tmp
+
+# Project
+projects/default.json
