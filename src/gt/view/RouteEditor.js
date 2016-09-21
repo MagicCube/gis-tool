@@ -46,7 +46,7 @@ export default class RouteEditor extends View
                     <label>
                         <i class="icon ion-navigate" />
                     </label>
-                    <input type="range" min="0" max="360" step="5" title="haha" />
+                    <input type="range" min="0" max="360" step="5" />
                     <div class="title"><span class="small" /></div>
                 </div>
             </header>
@@ -55,7 +55,11 @@ export default class RouteEditor extends View
         this.$header.find(".name > input").on("change", e => {
             this.setName($(e.currentTarget).val());
         });
-        this.$header.find(".direction > input").on("input", e => {
+        this.$header.find(".direction > input").on("input", () => {
+            const direction = window.parseInt(this.$header.find(".direction > input").val()) || 0;
+            this._onDirectionTitleChange(direction);
+        });
+        this.$header.find(".direction > input").on("change", e => {
             const direction = window.parseInt(this.$header.find(".direction > input").val());
             const delta = Math.abs(direction - (this.getDirection() || 0));
             this.setDirection(direction, delta > 20);
@@ -132,12 +136,8 @@ export default class RouteEditor extends View
                 });
             }
             const displayValue = direction || 0;
-            const left = (40 + displayValue / 360 * 300) * 0.96 + 7;
             this.$progressBar.val(displayValue);
-            this.$progressBarTitle.children("span").text(displayValue);
-            this.$progressBarTitle.css({
-                left: `${left}px`
-            });
+            this._onDirectionTitleChange(displayValue);
         }
     }
 
@@ -183,5 +183,14 @@ export default class RouteEditor extends View
     isShown()
     {
         return this._isShown;
+    }
+
+    _onDirectionTitleChange(direction)
+    {
+        const left = (40 + direction / 360 * 300) * 0.96 + 7;
+        this.$progressBarTitle.children("span").text(direction);
+        this.$progressBarTitle.css({
+            left: `${left}px`
+        });
     }
 }
