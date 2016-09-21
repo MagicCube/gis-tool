@@ -1,0 +1,30 @@
+.gt-way-editor
+{
+    .category
+    {
+        position: relative;
+        
+        select
+        {
+            -webkit-appearance: none;
+            appearance: none;
+            background: inherit;
+            border-radius: 0;
+            
+            &:focus
+            {
+                & + .dropdown-icon
+                {
+                    color: white;
+                }
+            }
+        }
+        
+        .dropdown-icon
+        {
+            position: absolute;
+            right: 2px;
+            color: rgba(250, 250, 250, 0.75);
+        }
+    }
+}

@@ -1,9 +1,9 @@
 import StateBus from "sap/a/state/StateBus";
 
-import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
+import WayEditor from "../view/WayEditor";
 
 export default class WaySceneController extends SceneController
 {
@@ -26,7 +26,7 @@ export default class WaySceneController extends SceneController
         const fab = scene.fab;
         fab.attachClick(this._fab_click.bind(this));
 
-        this.routeEditor = new RouteEditor({
+        this.routeEditor = new WayEditor({
             create: this._routeEditor_create.bind(this),
             cancel: this._routeEditor_cancel.bind(this)
         });
