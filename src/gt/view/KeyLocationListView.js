@@ -1,5 +1,8 @@
 import View from "sap/a/view/View";
 
+const ORIGIN_MARKER_URL = "../vendor/leaflet/images/marker-origin.png";
+const DESTINATION_MARKER_URL = "../vendor/leaflet/images/marker-destination.png";
+
 export default class KeylocationListView extends View
 {
     metadata = {
@@ -36,17 +39,17 @@ export default class KeylocationListView extends View
         let placeholder;
         if (index === 0)
         {
-            iconUrl = "../vendor/leaflet/images/marker-origin.png";
+            iconUrl = ORIGIN_MARKER_URL;
             placeholder = "From";
         }
         else if (index === this.getItems().length - 1)
         {
-            iconUrl = "../vendor/leaflet/images/marker-destination.png";
+            iconUrl = DESTINATION_MARKER_URL;
             placeholder = "To";
         }
         else
         {
-            iconUrl = "../vendor/leaflet/images/marker-destination.png";
+            iconUrl = ORIGIN_MARKER_URL;
             placeholder = "Passby";
         }
 
@@ -62,16 +65,20 @@ export default class KeylocationListView extends View
         {
             $keyLocation.find("label").on("dragstart", e => {
                 e = e.originalEvent;
+                const img = new Image();
                 if (index === 0)
                 {
                     e.dataTransfer.effectAllowed = "move";
                     e.dataTransfer.setData("origin", "true");
+                    img.src = ORIGIN_MARKER_URL;
                 }
                 else
                 {
                     e.dataTransfer.effectAllowed = "move";
                     e.dataTransfer.setData("destination", "true");
+                    img.src = DESTINATION_MARKER_URL;
                 }
+                e.dataTransfer.setDragImage(img, 12.5, 41);
             });
         }
 
