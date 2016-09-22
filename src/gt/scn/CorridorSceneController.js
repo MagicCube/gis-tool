@@ -44,6 +44,7 @@ export default class CorridorSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
         this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
+        this.routeEditor.show();
 
         const routeLayer = this.mapView.corridorLayer;
         routeLayer.bindDirection(`${path}/direction`);
@@ -87,6 +88,7 @@ export default class CorridorSceneController extends SceneController
             if (selectedRoute && route.id === selectedRoute.id)
             {
                 this.clearSelection();
+                this.routeEditor.hide();
             }
 
             const projectModel = sap.ui.getCore().getModel("project");

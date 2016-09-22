@@ -31,7 +31,11 @@ export default class Scene extends SuperScene
             const id = this.getId();
             this.addSubview(this.mapView, this.$(">main"));
 
-            if (id !== "cityScene")
+            if (id === "cityScene")
+            {
+                this.mapView.boundLayer.fitBounds();
+            }
+            else
             {
                 this.addSubview(this.fab, this.$(">main"));
             }

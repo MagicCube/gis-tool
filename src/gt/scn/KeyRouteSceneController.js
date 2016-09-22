@@ -44,6 +44,7 @@ export default class KeyRouteSceneController extends SceneController
         this.routeEditor.bindName(`${path}/name`);
         this.routeEditor.bindDirection(`${path}/direction`);
         this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
+        this.routeEditor.show();
 
         const routeLayer = this.mapView.keyRouteLayer;
         routeLayer.bindDirection(`${path}/direction`);
@@ -87,6 +88,7 @@ export default class KeyRouteSceneController extends SceneController
             if (selectedRoute && route.id === selectedRoute.id)
             {
                 StateBus.getInstance().setState("/selectedKeyRoute", null);
+                this.routeEditor.hide();
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
