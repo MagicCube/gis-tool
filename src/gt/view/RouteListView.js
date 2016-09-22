@@ -19,7 +19,7 @@ export default class RouteListView extends ListView
     
     _initPrompt()
     {
-        this.$prompt = $(`<div class="prompt">Click the button at bottom right to create route.</div>`)
+        this.$prompt = $(`<div class="prompt">No route found in this project. Please click the "+" button at bottom right to create route.</div>`)
         this.$container.append(this.$prompt);
     }
 
