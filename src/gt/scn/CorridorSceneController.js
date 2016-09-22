@@ -13,7 +13,7 @@ export default class CorridorSceneController extends SceneController
             id: "corridorScene",
             title: "CORRIDOR"
         });
-        
+
         this.mapView = scene.mapView;
 
         this.listView = new RouteListView({

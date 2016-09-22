@@ -52,17 +52,26 @@ export default class RouteEditor extends View
             </header>
         `);
         this.$element.append(this.$header);
-        this.$header.find(".name > input").on("change", e => {
+        const $name = this.$header.find(".name > input");
+        $name.on("change", e => {
             this.setName($(e.currentTarget).val());
+        });
+        $name.on("keydown", e => {
+            if (e.keyCode === 13)   // enter
+            {
+                setTimeout(() => {
+                    this.fireCreate();
+                });
+            }
         });
         this.$header.find(".direction > input").on("input", () => {
             const direction = window.parseInt(this.$header.find(".direction > input").val()) || 0;
+            this._transitDirectionIcon(direction, false);
             this._onDirectionTitleChange(direction);
         });
         this.$header.find(".direction > input").on("change", e => {
             const direction = window.parseInt(this.$header.find(".direction > input").val());
-            const delta = Math.abs(direction - (this.getDirection() || 0));
-            this.setDirection(direction, delta > 20);
+            this.setDirection(direction);
         });
 
         this.$directionIcon = this.$header.find(".direction > label");
@@ -122,21 +131,9 @@ export default class RouteEditor extends View
         this.setProperty("direction", direction);
         if (this.$header)
         {
-            const degree = window.parseInt(direction) - 45;
-            if (transition)
-            {
-                this.$directionIcon.transition({
-                    transform: `rotate(${degree}deg)`
-                }, 200);
-            }
-            else
-            {
-                this.$directionIcon.css({
-                    transform: `rotate(${degree}deg)`
-                });
-            }
             const displayValue = direction || 0;
             this.$progressBar.val(displayValue);
+            this._transitDirectionIcon(direction, transition);
             this._onDirectionTitleChange(displayValue);
         }
     }
@@ -192,5 +189,22 @@ export default class RouteEditor extends View
         this.$progressBarTitle.css({
             left: `${left}px`
         });
+    }
+
+    _transitDirectionIcon(direction, transition)
+    {
+        const degree = window.parseInt(direction) - 45;
+        if (transition && this.$directionIcon)
+        {
+            this.$directionIcon.transition({
+                transform: `rotate(${degree}deg)`
+            }, 200);
+        }
+        else
+        {
+            this.$directionIcon.css({
+                transform: `rotate(${degree}deg)`
+            });
+        }
     }
 }
