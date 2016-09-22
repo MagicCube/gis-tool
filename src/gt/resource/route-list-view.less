@@ -6,6 +6,14 @@
     margin: 0;
     list-style: none;
     overflow-y: auto;
+    position: relative;
+    
+    .prompt
+    {
+        position: absolute;
+        margin: 20px 14px 0 14px;
+        padding: 10px 8px;
+    }
 
     > li
     {
@@ -13,9 +21,8 @@
         line-height: @list-item-height;
         background-color: white;
         margin: 6px 14px 6px 14px;
+        padding: 0 8x;
         display: flex;
-        padding-left: 8px;
-        padding-right: 8px;
         cursor: pointer;
         transition: all 0.2s;
 
@@ -35,7 +42,7 @@
             transform: translate(-1px, -1px);
         }
 
-        &:first-child
+        &:first-of-type
         {
             margin-top: 20px;
         }

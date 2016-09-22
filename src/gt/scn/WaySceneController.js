@@ -45,6 +45,7 @@ export default class WaySceneController extends SceneController
         this.routeEditor.bindCategory(`${path}/category`);
         this.routeEditor.bindDirection(`${path}/direction`);
         this.routeEditor.bindKeyLocations(`${path}/keyLocations`);
+        this.routeEditor.show();
 
         const routeLayer = this.mapView.wayLayer;
         routeLayer.bindDirection(`${path}/direction`);
@@ -88,6 +89,7 @@ export default class WaySceneController extends SceneController
             if (selectedRoute && route.id === selectedRoute.id)
             {
                 StateBus.getInstance().setState("/selectedWay", null);
+                this.routeEditor.hide();
             }
 
             const projectModel = sap.ui.getCore().getModel("project");
