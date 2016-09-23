@@ -163,7 +163,9 @@ export default class CorridorSceneController extends SceneController
             top: 20,
             right: 20
         });
-        this.selectRoute(projectModel.getProperty("/corridors").length - 1);
+        const routeIndex = projectModel.getProperty("/corridors").length - 1;
+        this.selectRoute(routeIndex);
+        this.listView.selectRoute(routeIndex);
     }
 
     _routeEditor_cancel()

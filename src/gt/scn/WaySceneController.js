@@ -164,7 +164,9 @@ export default class WaySceneController extends SceneController
             top: 20,
             right: 20
         });
-        this.selectRoute(projectModel.getProperty("/ways").length - 1);
+        const routeIndex = projectModel.getProperty("/ways").length - 1;
+        this.selectRoute(routeIndex);
+        this.listView.selectRoute(routeIndex);
     }
 
     _routeEditor_cancel()

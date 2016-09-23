@@ -5,8 +5,12 @@ import RouteListItem from "./RouteListItem";
 export default class RouteListView extends ListView
 {
     metadata = {
+        properties: {
+            selection: { type: "gt.view.RouteListItem" }
+        },
         events: {
-            itemDelete: { parameters: { item: "object"} }
+            itemDelete: { parameters: { item: "object"} },
+            selectionChange: { }
         }
     };
 
@@ -15,6 +19,10 @@ export default class RouteListView extends ListView
         super.init();
         this.addStyleClass("gt-route-list-view");
         this._initPrompt();
+        this.attachItemClick(e => {
+            const item = e.getParameters().item;
+            this.setSelection(item, true);
+        });
     }
     
     _initPrompt()
@@ -22,7 +30,31 @@ export default class RouteListView extends ListView
         this.$prompt = $(`<div class="prompt">No route found in this project. Please click the "+" button at bottom right to create route.</div>`)
         this.$container.append(this.$prompt);
     }
-
+    
+    setSelection(selection, fireSelectionChange = false)
+    {
+        const prevSelection = this.getSelection();
+        if (!prevSelection || prevSelection !== selection)
+        {
+            if (prevSelection)
+            {
+                prevSelection.setSelected(false);                
+            }
+            selection.setSelected(true);
+            this.setProperty("selection", selection);
+            if (fireSelectionChange)
+            {
+                this.fireSelectionChange();
+            }
+        }
+    }
+    
+    selectRoute(index)
+    {
+        const item = this.getAggregation("items")[index];
+        this.setSelection(item);
+    }
+    
     createItemTemplate()
     {
         const listItem = new RouteListItem({
@@ -36,7 +68,7 @@ export default class RouteListView extends ListView
     addItem(item)
     {
         super.addItem(item);
-        this.hidePrompt();
+        this.$prompt.hide();
     }
     
     removeItem(item, neverUseAgain)
@@ -44,17 +76,7 @@ export default class RouteListView extends ListView
         super.removeItem(item, neverUseAgain);
         if (this.getItems().length === 0)
         {
-            this.showPrompt();            
+            this.$prompt.show();                 
         }
-    }
-    
-    showPrompt()
-    {
-        this.$prompt.show();        
-    }
-    
-    hidePrompt()
-    {
-        this.$prompt.hide();
-    }
+    }    
 }
