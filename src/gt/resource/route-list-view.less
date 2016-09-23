@@ -25,6 +25,16 @@
         display: flex;
         cursor: pointer;
         transition: all 0.2s;
+    
+        &.selected
+        {
+            background-color: @primary-color;
+            color: white;
+            .delete-icon
+            {
+                color: white;
+            }
+        }
 
         &:hover
         {
