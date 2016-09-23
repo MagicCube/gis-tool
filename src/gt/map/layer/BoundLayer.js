@@ -25,25 +25,24 @@ export default class BoundLayer extends Layer {
 		});
         
         this.container.addLayer(this.rectangle);
-        this.fitBounds();
     }
     
-    setCityBounds(value, clearLayers = true)
+    setCityBounds(value, redraw = true)
     {
         this.setProperty("cityBounds", value);
-        if (value && clearLayers)
+        if (redraw)
         {
             this.container.clearLayers();
             this._drawBounds();
+            this.fitBounds(value);
         }
     }
     
-    setGeoJson(geoJson)
+    setGeoJson(value)
     {
-        const layer = L.geoJson(geoJson, {
+        const layer = L.geoJson(value, {
             color: "#ff0000"
         });
         this.container.addLayer(layer);
-        this.fitBounds();
     }
 }

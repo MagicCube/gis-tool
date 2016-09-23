@@ -44,7 +44,7 @@ export default class Scene extends SuperScene
 
             if (id === "cityScene")
             {
-                this.mapView.boundLayer.fitBounds();                    
+                this.mapView.boundLayer.fitBounds(this.mapView.boundLayer.getCityBounds());
             }
         });
     }
