@@ -4,8 +4,9 @@ export default class RouteListItem extends ListItem
 {
     metadata = {
         properties: {
+            direction: { type: "int", bindable: true },
             route: { type: "object", bindable: true },
-            direction: { type: "int", bindable: true }
+            selected: { type: "boolean" }
         },
     };
 
@@ -34,5 +35,11 @@ export default class RouteListItem extends ListItem
     {
         this.setProperty("direction", value);
         this.$directionIcon.css("transform", `rotate(${value ? value : 0}deg)`);
+    }
+    
+    setSelected(value)
+    {
+        this.setProperty("selected", value);
+        this.$container.toggleClass("selected", value);
     }
 }
