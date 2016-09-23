@@ -31,11 +31,7 @@ export default class Scene extends SuperScene
             const id = this.getId();
             this.addSubview(this.mapView, this.$(">main"));
 
-            if (id === "cityScene")
-            {
-                this.mapView.boundLayer.fitBounds();
-            }
-            else
+            if (id !== "cityScene")
             {
                 this.addSubview(this.fab, this.$(">main"));
             }
@@ -44,8 +40,12 @@ export default class Scene extends SuperScene
             this.mapView.toggleLayer(this.mapView.corridorLayer, id === "corridorScene");
             this.mapView.toggleLayer(this.mapView.keyRouteLayer, id === "keyRouteScene");
             this.mapView.toggleLayer(this.mapView.wayLayer, id === "wayScene");
-
             this.mapView.invalidateSize();
+
+            if (id === "cityScene")
+            {
+                this.mapView.boundLayer.fitBounds();                    
+            }
         });
     }
 
