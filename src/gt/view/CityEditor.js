@@ -96,7 +96,8 @@ export default class CityEidtor extends View
     setCity(value)
     {
         this.setProperty("city", value);
-        this.cityInput.setCity(value);
+        const clone = JSON.parse(JSON.stringify(value));
+        this.cityInput.setCity(clone);
     }
     
     setCode(code)
