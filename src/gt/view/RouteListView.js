@@ -40,7 +40,10 @@ export default class RouteListView extends ListView
             {
                 prevSelection.setSelected(false);                
             }
-            selection.setSelected(true);
+            if (selection)
+            {
+                selection.setSelected(true);
+            }
             this.setProperty("selection", selection);
             if (fireSelectionChange)
             {
@@ -48,13 +51,7 @@ export default class RouteListView extends ListView
             }
         }
     }
-    
-    selectRoute(index)
-    {
-        const item = this.getAggregation("items")[index];
-        this.setSelection(item);
-    }
-    
+        
     createItemTemplate()
     {
         const listItem = new RouteListItem({

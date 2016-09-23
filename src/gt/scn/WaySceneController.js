@@ -18,8 +18,8 @@ export default class WaySceneController extends SceneController
 
         this.listView = new RouteListView({
             items: "{project>/ways}",
-            itemClick: this._listView_itemClick.bind(this),
-            itemDelete: this._listView_itemdDelete.bind(this)
+            selectionChange: this._listView_selectionChange.bind(this),
+            itemDelete: this._listView_itemDelete.bind(this)
         });
         scene.addSubview(this.listView, scene.$(">aside"));
 
@@ -38,7 +38,7 @@ export default class WaySceneController extends SceneController
 
     selectRoute(index)
     {
-        this.clearSelection();
+        this.clearSelection(false);
 
         const path = "project>/ways/" + index;
         this.routeEditor.bindName(`${path}/name`);
@@ -52,7 +52,7 @@ export default class WaySceneController extends SceneController
         routeLayer.bindKeyLocations(`${path}/keyLocations`);
     }
 
-    clearSelection()
+    clearSelection(clearListViewSelection = true)
     {
         StateBus.getInstance().setState("/selectedWay", null);
         this.routeEditor.unbindName(false);
@@ -62,11 +62,16 @@ export default class WaySceneController extends SceneController
         const routeLayer = this.mapView.wayLayer;
         routeLayer.unbindDirection();
         routeLayer.unbindKeyLocations();
+        
+        if (clearListViewSelection)
+        {
+            this.listView.setSelection(null);
+        }
     }
     
-    _listView_itemClick(e)
+    _listView_selectionChange(e)
     {
-        const item = e.getParameter("item");
+        const item = this.listView.getSelection();
         const route = item.getRoute();
         StateBus.getInstance().setState("selectedWay", route);
 
@@ -75,26 +80,21 @@ export default class WaySceneController extends SceneController
         this.selectRoute(index);
     }
     
-    _listView_itemdDelete(e)
+    _listView_itemDelete(e)
     {
         const item = e.getParameter("item");
         const route = item.getRoute();
-        if (!confirm(`Are you sure you want to delete ${route.name}?`))
+        if (!confirm(`Do you want to delete ${route.name}?`))
         {
             return;
         }
         if (route)
         {
-            const selectedRoute = StateBus.getInstance().getState("/selectedWay");
-            if (selectedRoute && route.id === selectedRoute.id)
-            {
-                StateBus.getInstance().setState("/selectedWay", null);
-                this.routeEditor.hide();
-            }
+            this.clearSelection();
+            this.routeEditor.hide();
 
             const projectModel = sap.ui.getCore().getModel("project");
             projectModel.removeItem("/ways", route);
-
             this.listView.removeItem(item);
         }
     }
@@ -166,7 +166,7 @@ export default class WaySceneController extends SceneController
         });
         const routeIndex = projectModel.getProperty("/ways").length - 1;
         this.selectRoute(routeIndex);
-        this.listView.selectRoute(routeIndex);
+        this.listView.setSelection(this.listView.getItems()[routeIndex]);
     }
 
     _routeEditor_cancel()
