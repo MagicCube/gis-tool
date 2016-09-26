@@ -16,6 +16,7 @@ export default class SceneTabContainer extends SceneContainer
             ratio: [ 38, undefined ]
         }));
         this._initTabs();
+        this._initActions();
         const $scenePlaceholder = $(`<div class="scene-placeholder">`);
         this.$element.find(".sub-container:nth-child(2)").append($scenePlaceholder);
         this.$container = $scenePlaceholder;
@@ -32,6 +33,18 @@ export default class SceneTabContainer extends SceneContainer
         });
     }
 
+    _initActions()
+    {
+        const $downloadButton = $(
+            `<li class="download-icon">
+                <i class="icon ion-android-download"></i>
+            </li>`
+        );
+        $downloadButton.click(e => {
+            return false;
+        });
+        this.$ul.append($downloadButton);
+    }
 
 
     appendScene(scene)
