@@ -1,6 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 
-export default class ServiceClient extends ManagedObject
+export default class ProjectServiceClient extends ManagedObject
 {
     metadata = {
         properties: {
@@ -8,19 +8,11 @@ export default class ServiceClient extends ManagedObject
         }
     };
 
-    static _instance = null;
-    static getInstance()
-    {
-        if (gt.service.ServiceClient._instance === null)
-        {
-            gt.service.ServiceClient._instance = new gt.service.ServiceClient();
-        }
-        return gt.service.ServiceClient._instance;
-    }
-
     async getProject(projectId)
     {
-        const res = await $.ajax(`${this.getBaseUrl()}/${projectId}`);
+        const res = await $.ajax({
+            url: `${this.getBaseUrl()}/${projectId}`
+        });
         return res;
     }
 

@@ -11,11 +11,11 @@ export default class OsmServiceClient extends ManagedObject
     static _instance = null;
     static getInstance()
     {
-        if (gt.service.ServiceClient._instance === null)
+        if (gt.service.OsmServiceClient._instance === null)
         {
-            gt.service.ServiceClient._instance = new gt.service.OsmServiceClient();
+            gt.service.OsmServiceClient._instance = new gt.service.OsmServiceClient();
         }
-        return gt.service.ServiceClient._instance;
+        return gt.service.OsmServiceClient._instance;
     }
 
     async searchCity(cityName)
@@ -35,7 +35,7 @@ export default class OsmServiceClient extends ManagedObject
             this.getRouteXhr.abort();
             this.getRouteXhr = null;
         }
-        
+
         if (locations.length > 0 && Array.isArray(locations[0]))
         {
             locations = locations.map(location => ({
@@ -61,7 +61,7 @@ export default class OsmServiceClient extends ManagedObject
             url: `${this.getBaseUrl()}/route/${JSON.stringify(json)}`,
             data: data
         });
-        
+
         return new Promise((resolve, reject) => {
             this.getRouteXhr.done(resolve);
             this.getRouteXhr.fail((xhr, status, error) => {

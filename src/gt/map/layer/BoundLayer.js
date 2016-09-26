@@ -1,7 +1,5 @@
 import Layer from "sap/a/map/layer/Layer";
 
-import OsmServiceClient from "../../service/OsmServiceClient";
-
 export default class BoundLayer extends Layer {
     metadata = {
         properties: {
@@ -9,7 +7,7 @@ export default class BoundLayer extends Layer {
             cityBounds: { type: "object", bindable: true }  //array of array
         },
     };
-    
+
     _drawBounds() {
         const bounds = this.getCityBounds();
         this.rectangle = L.rectangle(bounds, {
@@ -17,16 +15,16 @@ export default class BoundLayer extends Layer {
             opacity: 0.8,
             weight: 2
         });
-        
+
         this.rectangle.editing.enable();
 		this.rectangle.on("edit", e => {
             const [bottomLeft, topLeft, topRight, bottomRight] = e.target.getLatLngs();
             this.setCityBounds([bottomLeft, topRight], false);
 		});
-        
+
         this.container.addLayer(this.rectangle);
     }
-    
+
     setCityBounds(value, redraw = true)
     {
         this.setProperty("cityBounds", value);
@@ -37,7 +35,7 @@ export default class BoundLayer extends Layer {
             this.fitBounds(value);
         }
     }
-    
+
     setGeoJson(value)
     {
         const layer = L.geoJson(value, {
