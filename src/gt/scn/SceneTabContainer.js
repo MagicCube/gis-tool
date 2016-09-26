@@ -48,7 +48,7 @@ export default class SceneTabContainer extends SceneContainer
                     console.log("Download success");
                 })
                 .catch(reason => {
-                    alert(`Download failed. ${reason}`);
+                    console.error(`Download failed. ${reason}`);
                 })
             return false;
         });
