@@ -1,0 +1,176 @@
+# Save it in UTF-8 without BOM
+
+###################################################################################################
+[MAIN]
+in_command = OsmDownload, GenerateBasics, EdgesRoads, EdgeTiles, ExtKeyRoutes, ExtAreas, EdgeName
+#in_command = EdgeTiles
+
+# file names such as city_01.osm
+in_osm_xml_files = output\city_*.osm
+
+# Only segments in the below box are saved to csv/json, format: left, bottom, right, top
+in_bbox = {{in_bbox}} # normal extended city area
+
+###################################################################################################
+[OsmDownload]
+
+degree_step = 0.1 # lat, lng step
+export_pattern_url = http://api.openstreetmap.org/api/0.6/map?bbox=%lf,%lf,%lf,%lf
+
+proxy = proxy.wdf.sap.corp:8080 # leave if blank if no proxy
+thread_num = 7
+
+osm_xml_part_num = 8
+out_osm_data_xmls = output\city_*.osm
+
+###################################################################################################
+# This section is for gereation of basic data structures: city, segments, ways. etc.
+[GenerateBasics]
+# NOTE: this section depends on some input configuration items in section "GenerateBasics"
+
+# For city related
+in_city_id = {{in_city_id}}
+in_city_name = {{in_city_name}}   # name in default language, must be same from OSM map
+in_city_admin_level = 5 # by default, in OSM admin level of city is 5. It may change in different
+                        # countries.
+
+# pre-specified parameters of areas. leave it blank if no pre-spedified area size
+in_area_pre_defines_csv = input\area_pre_defines.csv
+
+# For segment related
+in_split_if_needed = 1 # whether to split if segment length is greater than max_segment_length
+in_max_segment_length = 200 # in meter
+
+# way type filter for segments generation
+in_way_types_filter_for_segments = motorway, trunk, primary, secondary, tertiary, unclassified, \
+    residential, service, motorway_link, trunk_link, primary_link, secondary_link, tertiary_link, \
+    living_street, track, road
+
+# interested way types to output ways
+in_way_types_filter = motorway, trunk, primary, secondary, tertiary, unclassified, residential
+
+# segment outputs
+segments_part_num = 1
+out_segments_csv = output\segments_*.csv
+out_segments_json = # leave it blank if not needed
+
+# ways in GSON
+out_ways_json =
+
+# city related outputs
+out_city_csv = output\city.csv
+out_city_names_csv = output\city_names.csv
+out_city_json =
+
+out_area_info_csv = output\area_info.csv
+out_area_names_csv = output\area_names.csv
+out_area_json =
+
+###################################################################################################
+# This section is for generation of edges, roads, etc. from OSM data
+[EdgesRoads]
+
+in_segments_csv = output\segments_*.csv
+in_city_csv = output\city.csv
+in_city_names_csv = output\city_names.csv
+in_area_info_csv = output\area_info.csv
+in_area_names_csv = output\area_names.csv
+in_way_type_category_mapping_csv = input\way_type_category_mapping.csv
+
+# NOTE: the CSV shall be encoded in UTF8 without BOM
+# NOTE: 1. 要按照行车方向的顺序 2. dir-0: 东西向或南北向, dir-1: 西东向或北南向
+# leave if blank if no need to change road's way category directly
+in_way_category_filter_csv = input\way_category_filter_key_locs.csv
+# way type filter for edges generation
+in_way_types_filter_for_edges = motorway, trunk, primary, secondary, tertiary, unclassified, \
+    residential, motorway_link, trunk_link, primary_link, secondary_link, tertiary_link, \
+    living_street
+
+# outputs
+
+out_edge_csv = output\edge.csv
+out_edge_json =
+out_edge_t_csv = output\edge_t.csv
+out_edge_segments_csv = output\edge_segments.csv
+
+###################################################################################################
+# This section is for generation of key routes
+[ExtKeyRoutes]
+
+# key locations (coordinates) of the key routes
+in_key_routes_key_locs_csv = input\routes_key_locs.csv
+
+# Only segments in the below box are loaded, format: left, bottom, right, top
+in_bbox = {{in_bbox}}
+
+in_segments_csv =  output\segments_*.csv
+in_edges_csv =     output\edge.csv
+in_edge_segments_csv = output\edge_segments.csv
+
+# outputs
+out_key_routes_names_csv = output\key_routes_names.csv
+out_key_routes_csv =   output\key_routes.csv
+out_key_route_edges_csv = output\key_route_edges.csv
+
+out_key_routes_json =  output\key_routes.json
+out_key_route_edges_json = output\key_route_edges.json
+
+###################################################################################################
+# This section is for ext areas.
+[ExtAreas]
+
+# key locations (coordinates) of the city ring.
+in_city_ring_key_locs_csv = input\city_ring_key_locs.csv
+
+# Admin areas
+in_area_info_csv = output\area_info.csv
+in_area_names_csv = output\area_names.csv
+in_main_area_id =  2138698, 2139790, 2139809, 2139830, 2140011
+
+# Only segments in the below box are loaded, format: left, bottom, right, top
+in_bbox = {{in_bbox}}
+
+in_segments_csv =      output\segments_*.csv
+in_edges_csv =         output\edge.csv
+in_edge_segments_csv = output\edge_segments.csv
+
+# outputs
+out_ext_area_names_csv = output\ext_area_names.csv
+out_ext_area_csv =   output\ext_area.csv
+out_ext_area_edges_csv = output\ext_area_edges.csv
+
+out_ext_area_json =
+out_ext_area_edges_json =
+
+###################################################################################################
+# This section is for generate edge tiles
+[EdgeTiles]
+
+in_edges_csv =         output\edge.csv
+in_segments_csv =      output\segments_*.csv
+in_edge_segments_csv = output\edge_segments.csv
+in_zoom_level = 11, 12, 13, 14, 15, 16, 17, 18
+
+# A tile's pixel is 256, and 20 pixel is the extending size
+in_extend_pixel = 50
+# outputs
+edge_tiles_part_num = 1
+out_ext_edge_tiles_csv = output\ext_edge_tiles_*.csv
+out_ext_edge_tile_bound = output\edge_tile_bound.csv
+
+out_ext_area_edges_json =
+###################################################################################################
+# need to run after generated key routes
+[EdgeName]
+
+in_segments_csv =      output\segments_*.csv
+in_edges_csv =         output\edge.csv
+in_edge_t_csv = output\edge_t.csv
+in_edge_segments_csv = output\edge_segments.csv
+in_key_routes_csv =   output\key_routes.csv
+in_key_route_edges_csv = output\key_route_edges.csv
+in_key_route_ids = 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205, 206, 207, 208, 209, 610, 401, 402, 403, 404, 405, 406, 407
+# outputs
+out_edge_t_csv = output\edge_crossed_name_t.csv
+out_edge_csv = output\edge_from_way_type.csv
+out_edge_t_json =
