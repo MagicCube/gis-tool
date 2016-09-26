@@ -39,6 +39,7 @@
     "body-parser": "^1.15.2",
     "cached-request": "^1.0.0",
     "express": "^4.14.0",
+    "mustache": "^2.2.1",
     "osmtogeojson": "^2.2.12",
     "request": "^2.74.0",
     "socket.io": "^1.4.8",
