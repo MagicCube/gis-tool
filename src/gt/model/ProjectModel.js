@@ -32,7 +32,7 @@ export default class ProjectModel extends Model
         }
         catch (e)
         {
-            alert("Save failed.")
+            alert(`Save failed. ${e}`);
         }
     }
 

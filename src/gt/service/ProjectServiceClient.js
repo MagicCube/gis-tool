@@ -26,11 +26,16 @@ export default class ServiceClient extends ManagedObject
 
     async updateProject(project)
     {
+        const data = JSON.stringify(project);
+        if (data.length > 1024 * 1024)
+        {
+            throw new Error("GeoJson too large");
+        }
         const res = await $.ajax({
             url: `${this.getBaseUrl()}/${project.id}`,
             method: "PUT",
             contentType: "application/json",
-            data: JSON.stringify(project)
+            data
         });
         return res;
     }
