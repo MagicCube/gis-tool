@@ -20,10 +20,16 @@ export default class DownloadServiceClient extends ManagedObject
 
     async downloadConvertedFiles(id = "default")
     {
-        const res = await $.ajax({
+        const downloadXhr = $.ajax({
             url: `${this.getBaseUrl()}/${id}`,
             method: "GET"
         });
-        return res;
+
+        return new Promise((resolve, reject) => {
+            downloadXhr.done(resolve);
+            downloadXhr.fail((xhr, status, error) => {
+                reject(`${xhr.status} ${xhr.statusText}`);
+            });
+        })
     }
 }

@@ -45,10 +45,10 @@ export default class SceneTabContainer extends SceneContainer
         $downloadButton.click(e => {
             DownloadServiceClient.getInstance().downloadConvertedFiles()
                 .then(res => {
-                    alert("Download success");
+                    console.log("Download success");
                 })
                 .catch(reason => {
-                    alert(`Download failed. ${JSON.stringify(reason)}`);
+                    console.error(`Download failed. ${reason}`);
                 })
             return false;
         });
