@@ -2,49 +2,84 @@
 {
     > .sub-container:nth-child(1)
     {
-        ul
+        nav
         {
-            display: block;
-            color: white;
             background: @primary-color;
-            padding: 0;
-            margin: 0;
             height: 38px;
-            cursor: default;
-            padding-left: 12px;
-            padding-right: 12px;
 
-            li
+            ul
             {
-                color: rgba(255, 255, 255, 0.4);
-                display: inline-block;
+                display: block;
+                color: white;
+                background: @primary-color;
                 padding: 0;
                 margin: 0;
-                margin-left: 2px;
-                padding-left: 10px;
-                padding-right: 10px;
-                margin-right: 2px;
-                cursor: pointer;
-                border-bottom: 3px solid transparent;
-                line-height: 35px;
+                height: 38px;
+                cursor: default;
+                padding-left: 12px;
+                padding-right: 12px;
 
-                &:hover
+                li
                 {
-                    color: rgba(255, 255, 255, 0.7);
-                }
-
-                &.selected
-                {
-                    color: white;
-                    border-bottom: 3px solid @secondary-color;
+                    color: rgba(255, 255, 255, 0.4);
+                    display: inline-block;
+                    padding: 0;
+                    margin: 0;
+                    margin-left: 2px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    margin-right: 2px;
+                    cursor: pointer;
+                    line-height: 35px;
                 }
             }
 
-            li.download-icon
+            ul.tabs
             {
-                position: absolute;;
-                right: 10px;
-                font-size: 28px;
+                float: left;
+
+                li
+                {
+                    border-bottom: 3px solid transparent;
+
+                    &:hover
+                    {
+                        color: rgba(255, 255, 255, 0.7);
+                    }
+
+                    &.selected
+                    {
+                        color: white;
+                        border-bottom: 3px solid @secondary-color;
+                    }
+                }
+            }
+
+            ul.buttons
+            {
+                float: right;
+
+                li
+                {
+                    position: absolute;;
+                    right: 10px;
+                    font-size: 28px;
+
+                    a:link
+                    {
+                        color: rgba(255, 255, 255, 0.4);
+                    }
+
+                    a:active
+                    {
+                        color: white;
+                    }
+
+                    a:hover
+                    {
+                        color: rgba(255, 255, 255, 0.7);
+                    }
+                }
             }
         }
     }

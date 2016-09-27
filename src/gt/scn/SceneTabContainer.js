@@ -17,8 +17,11 @@ export default class SceneTabContainer extends SceneContainer
         this.setLayout(new SplitLayout({
             ratio: [ 38, undefined ]
         }));
+        this.$nav = $(`<nav />`);
         this._initTabs();
         this._initActions();
+        this.getLayout().append(this.$nav);
+
         const $scenePlaceholder = $(`<div class="scene-placeholder">`);
         this.$element.find(".sub-container:nth-child(2)").append($scenePlaceholder);
         this.$container = $scenePlaceholder;
@@ -26,25 +29,27 @@ export default class SceneTabContainer extends SceneContainer
 
     _initTabs()
     {
-        this.$ul = $(`<ul></ul>`);
-        this.getLayout().append(this.$ul);
-        this.$ul.on("click", "li", e => {
+        this.$tabs = $(`<ul class="tabs"></ul>`);
+        this.$tabs.on("click", "li", e => {
             const $li = $(e.currentTarget);
             const id = $li.attr("id");
             this.selectScene(id);
         });
+        this.$nav.append(this.$tabs);
     }
 
     _initActions()
     {
-        const $downloadButton = $(
-            `<li class="download-icon">
-                <a href="../api/project/download/default" onclick="javascript:void(0)">
-                    <i class="icon ion-android-download"></i>
-                </a>
-            </li>`
-        );
-        this.$ul.append($downloadButton);
+        this.$buttons = $(`
+            <ul class="buttons">
+                <li class="download-icon">
+                    <a href="../api/project/download/default" onclick="javascript:void(0)">
+                        <i class="icon ion-android-download"></i>
+                    </a>
+                </li>
+            </ul>
+        `);
+        this.$nav.append(this.$buttons);
     }
 
 
@@ -56,7 +61,7 @@ export default class SceneTabContainer extends SceneContainer
         const $li = $(`<li>`);
         $li.attr("id", scene.getId());
         $li.text(scene.getTitle());
-        this.$ul.append($li);
+        this.$tabs.append($li);
     }
 
 
@@ -71,9 +76,9 @@ export default class SceneTabContainer extends SceneContainer
                 return;
             }
 
-            this.$ul.find("#" + currentScene.getId()).removeClass("selected");
+            this.$tabs.find("#" + currentScene.getId()).removeClass("selected");
         }
-        const $li = this.$ul.find("#" + id);
+        const $li = this.$tabs.find("#" + id);
         $li.addClass("selected");
         this.setScene(this.scenes[id], this.$container);
     }
