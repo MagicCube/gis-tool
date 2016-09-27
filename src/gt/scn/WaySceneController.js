@@ -62,13 +62,13 @@ export default class WaySceneController extends SceneController
         const routeLayer = this.mapView.wayLayer;
         routeLayer.unbindDirection();
         routeLayer.unbindKeyLocations();
-        
+
         if (clearListViewSelection)
         {
             this.listView.setSelection(null);
         }
     }
-    
+
     _listView_selectionChange(e)
     {
         const item = this.listView.getSelection();
@@ -79,7 +79,7 @@ export default class WaySceneController extends SceneController
         this.routeEditor.show();
         this.selectRoute(index);
     }
-    
+
     _listView_itemDelete(e)
     {
         const item = e.getParameter("item");
@@ -98,7 +98,7 @@ export default class WaySceneController extends SceneController
             this.listView.removeItem(item);
         }
     }
-    
+
     _fab_click()
     {
         this.getView().showOverlay();
@@ -152,6 +152,7 @@ export default class WaySceneController extends SceneController
         this.getView().hideOverlay();
         const route = {
             name,
+            "category": 1,
             "direction": 0,
             "keyLocations": [ {}, {} ]
         };
