@@ -9,7 +9,7 @@ export default class RouteEditor extends View
             name: { type: "string", bindable: true },
             direction: { type: "float", bindable: true },
             keyLocations: { type: "object", bindable: true },
-            mode: { type: "string", defaultValue: "edit" }
+            mode: { type: "string", defaultValue: "edit" }  // "create" or "edit"
         },
         events: {
             create: {},
@@ -57,7 +57,7 @@ export default class RouteEditor extends View
             this.setName($(e.currentTarget).val());
         });
         $name.on("keydown", e => {
-            if (e.keyCode === 13)   // enter
+            if (e.keyCode === 13 && this.getMode() === "create")   // enter
             {
                 setTimeout(() => {
                     this.fireCreate();
