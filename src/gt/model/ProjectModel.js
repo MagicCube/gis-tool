@@ -6,13 +6,12 @@ export default class ProjectModel extends Model
     constructor(...args)
     {
         super(...args);
-        this.serviceClient = new ProjectServiceClient();
         this.attachPropertyChange(this._onPropertyChange.bind(this));
     }
 
     async loadProject(id = "default")
     {
-        const project = await this.serviceClient.getProject(id);
+        const project = await ProjectServiceClient.getInstance().getProject(id);
         if (project)
         {
             this.setData(project);
@@ -23,7 +22,7 @@ export default class ProjectModel extends Model
     {
         try
         {
-            const result = await this.serviceClient.updateProject(this.getData());
+            const result = await ProjectServiceClient.getInstance().updateProject(this.getData());
             if (result.version)
             {
                 this.setProperty("/version", result.version);

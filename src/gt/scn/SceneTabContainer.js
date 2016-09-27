@@ -1,7 +1,7 @@
 import SceneContainer from "sap/a/scn/SceneContainer";
 import SplitLayout from "sap/a/layout/SplitLayout";
 
-import DownloadServiceClient from "../service/DownloadServiceClient";
+import ProjectServiceClient from "../service/ProjectServiceClient";
 
 export default class SceneTabContainer extends SceneContainer
 {
@@ -43,7 +43,7 @@ export default class SceneTabContainer extends SceneContainer
             </li>`
         );
         $downloadButton.click(e => {
-            DownloadServiceClient.getInstance().downloadConvertedFiles()
+            ProjectServiceClient.getInstance().downloadConvertedFiles()
                 .then(res => {
                     console.log("Download success");
                 })
