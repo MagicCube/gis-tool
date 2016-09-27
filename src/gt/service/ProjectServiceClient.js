@@ -8,6 +8,16 @@ export default class ProjectServiceClient extends ManagedObject
         }
     };
 
+    static _instance = null;
+    static getInstance()
+    {
+        if (gt.service.ProjectServiceClient._instance === null)
+        {
+            gt.service.ProjectServiceClient._instance = new gt.service.ProjectServiceClient();
+        }
+        return gt.service.ProjectServiceClient._instance;
+    }
+
     async getProject(projectId)
     {
         const res = await $.ajax({
@@ -30,5 +40,20 @@ export default class ProjectServiceClient extends ManagedObject
             data
         });
         return res;
+    }
+
+    async downloadConvertedFiles(id = "default")
+    {
+        const downloadXhr = $.ajax({
+            url: `${this.getBaseUrl()}/download/${id}`,
+            method: "GET"
+        });
+
+        return new Promise((resolve, reject) => {
+            downloadXhr.done(resolve);
+            downloadXhr.fail((xhr, status, error) => {
+                reject(`${xhr.status} ${xhr.statusText}`);
+            });
+        })
     }
 }
