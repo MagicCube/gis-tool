@@ -75,7 +75,7 @@ export default class MapView extends SuperMapView
 
        if (this.keyRouteLayer.isVisible())
        {
-           return this.corridorLayer;
+           return this.keyRouteLayer;
        }
 
        if (this.wayLayer.isVisible())
