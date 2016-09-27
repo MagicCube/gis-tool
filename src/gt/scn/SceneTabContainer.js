@@ -39,19 +39,11 @@ export default class SceneTabContainer extends SceneContainer
     {
         const $downloadButton = $(
             `<li class="download-icon">
-                <i class="icon ion-android-download"></i>
+                <a href="../api/project/download/default" onclick="javascript:void(0)">
+                    <i class="icon ion-android-download"></i>
+                </a>
             </li>`
         );
-        $downloadButton.click(e => {
-            ProjectServiceClient.getInstance().downloadConvertedFiles()
-                .then(res => {
-                    console.log("Download success");
-                })
-                .catch(reason => {
-                    console.error(`Download failed. ${reason}`);
-                })
-            return false;
-        });
         this.$ul.append($downloadButton);
     }
 
