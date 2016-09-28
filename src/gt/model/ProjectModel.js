@@ -39,10 +39,15 @@ export default class ProjectModel extends Model
 
     async saveProjectAs(name, initialSave = false)
     {
+        if (initialSave)
+        {
+            clearTimeout(this._autoSaveTimer);
+            this._autoSaveTimer = null;
+        }
         try
         {
             const result = await ProjectServiceClient.getInstance().saveProjectAs(this.getData(), name);
-            if (result.version)
+            if (initialSave && result.version)
             {
                 this.setProperty("/version", result.version);
             }

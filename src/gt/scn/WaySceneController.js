@@ -1,5 +1,3 @@
-import StateBus from "sap/a/state/StateBus";
-
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
 import SceneController from "./SceneController";
@@ -54,7 +52,6 @@ export default class WaySceneController extends SceneController
 
     clearSelection(clearListViewSelection = true)
     {
-        StateBus.getInstance().setState("/selectedWay", null);
         this.routeEditor.unbindName(false);
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
@@ -73,7 +70,6 @@ export default class WaySceneController extends SceneController
     {
         const item = this.listView.getSelection();
         const route = item.getRoute();
-        StateBus.getInstance().setState("selectedWay", route);
 
         const index = this.listView.getItems(item).indexOf(item);
         this.routeEditor.show();

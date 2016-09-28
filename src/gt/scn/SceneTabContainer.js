@@ -57,7 +57,7 @@ export default class SceneTabContainer extends SceneContainer
             if (project.city && project.city.code)
             {
                 this.getModel("project")
-                    .saveProjectAs(project.city.code)
+                    .saveProjectAs(project.city.code, true)
                     .then(() => {
                         console.log("Project has been uploaded");
                     })

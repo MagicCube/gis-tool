@@ -1,5 +1,3 @@
-import StateBus from "sap/a/state/StateBus";
-
 import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
@@ -60,7 +58,7 @@ export default class CorridorSceneController extends SceneController
         const routeLayer = this.mapView.corridorLayer;
         routeLayer.unbindDirection();
         routeLayer.unbindKeyLocations();
-        
+
         if (clearListViewSelection)
         {
             this.listView.setSelection(null);
@@ -71,7 +69,6 @@ export default class CorridorSceneController extends SceneController
     {
         const item = this.listView.getSelection();
         const route = item.getRoute();
-        StateBus.getInstance().setState("selectedCorridor", route);
 
         const index = this.listView.getItems(item).indexOf(item);
         this.routeEditor.show();
@@ -90,7 +87,7 @@ export default class CorridorSceneController extends SceneController
         {
             this.clearSelection();
             this.routeEditor.hide();
-            
+
             const projectModel = sap.ui.getCore().getModel("project");
             projectModel.removeItem("/corridors", route);
             this.listView.removeItem(item);

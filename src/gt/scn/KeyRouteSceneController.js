@@ -1,5 +1,3 @@
-import StateBus from "sap/a/state/StateBus";
-
 import RouteEditor from "../view/RouteEditor";
 import RouteListView from "../view/RouteListView";
 import Scene from "./Scene";
@@ -13,9 +11,9 @@ export default class KeyRouteSceneController extends SceneController
             id: "keyRouteScene",
             title: "KEYROUTES"
         });
-        
+
         this.mapView = scene.mapView;
-        
+
         this.listView = new RouteListView({
             items: "{project>/keyRoutes}",
             selectionChange: this._listView_selectionChange.bind(this),
@@ -32,7 +30,7 @@ export default class KeyRouteSceneController extends SceneController
         });
         this.routeEditor.hide();
         scene.addSubview(this.routeEditor, scene.$element);
-        
+
         return scene;
     }
 
@@ -53,7 +51,6 @@ export default class KeyRouteSceneController extends SceneController
 
     clearSelection(clearListViewSelection = true)
     {
-        StateBus.getInstance().setState("/selectedKeyRoute", null);
         this.routeEditor.unbindName(false);
         this.routeEditor.unbindDirection(false);
         this.routeEditor.unbindKeyLocations(false);
@@ -61,24 +58,23 @@ export default class KeyRouteSceneController extends SceneController
         const routeLayer = this.mapView.keyRouteLayer;
         routeLayer.unbindDirection();
         routeLayer.unbindKeyLocations();
-        
+
         if (clearListViewSelection)
         {
             this.listView.setSelection(null);
         }
     }
-    
+
     _listView_selectionChange(e)
     {
         const item = this.listView.getSelection();
         const route = item.getRoute();
-        StateBus.getInstance().setState("selectedKeyRoute", route);
 
         const index = this.listView.getItems(item).indexOf(item);
         this.routeEditor.show();
-        this.selectRoute(index);        
+        this.selectRoute(index);
     }
-    
+
     _listView_itemDelete(e)
     {
         const item = e.getParameter("item");
@@ -97,7 +93,7 @@ export default class KeyRouteSceneController extends SceneController
             this.listView.removeItem(item);
         }
     }
-    
+
     _fab_click()
     {
         this.getView().showOverlay();

@@ -33,7 +33,7 @@ export default class ApplicationController extends BaseApplicationController
         this.corridorSceneController = new CorridorSceneController("corridorSceneController");
         this.keyRouteSceneController = new KeyRouteSceneController("keyRouteSceneController");
         this.waySceneController = new WaySceneController("waySceneController");
-        
+
         this.sceneTabContainerController.setSceneControllers([
             this.citySceneController,
             this.corridorSceneController,
@@ -41,14 +41,15 @@ export default class ApplicationController extends BaseApplicationController
             this.waySceneController
         ]);
     }
-    
+
     _initStateBus()
     {
         new StateBus();
         const stateModel = sap.ui.getCore().getModel("state");
         this.setModel(stateModel, "state");
+        StateBus.getInstance().bindState("projectId").attachChange(this._projectId_onChange.bind(this));
     }
-    
+
     _initModels()
     {
         const projectModel = new ProjectModel();
@@ -66,15 +67,27 @@ export default class ApplicationController extends BaseApplicationController
     async run()
     {
         super.run();
-        const projectMoel = this.getModel("project");
-        await projectMoel.loadProject();
+        let projectId = jQuery.sap.getUriParameters().get("projectId");
+        if (!projectId)
+        {
+            projectId = "2131524";  //Nanjing
+        }
+        StateBus.getInstance().setState("projectId", projectId);
+    }
+
+    async _projectId_onChange()
+    {
+        const projectId = StateBus.getInstance().getState("projectId");
+        const projectModel = this.getModel("project");
+
+        await projectModel.loadProject(projectId);
         this.sceneTabContainerController.selectSceneController("citySceneController");
 
-        const city = projectMoel.getProperty("/city");
+        const city = projectModel.getProperty("/city");
         if (city && city.centerLocation)
         {
             this.view.mapView.setCenterLocation(city.centerLocation, 9);
         }
-        
+
     }
 }
