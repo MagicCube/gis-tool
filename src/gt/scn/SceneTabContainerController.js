@@ -6,7 +6,9 @@ export default class SceneTabContainerController extends SceneContainerControlle
 {
     createView(options)
     {
-        return new SceneTabContainer(options);
+        const view = new SceneTabContainer(options);
+        view.bindProjectId("state>/projectId");
+        return view;
     }
 
     setSceneControllers(controllers)

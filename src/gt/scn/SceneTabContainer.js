@@ -5,6 +5,12 @@ import ProjectServiceClient from "../service/ProjectServiceClient";
 
 export default class SceneTabContainer extends SceneContainer
 {
+    metadata = {
+        properties: {
+            projectId: { type: "string", bindable: true }
+        }
+    };
+
     init()
     {
         super.init();
@@ -73,6 +79,11 @@ export default class SceneTabContainer extends SceneContainer
         this.$nav.append(this.$buttons);
     }
 
+    setProjectId(value)
+    {
+        this.setProperty("projectId", value);
+        this.$element.find("li.download-button > a").attr("href", `../api/project/download/${value}`);
+    }
 
     appendScene(scene)
     {
@@ -84,8 +95,6 @@ export default class SceneTabContainer extends SceneContainer
         $li.text(scene.getTitle());
         this.$tabs.append($li);
     }
-
-
 
     selectScene(id)
     {
