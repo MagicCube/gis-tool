@@ -88,6 +88,5 @@ export default class ApplicationController extends BaseApplicationController
         {
             this.view.mapView.setCenterLocation(city.centerLocation, 9);
         }
-
     }
 }
