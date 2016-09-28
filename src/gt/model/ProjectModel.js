@@ -1,6 +1,8 @@
 import Model from "sap/a/model/Model";
 import ProjectServiceClient from "../service/ProjectServiceClient";
 
+const PROJECT_ID_OF_NANJING = "2131524";
+
 export default class ProjectModel extends Model
 {
     constructor(...args)
@@ -9,7 +11,7 @@ export default class ProjectModel extends Model
         this.attachPropertyChange(this._onPropertyChange.bind(this));
     }
 
-    async loadProject(id = "default")
+    async loadProject(id = PROJECT_ID_OF_NANJING)
     {
         const project = await ProjectServiceClient.getInstance().getProject(id);
         if (project)
@@ -31,12 +33,25 @@ export default class ProjectModel extends Model
         }
         catch (e)
         {
-            alert(`Save failed. ${e}`);
+            throw new Error(`Save failed. ${e}`);
         }
     }
 
-
-
+    async saveProjectAs(name)
+    {
+        try
+        {
+            const result = await ProjectServiceClient.getInstance().saveProjectAs(this.getData(), name);
+            if (result.version)
+            {
+                this.setProperty("/version", result.version);
+            }
+        }
+        catch (e)
+        {
+            throw new Error(`Save failed. ${e}`);
+        }
+    }
 
     appendItem(path, item)
     {

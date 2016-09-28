@@ -41,4 +41,20 @@ export default class ProjectServiceClient extends ManagedObject
         });
         return res;
     }
+
+    async saveProjectAs(project, name)
+    {
+        const data = JSON.stringify(project);
+        if (data.length > 1024 * 1024)
+        {
+            throw new Error("GeoJson too large");
+        }
+        const res = await $.ajax({
+            url: `${this.getBaseUrl()}/${name}`,
+            method: "POST",
+            contentType: "application/json",
+            data
+        });
+        return res;
+    }
 }

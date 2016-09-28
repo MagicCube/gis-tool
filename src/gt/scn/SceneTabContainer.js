@@ -42,13 +42,34 @@ export default class SceneTabContainer extends SceneContainer
     {
         this.$buttons = $(`
             <ul class="buttons">
-                <li class="download-icon">
+                <li class="save-button">
+                    <i class="icon ion-ios-copy"></i>
+                </li>
+                <li class="download-button">
                     <a href="../api/project/download/default" onclick="javascript:void(0)">
                         <i class="icon ion-android-download"></i>
                     </a>
                 </li>
             </ul>
         `);
+        this.$buttons.find(".save-button").click(() => {
+            const project = this.getModel("project").getData();
+            if (project.city && project.city.code)
+            {
+                this.getModel("project")
+                    .saveProjectAs(project.city.code)
+                    .then(() => {
+                        console.log("Project has been uploaded");
+                    })
+                    .catch(reason => {
+                        alert(`Uplod failed. ${reason}`);
+                    });
+            }
+            else
+            {
+                alert("City code is required");
+            }
+        });
         this.$nav.append(this.$buttons);
     }
 

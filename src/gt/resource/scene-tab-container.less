@@ -29,17 +29,8 @@
                     margin-right: 2px;
                     cursor: pointer;
                     line-height: 35px;
-                }
-            }
-
-            ul.tabs
-            {
-                float: left;
-
-                li
-                {
-                    border-bottom: 3px solid transparent;
                     color: rgba(255, 255, 255, 0.4);
+                    border-bottom: 3px solid transparent;
 
                     &:hover
                     {
@@ -49,6 +40,18 @@
                     &.selected
                     {
                         color: white;
+                    }
+                }
+            }
+
+            ul.tabs
+            {
+                float: left;
+
+                li
+                {
+                    &.selected
+                    {
                         border-bottom: 3px solid @secondary-color;
                     }
                 }
@@ -57,10 +60,14 @@
             ul.buttons
             {
                 float: right;
+                padding-right:14px;
 
                 li
                 {
                     font-size: 28px;
+                    width: 40px;
+                    padding: 0;
+                    text-align: center;
 
                     a:link, a:visited
                     {

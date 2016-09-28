@@ -30,6 +30,14 @@ export default class CitySceneController extends SceneController
         this.cityEditor.bindOsmId("project>/city/osmId");
         scene.addSubview(this.cityEditor, scene.$element);
 
+        this.cityEditor.attachCitySwitch(() => {
+            const project = sap.ui.getCore().getModel("project").getData();
+            if (project.city && project.city.code)
+            {
+                project.id = project.city.code;
+            }
+        });
+
         return scene;
     }
 }

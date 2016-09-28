@@ -14,6 +14,9 @@ export default class CityEidtor extends View
             geoJson: { type: "object", bindable: true },
             name: { type: "string", bindable: true },
             osmId: { typr: "string", bindable: true }
+        },
+        events: {
+            citySwitch: { }
         }
     };
 
@@ -50,11 +53,19 @@ export default class CityEidtor extends View
         this.cityInput = new CityInput();
         this.addSubview(this.cityInput, this.$header.find(".name"));
         this.cityInput.attachChange(e => {
-            this.setCity(this.cityInput.getCity());
+            const prevCity = this.getCity();
+            const city = this.cityInput.getCity();
+            city.code = city.osmId;
+            this.setCity(city);
+
+            if (!prevCity || prevCity.osmId !== city.osmId)
+            {
+                this.fireCitySwitch();
+            }
         });
-        
+
         this.$element.append(this.$header);
-        
+
         this.$header.find(".code > input").on("change", e => {
             this.setCode($(e.currentTarget).val());
         });
@@ -99,13 +110,13 @@ export default class CityEidtor extends View
         const clone = JSON.parse(JSON.stringify(value));
         this.cityInput.setCity(clone);
     }
-    
+
     setCode(code)
     {
         this.setProperty("code", code);
         this.$header.find(".code > input").val(code);
     }
-    
+
     setBounds(bounds)
     {
         this.setProperty("bounds", bounds);
