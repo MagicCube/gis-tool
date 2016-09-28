@@ -155,6 +155,9 @@ export default class RouteEditor extends View
             this.$("header > .item:not(:first-child)").slideUp(duration);
             this.$("main").slideUp(duration);
             this.$("footer").slideDown(duration);
+            setTimeout(() => {
+                this.$(".name > input").focus();
+            }, 400);
         }
         else
         {
