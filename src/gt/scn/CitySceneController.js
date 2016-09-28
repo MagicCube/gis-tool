@@ -36,6 +36,11 @@ export default class CitySceneController extends SceneController
             {
                 project.id = project.city.code;
             }
+            sap.ui.getCore().getModel("project")
+                .saveProjectAs(project.id)
+                .catch(reason => {
+                    console.error(`Project uploading failed. ${reason}`);
+                });
         });
 
         return scene;

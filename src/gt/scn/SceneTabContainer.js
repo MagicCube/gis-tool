@@ -62,7 +62,7 @@ export default class SceneTabContainer extends SceneContainer
                         console.log("Project has been uploaded");
                     })
                     .catch(reason => {
-                        alert(`Uplod failed. ${reason}`);
+                        alert(`Project uploading failed. ${reason}`);
                     });
             }
             else

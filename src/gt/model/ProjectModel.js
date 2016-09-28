@@ -37,7 +37,7 @@ export default class ProjectModel extends Model
         }
     }
 
-    async saveProjectAs(name)
+    async saveProjectAs(name, initialSave = false)
     {
         try
         {
@@ -78,6 +78,6 @@ export default class ProjectModel extends Model
         this._autoSaveTimer = setTimeout(() => {
             this._autoSaveTimer = null;
             this.saveProject();
-        }, 200);
+        }, 400);
     }
 }
