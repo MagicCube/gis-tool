@@ -1,3 +1,4 @@
+# Generated at {{timestamp}}
 # NOTE: encode in UTF8 without BOM
 # NOTE: 1. 要按照行车方向的顺序 2. dir-0: 东西向或南北向, dir-1: 西东向或北南向
 # route_id, route_name, direction, way_category, key_locs
