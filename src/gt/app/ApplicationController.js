@@ -72,18 +72,22 @@ export default class ApplicationController extends BaseApplicationController
         StateBus.getInstance().setState("projectId", projectId);
     }
 
-    async _projectId_onChange()
+    _projectId_onChange()
     {
         const projectId = StateBus.getInstance().getState("projectId");
         const projectModel = this.getModel("project");
 
-        await projectModel.loadProject(projectId);
-        this.sceneTabContainerController.selectSceneController("citySceneController");
-
-        const city = projectModel.getProperty("/city");
-        if (city && city.centerLocation)
-        {
-            this.view.mapView.setCenterLocation(city.centerLocation, 9);
-        }
+        projectModel.loadProject(projectId)
+            .then(() => {
+                this.sceneTabContainerController.selectSceneController("citySceneController");
+                const city = projectModel.getProperty("/city");
+                if (city && city.centerLocation)
+                {
+                    this.view.mapView.setCenterLocation(city.centerLocation, 9);
+                }
+            })
+            .catch(reason => {
+                alert(reason);
+            });
     }
 }

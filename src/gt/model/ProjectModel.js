@@ -13,10 +13,14 @@ export default class ProjectModel extends Model
 
     async loadProject(id = PROJECT_ID_OF_NANJING)
     {
-        const project = await ProjectServiceClient.getInstance().getProject(id);
-        if (project)
+        try
         {
+            const project = await ProjectServiceClient.getInstance().getProject(id);
             this.setData(project);
+        }
+        catch (e)
+        {
+            throw new Error(`Project ${id} not found.`);
         }
     }
 
