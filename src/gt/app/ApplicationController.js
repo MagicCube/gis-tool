@@ -67,11 +67,8 @@ export default class ApplicationController extends BaseApplicationController
     async run()
     {
         super.run();
-        let projectId = jQuery.sap.getUriParameters().get("projectId");
-        if (!projectId)
-        {
-            projectId = "2131524";  //Nanjing
-        }
+        // load Nanjing by default
+        let projectId = window.location.hash.replace(/^#/, "") || "2131524";
         StateBus.getInstance().setState("projectId", projectId);
     }
 
