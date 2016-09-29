@@ -65,7 +65,6 @@ export default class SceneTabContainer extends SceneContainer
                 this.getModel("project")
                     .saveProjectAs(project.city.code, true)
                     .then(() => {
-                        console.log("Project has been uploaded");
                     })
                     .catch(reason => {
                         alert(`Project uploading failed. ${reason}`);

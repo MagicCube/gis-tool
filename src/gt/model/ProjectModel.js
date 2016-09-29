@@ -28,7 +28,8 @@ export default class ProjectModel extends Model
             if (result.version)
             {
                 this.setProperty("/version", result.version);
-                console.log("Project has been automatically saved.");
+                const id = this.getData().id;
+                console.log(`Project ${id} has been automatically saved.`);
             }
         }
         catch (e)
@@ -37,24 +38,17 @@ export default class ProjectModel extends Model
         }
     }
 
-    async saveProjectAs(name, initialSave = false)
+    async saveProjectAs(name)
     {
-        if (initialSave)
-        {
-            clearTimeout(this._autoSaveTimer);
-            this._autoSaveTimer = null;
-        }
         try
         {
-            const result = await ProjectServiceClient.getInstance().saveProjectAs(this.getData(), name);
-            if (initialSave && result.version)
-            {
-                this.setProperty("/version", result.version);
-            }
+            await ProjectServiceClient.getInstance().saveProjectAs(this.getData(), name);
+            const id = this.getData().id;
+            console.log(`Project ${id} has been uploaded`);
         }
         catch (e)
         {
-            throw new Error(`Save failed. ${e}`);
+            throw new Error(`Project uploading failed. ${e}`);
         }
     }
 

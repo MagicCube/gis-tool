@@ -31,16 +31,16 @@ export default class CitySceneController extends SceneController
         scene.addSubview(this.cityEditor, scene.$element);
 
         this.cityEditor.attachCitySwitch(() => {
-            const project = sap.ui.getCore().getModel("project").getData();
-            if (project.city && project.city.code)
-            {
-                project.id = project.city.code;
-            }
-            sap.ui.getCore().getModel("project")
-                .saveProjectAs(project.id)
-                .catch(reason => {
-                    console.error(`Project uploading failed. ${reason}`);
-                });
+            // const project = sap.ui.getCore().getModel("project").getData();
+            // if (project.city && project.city.code)
+            // {
+            //     project.id = project.city.code;
+            // }
+            // sap.ui.getCore().getModel("project")
+            //     .saveProjectAs(project.id)
+            //     .catch(reason => {
+            //         console.error(`Project uploading failed. ${reason}`);
+            //     });
         });
 
         return scene;

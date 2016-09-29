@@ -68,7 +68,7 @@ export default class ApplicationController extends BaseApplicationController
     {
         super.run();
         // load Nanjing by default
-        let projectId = window.location.hash.replace(/^#/, "") || "2131524";
+        let projectId = window.location.hash.replace(/^#/, "") || "default";
         StateBus.getInstance().setState("projectId", projectId);
     }
 
