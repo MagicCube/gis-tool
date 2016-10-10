@@ -65,10 +65,7 @@ export default class RouteLayer extends Layer
         fitBounds = false
     } = {})
     {
-        const keyLocations = this.markers.map(marker => {
-            const latLng = marker.getLatLng()
-            return latLng;
-        });
+        const keyLocations = this.markers.map(marker => marker.getLatLng());
         if (keyLocations && keyLocations[0] && keyLocations[0].lat && keyLocations[1] && keyLocations[1].lat)
         {
             OsmServiceClient.getInstance().getRoute(keyLocations, maxAge)

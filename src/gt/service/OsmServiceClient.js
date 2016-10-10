@@ -20,11 +20,28 @@ export default class OsmServiceClient extends ManagedObject
 
     async searchCity(cityName)
     {
-        const res = await $.ajax({
+        if (this.searchCityXhr) {
+            this.searchCityXhr.abort();
+            this.searchCityXhr = null;
+        }
+        this.searchCityXhr = $.ajax({
             url: `${this.getBaseUrl()}/city?q=${cityName}`,
             contentType: "application/json"
         });
-        return res;
+        
+        return new Promise((resolve, reject) => {
+            this.searchCityXhr.done(resolve);
+            this.searchCityXhr.fail((xhr, status, error) => {
+                if (xhr.statusText === "abort")
+                {
+                    reject("searchCity() request cancelled by user.");
+                }
+                else
+                {
+                    reject(error);
+                }
+            });
+        });
     }
 
     // Supported location format: [lng, lat] and { lat, lng }
@@ -34,14 +51,6 @@ export default class OsmServiceClient extends ManagedObject
         {
             this.getRouteXhr.abort();
             this.getRouteXhr = null;
-        }
-
-        if (locations.length > 0 && Array.isArray(locations[0]))
-        {
-            locations = locations.map(location => ({
-                lat: location[0],
-                lng: location[1]
-            }));
         }
         locations = locations.map(location => ({
             lat: location.lat,

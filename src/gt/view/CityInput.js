@@ -73,19 +73,23 @@ export default class CityInput extends View
         const input = this.$input.val();
         if (input)
         {
-            OsmServiceClient.getInstance().searchCity(input).then(cities => {
-                this.$list.children().remove();
-                cities.forEach(city => {
-                    const $item = $(`<li>${city.displayName}</li>`);
-                    $item.data("city", city);
-                    this.$list.append($item);
+            OsmServiceClient.getInstance().searchCity(input)
+                .then(cities => {
+                    this.$list.children().remove();
+                    cities.forEach(city => {
+                        const $item = $(`<li>${city.displayName}</li>`);
+                        $item.data("city", city);
+                        this.$list.append($item);
+                    });
+                    if (cities.length > 0)
+                    {
+                        this._showList();
+                        return;
+                    }
+                })
+                .catch(reason => {
+                    console.log(reason);
                 });
-                if (cities.length > 0)
-                {
-                    this._showList();
-                    return;
-                }
-            });
         }
         this._hideList();
     }
