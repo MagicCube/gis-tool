@@ -5,5 +5,5 @@
 # corridor
 
 {{#routes}}
-{{id}},{{{name}}},{{direction}},{{type}},{{{keyLocations}}}
+{{id}},{{{name}}},{{direction}},0,0,{{type}},{{{keyLocations}}}
 {{/routes}}
