@@ -47,8 +47,11 @@ export default class ProjectModel extends Model
         try
         {
             await ProjectServiceClient.getInstance().saveProjectAs(this.getData(), name);
-            const id = this.getData().id;
-            console.log(`Project ${id} has been uploaded`);
+            let code = '';
+            if (this.getData().city) {
+                code = this.getData().city.code;
+            }
+            console.log(`Project ${code} has been uploaded`);
         }
         catch (e)
         {
