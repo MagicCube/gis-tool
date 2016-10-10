@@ -39,9 +39,7 @@ export default class Scene extends SuperScene
 
             if (id === "cityScene")
             {
-                setTimeout(() => {
-                    this.mapView.boundLayer.fitBounds();
-                });
+                this.mapView.boundLayer.fitBounds();
             }
             else
             {
